@@ -244,10 +244,10 @@ export const PLUMBING_SERVICES: ServiceDefinition[] = [
       materialsIncluded: true,
       surveyedAt: '2026-10-09',
       lastVerifiedAt: '2026-10-09',
-      verificationStatus: 'verified',
+      verificationStatus: 'partially_verified',
       reliabilityLevel: 'high',
       sourceType: 'platform_average',
-      notes: '숨고 실거래 평균 50,000원 (최저 5만 ~ 최고 30만원). 단순 변기 관통 5만~7만, 싱크대 전동 샤프트 스케일링 12만~18만, 메인 오수관 고압세척 30만.',
+      notes: '숨고 실거래 평균 50,000원, 최고 300,000원. 원문 페이지의 최저가격은 70,000원으로 집계되어 최저가(7만)가 평균가(5만)보다 높게 산출된 통계 이상치(모순)가 존재함. 레지스트리는 현장 최저 단순 통수 작업 기준 50,000원으로 산정하였으나, 원문 최저가 불일치 및 데이터 이상치로 인해 partially_verified 상태로 엄격 관리함.',
     },
     seo: {
       title: '하수구 뚫음 비용 견적 계산기 (싱크대역류/변기/고압세척) | 바로견적',

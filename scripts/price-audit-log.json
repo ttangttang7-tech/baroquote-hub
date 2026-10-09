@@ -1,10 +1,11 @@
 {
-  "auditDate": "2026-10-09T09:59:56.348Z",
+  "auditDate": "2026-10-09T10:19:03.303Z",
   "todayBoundary": "2026-10-09",
   "totalServices": 30,
   "http200Count": 30,
-  "fullVerifiedCount": 30,
-  "partialVerifiedCount": 0,
+  "fullVerifiedCount": 28,
+  "roundedVerifiedCount": 1,
+  "partialVerifiedCount": 1,
   "unverifiedCount": 0,
   "results": [
     {
@@ -16,9 +17,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 250000,
@@ -32,9 +33,11 @@
         "priceUnit": "공급면적 평당 11,000원 ~ 14,000원 (24평 평균 25만)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -45,9 +48,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 180000,
@@ -61,9 +64,11 @@
         "priceUnit": "건당 100,000원 ~ 270,000원 (스탠드 평균 18만)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -74,9 +79,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 220000,
@@ -90,9 +95,11 @@
         "priceUnit": "건당 100,000원 ~ 520,000원 (반포장 10km 평균 22만)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -103,9 +110,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 750000,
@@ -119,9 +126,11 @@
         "priceUnit": "건당 350,000원 ~ 1,700,000원 (5톤 표준 120만~150만)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -132,9 +141,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 120000,
@@ -148,9 +157,11 @@
         "priceUnit": "대당 60,000원 ~ 260,000원 (스탠드 평균 12만)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -161,9 +172,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 1200000,
@@ -177,9 +188,11 @@
         "priceUnit": "건당 (평균 120만원 / 최저 25만 ~ 최고 270만원)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -190,9 +203,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 300000,
@@ -206,9 +219,11 @@
         "priceUnit": "건당 150,000원 ~ 800,000원 (기본 탐지 평균 30만)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -219,9 +234,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 150000,
@@ -235,9 +250,11 @@
         "priceUnit": "건당 50,000원 ~ 500,000원 (단품 5만~10만, 1톤 1차 40만~50만)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -248,9 +265,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 1780000,
@@ -264,9 +281,11 @@
         "priceUnit": "건당 (평균 178만원 / 최저 15만 ~ 최고 380만원)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -277,9 +296,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 680000,
@@ -293,9 +312,11 @@
         "priceUnit": "시공당 150,000원 ~ 890,000원 (친환경 콘덴싱 교체 평균 68만)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -306,9 +327,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 85000,
@@ -322,9 +343,11 @@
         "priceUnit": "건당 45,000원 ~ 260,000원 (공임+기본부품 평균 8.5만)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -335,9 +358,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 110000,
@@ -351,9 +374,11 @@
         "priceUnit": "건당 50,000원 ~ 300,000원 (15km 기본 5만~6만, 거리비례)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -364,9 +389,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 100000,
@@ -380,9 +405,11 @@
         "priceUnit": "대당 70,000원 ~ 220,000원 (통돌이 7~9만, 드럼 11~14만)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -393,9 +420,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 130000,
@@ -409,9 +436,11 @@
         "priceUnit": "시공당 (평균 13만원 / 최저 4.5만 ~ 최고 32만원)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -422,9 +451,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 800000,
@@ -438,9 +467,11 @@
         "priceUnit": "건당 (평균 80만원 / 최저 15만 ~ 최고 300만원)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -451,9 +482,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 110000,
@@ -467,9 +498,11 @@
         "priceUnit": "시공당 (평균 11만원 / 최저 5만 ~ 최고 26.5만원)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -480,9 +513,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 250000,
@@ -496,9 +529,11 @@
         "priceUnit": "시공당 (평균 25만원 / 최저 4만 ~ 최고 110만원)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -509,9 +544,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 400000,
@@ -525,9 +560,11 @@
         "priceUnit": "건당 (평균 40만원 / 최저 15만 ~ 최고 100만원)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -538,9 +575,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 600000,
@@ -554,9 +591,11 @@
         "priceUnit": "건당 (평균 60만원 / 최저 15만 ~ 최고 270만원)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -567,9 +606,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 150000,
@@ -583,9 +622,11 @@
         "priceUnit": "건당 (평균 15만원 / 최저 4만 ~ 최고 40만원)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -596,9 +637,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 320000,
@@ -612,22 +653,24 @@
         "priceUnit": "건당 (평균 32만원 / 최저 5만 ~ 최고 85만원)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
-      "status": "ok",
+      "status": "partially_verified",
       "slug": "drain-unclogging",
       "url": "https://soomgo.com/prices/%ED%95%98%EC%88%98%EA%B5%AC-%EC%B2%AD%EC%86%8C",
       "httpStatus": 200,
       "httpOk": true,
       "liveExtractionSuccess": true,
-      "liveVerificationLevel": "full_verified",
+      "liveVerificationLevel": "partially_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "discrepancy",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 50000,
@@ -641,9 +684,17 @@
         "priceUnit": "건당 (평균 5만원 / 최저 5만 ~ 최고 30만원)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": {
+        "field": "min",
+        "rawExtractedMin": 70000,
+        "registryMin": 50000,
+        "difference": 20000,
+        "anomalyReason": "숨고 원문 최저가 70,000원이 평균가 50,000원보다 높은 플랫폼 데이터 이상치(모순) 확인. 레지스트리는 현장 기초 통수 50,000원으로 합리적 산정하였으나, 원문 최저가 불일치로 partially_verified 엄격 분류"
+      },
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -654,9 +705,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 120000,
@@ -670,9 +721,11 @@
         "priceUnit": "건당 60,000원 ~ 350,000원 (저층 1회 12만, 10층 14만, 15층 17만)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -683,9 +736,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 200000,
@@ -699,9 +752,11 @@
         "priceUnit": "시공건당 80,000원 ~ 650,000원 (단순제거 8만, 단열코팅 20만~35만)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -710,11 +765,11 @@
       "httpStatus": 200,
       "httpOk": true,
       "liveExtractionSuccess": true,
-      "liveVerificationLevel": "full_verified",
+      "liveVerificationLevel": "rounded_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "rounded_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 3504433,
@@ -728,9 +783,16 @@
         "priceUnit": "시공당 (평균 350만원 / 최저 175만 ~ 최고 560만원)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": {
+        "rawExtractedAvg": 3504433,
+        "displayBasePrice": 3500000,
+        "roundingDelta": 4433,
+        "rationale": "숨고 원문 평균 3,504,433원, 소비자 인지성 및 견적 편의를 위한 만원 단위 반올림(3,500,000원) 표기 확인"
+      },
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -741,9 +803,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 70000,
@@ -757,9 +819,11 @@
         "priceUnit": "회당 55,000원 ~ 70,000원 선 (시간당 15,000원~18,000원)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -770,9 +834,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 230000,
@@ -786,9 +850,11 @@
         "priceUnit": "건당 (평균 23만원 / 최저 8만 ~ 최고 45만원)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -799,9 +865,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 80000,
@@ -815,9 +881,11 @@
         "priceUnit": "대당 50,000원 ~ 150,000원 (퀸 건식 5~6만, 습식 종합 8~11만)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -828,9 +896,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 150000,
@@ -844,9 +912,11 @@
         "priceUnit": "건당 80,000원 ~ 400,000원 (24~34평 기준 평균 15만)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     },
     {
       "status": "ok",
@@ -857,9 +927,9 @@
       "liveExtractionSuccess": true,
       "liveVerificationLevel": "full_verified",
       "fieldStatus": {
-        "avg": "verified",
-        "min": "verified",
-        "max": "verified"
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
       },
       "extracted": {
         "avg": 400000,
@@ -873,9 +943,11 @@
         "priceUnit": "건당 (1회성 대청소 기준, 월정액 정기계약은 현장실측 준비형)",
         "lastVerifiedAt": "2026-10-09"
       },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
       "ageInDays": 0,
       "isStale": false,
-      "verifiedAt": "2026-10-09T09:59:56.348Z"
+      "verifiedAt": "2026-10-09T10:19:03.303Z"
     }
   ]
 }

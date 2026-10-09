@@ -473,6 +473,9 @@ const jsonLd = [
     return `${(num / 10000).toLocaleString('ko-KR')}만`;
   }
 
+  // Active state cache
+  let currentResult: any = null;
+
   function updateEstimateResult() {
     if (!form) return;
     const serviceId = form.getAttribute('data-service-id');
@@ -480,6 +483,7 @@ const jsonLd = [
 
     const answers = getFormAnswers(form);
     const result = calculateEstimate(serviceId, answers);
+    currentResult = result;
 
     // 1. Update Badge
     if (resultTypeBadge) {
@@ -505,6 +509,11 @@ const jsonLd = [
     } else {
       if (rangeDisplay) rangeDisplay.style.display = 'none';
       if (prepDisplay) prepDisplay.style.display = 'block';
+
+      // Clear range amounts in DOM to prevent stale leaks and copying
+      if (minAmountDisplay) minAmountDisplay.textContent = '';
+      if (maxAmountDisplay) maxAmountDisplay.textContent = '';
+      if (manwonDisplay) manwonDisplay.textContent = '';
 
       const prepTitleEl = document.getElementById('prepTitle');
       const prepDescEl = document.getElementById('prepDesc');
@@ -588,19 +597,31 @@ const jsonLd = [
     });
   }
 
-  // Copy result to clipboard
+  // Copy result to clipboard (strictly outputs guide text if preparation mode or stale)
   if (copyBtn && form) {
     copyBtn.addEventListener('click', () => {
       const serviceTitle = document.querySelector('.service-title')?.textContent?.trim() || '바로견적';
-      const minVal = minAmountDisplay?.textContent?.trim() || '';
-      const maxVal = maxAmountDisplay?.textContent?.trim() || '';
-      const isRange = Boolean(minVal && maxVal);
+      const isRange = currentResult?.type === 'range_estimate' &&
+        rangeDisplay &&
+        rangeDisplay.style.display !== 'none' &&
+        Boolean(minAmountDisplay?.textContent?.trim()) &&
+        Boolean(maxAmountDisplay?.textContent?.trim());
 
-      let copyText = `[바로견적] ${serviceTitle} 예상견적 요약\n`;
+      let copyText = '';
       if (isRange) {
+        const minVal = minAmountDisplay?.textContent?.trim() || '';
+        const maxVal = maxAmountDisplay?.textContent?.trim() || '';
+        copyText = `[바로견적] ${serviceTitle} 예상견적 요약\n`;
         copyText += `▶ 예상 비용 범위: ${minVal}원 ~ ${maxVal}원 (VAT포함)\n`;
       } else {
-        copyText += `▶ 예상 형태: 현장 진단 및 맞춤 견적 가이드\n`;
+        const prepTitleText = document.getElementById('prepTitle')?.textContent?.trim() || '현장 방문 실측 맞춤 견적 권장 서비스';
+        const prepDescText = document.getElementById('prepDesc')?.textContent?.trim() || '';
+        copyText = `[바로견적] ${serviceTitle} 현장 진단 및 준비 가이드\n`;
+        copyText += `▶ 견적 상태: 현장 실측 및 맞춤 견적 권장 (정액 숫자 견적 미제공)\n`;
+        copyText += `▶ 안내 사유: ${prepTitleText}\n`;
+        if (prepDescText) {
+          copyText += `▶ 상세 가이드: ${prepDescText}\n`;
+        }
       }
       copyText += `▶ 산정 출처: 바로견적 (https://quote.info-myview.co.kr)\n`;
       copyText += `※ 본 견적은 시장 평균 단가 기준 참고치이며, 계약 전 반드시 해당 업체로부터 서면 확정 견적을 수령하시기 바랍니다.`;
@@ -614,5 +635,17 @@ const jsonLd = [
         }
       });
     });
+  }
+
+  // Immediate evaluation on initial page load (prevents stale static HTML leaks across elapsed time)
+  updateEstimateResult();
+
+  // Expose test hook for verification suites
+  if (typeof window !== 'undefined') {
+    (window as any).__baroquote_runtime = {
+      updateEstimateResult,
+      getCurrentResult: () => currentResult,
+      getFormAnswers: () => form ? getFormAnswers(form) : {},
+    };
   }
 </script>

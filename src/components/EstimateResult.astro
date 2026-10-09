@@ -66,33 +66,41 @@ const formatManwon = (val: number) => {
     </div>
   </div>
 
-  <!-- Primary Price or Prep Display -->
+  <!-- Primary Price or Prep Display: Both elements rendered in DOM to guarantee clean client transitions -->
   <div class="result-highlight-box">
-    {initialResult.type === 'range_estimate' && initialResult.minAmount && initialResult.maxAmount ? (
-      <div class="range-display" id="rangeDisplay">
-        <div class="range-label">시장 실거래 빅데이터 기반 예상 범위 (참고용 추정치)</div>
-        <div class="range-amounts">
-          <span class="amount-val" id="minAmountDisplay">{formatMoney(initialResult.minAmount)}</span>
-          <span class="amount-sep">~</span>
-          <span class="amount-val" id="maxAmountDisplay">{formatMoney(initialResult.maxAmount)}</span>
-          <span class="amount-unit">원</span>
-        </div>
-        <div class="range-subtext" id="manwonDisplay">
-          (약 {formatManwon(initialResult.minAmount)}원 ~ {formatManwon(initialResult.maxAmount)}원)
-        </div>
-        <div class="range-notice" id="rangeNotice">
-          ※ 본 금액은 시공 업체의 확정 견적이 아닌 시장 통계 기반 참고용 추정 범위이며, 현장 조건에 따라 달라질 수 있습니다.
-        </div>
+    <div
+      class="range-display"
+      id="rangeDisplay"
+      style={initialResult.type === 'range_estimate' && initialResult.minAmount && initialResult.maxAmount ? '' : 'display: none;'}
+    >
+      <div class="range-label">시장 실거래 빅데이터 기반 예상 범위 (참고용 추정치)</div>
+      <div class="range-amounts">
+        <span class="amount-val" id="minAmountDisplay">{initialResult.minAmount ? formatMoney(initialResult.minAmount) : ''}</span>
+        <span class="amount-sep">~</span>
+        <span class="amount-val" id="maxAmountDisplay">{initialResult.maxAmount ? formatMoney(initialResult.maxAmount) : ''}</span>
+        <span class="amount-unit">원</span>
       </div>
-    ) : (
-      <div class="prep-display" id="prepDisplay">
-        <div class="prep-icon">📋</div>
-        <div class="prep-title" id="prepTitle">{initialResult.prepTitle || '현장 방문 실측 맞춤 견적 권장 서비스'}</div>
-        <div class="prep-desc" id="prepDesc">
-          {initialResult.basis.explanation || '본 서비스는 현장 상태, 시공 범위, 자재 스펙에 따라 편차가 커 단일 정액가 대신 현장 실측 맞춤 견적을 권장합니다. 아래 점검 항목을 바탕으로 2~3개 업체의 견적서를 비교하세요.'}
-        </div>
+      <div class="range-subtext" id="manwonDisplay">
+        {initialResult.minAmount && initialResult.maxAmount ? `(약 ${formatManwon(initialResult.minAmount)}원 ~ ${formatManwon(initialResult.maxAmount)}원)` : ''}
       </div>
-    )}
+      <div class="range-notice" id="rangeNotice">
+        ※ 본 금액은 시공 업체의 확정 견적이 아닌 시장 통계 기반 참고용 추정 범위이며, 현장 조건에 따라 달라질 수 있습니다.
+      </div>
+    </div>
+
+    <div
+      class="prep-display"
+      id="prepDisplay"
+      style={initialResult.type === 'range_estimate' && initialResult.minAmount && initialResult.maxAmount ? 'display: none;' : ''}
+    >
+      <div class="prep-icon">📋</div>
+      <div class="prep-title" id="prepTitle">
+        {initialResult.prepTitle || '현장 방문 실측 맞춤 견적 권장 서비스'}
+      </div>
+      <div class="prep-desc" id="prepDesc">
+        {initialResult.basis.explanation || '본 서비스는 현장 상태, 시공 범위, 자재 스펙에 따라 편차가 커 단일 정액가 대신 현장 실측 맞춤 견적을 권장합니다. 아래 점검 항목을 바탕으로 2~3개 업체의 견적서를 비교하세요.'}
+      </div>
+    </div>
   </div>
 
   <!-- Cost Breakdown / Basis -->

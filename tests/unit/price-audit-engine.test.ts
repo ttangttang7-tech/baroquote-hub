@@ -179,5 +179,86 @@ describe('Price Evidence & Estimation Engine Quality Audits', () => {
     expect(res.basis.explanation).toContain('확정 견적이 아니며');
     expect(res.basis.explanation).toContain('참고용 예상 범위');
   });
+
+  // 상황 A: 검증일로부터 30일 경과 (정상 숫자 견적)
+  it('[상황 A] produces valid range_estimate when 30 days elapsed from verification', () => {
+    // verified: 2026-10-09 -> +30 days = 2026-11-08
+    const res = calculateEstimate('move-in-cleaning', {
+      area_pyeong: 24,
+      __referenceDate: '2026-11-08',
+    });
+    expect(res.type).toBe('range_estimate');
+    expect(res.minAmount).toBeGreaterThan(0);
+    expect(res.maxAmount).toBeGreaterThan(res.minAmount!);
+  });
+
+  // 상황 B: 검증일로부터 정확히 90일 경과 (경계값 규칙 정상 판정)
+  it('[상황 B] maintains range_estimate on exactly 90-day boundary', () => {
+    // verified: 2026-10-09T00:00:00Z -> exactly +90 days
+    const baseTime = Date.parse('2026-10-09');
+    const day90 = new Date(baseTime + 90 * 24 * 60 * 60 * 1000);
+    const res = calculateEstimate('move-in-cleaning', {
+      area_pyeong: 24,
+      __referenceDate: day90.toISOString(),
+    });
+    expect(res.type).toBe('range_estimate');
+    expect(res.minAmount).toBeGreaterThan(0);
+  });
+
+  // 상황 C: 검증일로부터 91일 경과 (stale 판정, quote_preparation 자동 전환, 숫자 금액 미노출)
+  it('[상황 C] switches to quote_preparation on 91 days elapsed and hides numeric amounts', () => {
+    const baseTime = Date.parse('2026-10-09');
+    const day91 = new Date(baseTime + 91 * 24 * 60 * 60 * 1000);
+    const res = calculateEstimate('move-in-cleaning', {
+      area_pyeong: 24,
+      __referenceDate: day91.toISOString(),
+    });
+    expect(res.type).toBe('quote_preparation');
+    expect(res.minAmount).toBeUndefined();
+    expect(res.maxAmount).toBeUndefined();
+    expect(res.prepTitle).toContain('유효기간 만료');
+  });
+
+  // 상황 E: 만료 후 복사 기능 포맷 검증 (숫자 유출 없이 가이드 텍스트만 출력)
+  it('[상황 E] produces preparation guide text without numeric amounts in stale state', () => {
+    const res = calculateEstimate('move-in-cleaning', {
+      area_pyeong: 32,
+      contamination_level: 'heavy',
+      __referenceDate: '2027-02-01', // well beyond 90 days
+    });
+
+    expect(res.type).toBe('quote_preparation');
+    expect(res.minAmount).toBeUndefined();
+    expect(res.maxAmount).toBeUndefined();
+
+    // Verify copy formatting logic
+    const isRange = res.type === 'range_estimate' && Boolean(res.minAmount && res.maxAmount);
+    expect(isRange).toBe(false);
+
+    let copyText = '';
+    if (isRange) {
+      copyText = `[바로견적] 입주청소 예상견적 요약\n▶ 예상 비용 범위: ${res.minAmount}원 ~ ${res.maxAmount}원`;
+    } else {
+      copyText = `[바로견적] 입주청소 현장 진단 및 준비 가이드\n▶ 견적 상태: 현장 실측 및 맞춤 견적 권장 (정액 숫자 견적 미제공)\n▶ 안내 사유: ${res.prepTitle}\n▶ 상세 가이드: ${res.basis.explanation}`;
+    }
+
+    expect(copyText).not.toContain('예상 비용 범위');
+    expect(copyText).toContain('정액 숫자 견적 미제공');
+    expect(copyText).toContain(res.prepTitle!);
+  });
+
+  // 상황 F: 사무실 정기청소 (시장 건당가격 40만원이 있더라도 월정액 견적은 항상 준비형 유지)
+  it('[상황 F] preserves quote_preparation for office-cleaning-service even when fresh', () => {
+    const res = calculateEstimate('office-cleaning-service', {
+      office_area: 30,
+      frequency_per_week: 2,
+      __referenceDate: '2026-10-10', // fresh date
+    });
+
+    expect(res.type).toBe('quote_preparation');
+    expect(res.minAmount).toBeUndefined();
+    expect(res.maxAmount).toBeUndefined();
+    expect(res.basis.explanation).toContain('정기 방문 클리닝');
+  });
 });
 

@@ -726,7 +726,7 @@ export const INTERIOR_SERVICES: ServiceDefinition[] = [
       verificationStatus: 'verified',
       sourceType: 'platform_average',
       reliabilityLevel: 'high',
-      notes: '숨고 플랫폼 실거래 데이터 기준. 옥상공사/방수 시공당 평균 350만원 (최저 175만원, 최고 560만원). 우레탄 도막 3회 도포 및 복합 시트 방수 공법, 바닥 연삭 면갈이 여부에 따라 변동.',
+      notes: '숨고 플랫폼 실거래 데이터 기준. 원문 페이지 평균 시세 3,504,433원(UI 표시용 만원 단위 반올림 3,500,000원, 최저 1,750,000원, 최고 5,600,000원). 우레탄 도막 3회 도포 및 복합 시트 방수 공법, 바닥 연삭 면갈이 여부에 따라 변동.',
     },
     seo: {
       title: '옥상 방수공사 비용 평당 단가 계산기 (우레탄/복합시트방수) | 바로견적',
