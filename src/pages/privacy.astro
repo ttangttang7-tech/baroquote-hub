@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const pageTitle = '개인정보처리방침 | 바로견적';
+const pageDescription = '바로견적(BaroQuote)의 개인정보처리방침입니다. 바로견적은 비로그인 기반의 정적 정보 웹 플랫폼으로, 이용자의 성명, 연락처, 주소 등 개인 식별 정보를 일절 수집·저장하지 않습니다.';
+
+const breadcrumbItems = [{ name: '개인정보처리방침' }];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/privacy">
+  <div class="container static-page">
+    <Breadcrumb items={breadcrumbItems} />
+
+    <header class="page-header">
+      <h1 class="page-title">개인정보처리방침</h1>
+      <p class="page-subtitle">시행일자: 2026년 10월 9일</p>
+    </header>
+
+    <article class="content-body">
+      <section class="policy-section">
+        <h2>1. 개인정보 비수집 원칙</h2>
+        <p>
+          바로견적(이하 "서비스")은 회원가입, 로그인, 전화번호 입력 등의 절차를 두지 않는 완전 비회원제 순수 정보 제공형 웹 서비스입니다. 
+          따라서 이용자의 성명, 주민등록번호, 연락처, 주소, 금융계좌 등 개인을 식별할 수 있는 정보를 일체 수집하거나 서버에 저장하지 않습니다.
+        </p>
+      </section>
+
+      <section class="policy-section">
+        <h2>2. 입력 데이터의 처리 방식</h2>
+        <p>
+          이용자가 웹사이트 상의 각 견적 계산기(평수, 제품 유형, 옵션 등)에 입력하거나 선택하는 모든 조건 정보는 브라우저 내부(Client-side JavaScript)에서만 연산 처리되며, 당사의 원격 서버로 전송되거나 기록되지 않습니다. 브라우저를 닫거나 새로고침하면 해당 입력값은 즉시 소멸합니다.
+        </p>
+      </section>
+
+      <section class="policy-section">
+        <h2>3. 쿠키(Cookie) 및 웹 분석 도구</h2>
+        <p>
+          서비스 품질 개선 및 트래픽 분석을 위해 Google Analytics 또는 Cloudflare Web Analytics를 활용할 수 있으며, 이 과정에서 개인을 식별할 수 없는 통계적 데이터(접속 기기 환경, 브라우저 종류, 방문 경로, 체류 시간 등)가 비식별화된 상태로 처리될 수 있습니다. 이용자는 웹 브라우저의 옵션 설정을 통해 쿠키 저장을 거부할 수 있습니다.
+        </p>
+      </section>
+
+      <section class="policy-section">
+        <h2>4. 서드파티 광고 (Google AdSense) 운영 안내</h2>
+        <p>
+          당사는 사이트 운영비 조달을 위해 Google AdSense 등의 제3자 광고 사업자를 통하여 광고를 게재할 수 있습니다. Google을 포함한 타사 공급업체는 쿠키를 사용하여 이용자의 이전 웹사이트 방문 기록을 기반으로 맞춤형 광고를 제공할 수 있습니다. 이용자는 <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">Google 광고 설정</a> 페이지를 방문하여 맞춤설정 광고 쿠키 사용을 해제할 수 있습니다.
+        </p>
+      </section>
+
+      <section class="policy-section">
+        <h2>5. 개인정보 보호책임자 및 문의</h2>
+        <p>
+          서비스의 개인정보 보호 및 운영에 관한 문의사항은 아래 공식 창구를 통해 문의하실 수 있습니다.
+        </p>
+        <ul>
+          <li>서비스명: 바로견적 (BaroQuote)</li>
+          <li>책임 관리: 바로견적 운영팀</li>
+          <li>문의 이메일: contact@info-myview.co.kr</li>
+        </ul>
+      </section>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .static-page {
+    padding: var(--space-6) var(--space-4) var(--space-16);
+    max-width: 860px;
+  }
+
+  .page-header {
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .page-title {
+    font-size: var(--text-3xl);
+    font-weight: 800;
+    color: var(--color-text);
+    margin: 0 0 var(--space-2);
+  }
+
+  .page-subtitle {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .content-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .policy-section h2 {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    margin: 0 0 var(--space-3);
+    color: var(--color-text);
+  }
+
+  .policy-section p {
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: #334155;
+    margin: 0 0 var(--space-3);
+  }
+
+  .policy-section ul {
+    font-size: var(--text-sm);
+    color: #334155;
+    line-height: 1.7;
+    padding-left: var(--space-5);
+  }
+</style>

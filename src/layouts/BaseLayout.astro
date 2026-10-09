@@ -1,0 +1,93 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  ogType?: 'website' | 'article';
+  currentCategory?: string;
+  jsonLd?: Record<string, any> | Record<string, any>[];
+}
+
+const {
+  title,
+  description,
+  canonicalPath = '',
+  ogType = 'website',
+  currentCategory,
+  jsonLd
+} = Astro.props;
+
+const siteUrl = 'https://quote.info-myview.co.kr';
+const canonicalUrl = `${siteUrl}${canonicalPath}`;
+const formattedTitle = title.includes('바로견적') ? title : `${title} | 바로견적`;
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>{formattedTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#1D4ED8" />
+
+    <!-- Open Graph / SNS -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={formattedTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="바로견적" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:image" content={`${siteUrl}/og-image.png`} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={formattedTitle} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Fonts: Pretendard & Inter -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="stylesheet" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+    <!-- JSON-LD Structured Data -->
+    {jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
+
+    <!-- Default WebSite Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "바로견적",
+      "url": "https://quote.info-myview.co.kr",
+      "description": "생활밀착 30대 필수 서비스 예상견적 및 바가지 예방 체크리스트 플랫폼",
+      "inLanguage": "ko-KR",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://quote.info-myview.co.kr/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    })} />
+  </head>
+  <body>
+    <Header currentCategory={currentCategory} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  #main-content {
+    min-height: calc(100vh - 64px - 400px);
+  }
+</style>

@@ -1,0 +1,512 @@
+---
+import type { EstimateResult, PriceEvidence } from '../lib/registry/types';
+
+interface PriceEvidenceDetails extends Partial<PriceEvidence> {
+  sourceName?: string;
+  sourceType?: string;
+  conditions?: string;
+  verifiedAt?: string;
+  verified?: boolean;
+  provider?: string;
+  notes?: string;
+  lastVerifiedAt?: string;
+  reliabilityLevel?: 'high' | 'medium';
+}
+
+interface Props {
+  initialResult: EstimateResult;
+  priceEvidence: PriceEvidenceDetails;
+}
+
+const { initialResult, priceEvidence } = Astro.props;
+
+const sourceName = priceEvidence.sourceName || priceEvidence.provider || '표준 시장 요금표';
+const conditions = priceEvidence.conditions || priceEvidence.notes || '표준 작업 기준';
+const verifiedAt = priceEvidence.verifiedAt || priceEvidence.lastVerifiedAt || '2026-10-01';
+const isVerified = priceEvidence.verified ?? (priceEvidence.reliabilityLevel === 'high');
+const sourceTypeLabel = priceEvidence.sourceType === 'official_rate_card' || priceEvidence.reliabilityLevel === 'high'
+  ? '공식 요금표'
+  : '플랫폼 실거래 참고가격';
+
+const formatMoney = (val: number) => {
+  return val.toLocaleString('ko-KR');
+};
+
+const formatManwon = (val: number) => {
+  return `${(val / 10000).toLocaleString('ko-KR')}만`;
+};
+---
+
+<div class="estimate-result-card" id="estimateResultContainer" aria-live="polite">
+  <div class="result-header">
+    <div class="result-status-badge">
+      {initialResult.type === 'range_estimate' ? (
+        <span class="badge badge-success" id="resultTypeBadge">✓ 예상 견적 정상 산출</span>
+      ) : (
+        <span class="badge badge-warning" id="resultTypeBadge">📋 현장 진단 및 준비 가이드</span>
+      )}
+    </div>
+    <div class="result-date" id="resultDate">
+      기준일: {initialResult.verificationDate}
+    </div>
+  </div>
+
+  <!-- Primary Price or Prep Display -->
+  <div class="result-highlight-box">
+    {initialResult.type === 'range_estimate' && initialResult.minAmount && initialResult.maxAmount ? (
+      <div class="range-display" id="rangeDisplay">
+        <div class="range-label">예상 비용 범위 (VAT 포함 기준)</div>
+        <div class="range-amounts">
+          <span class="amount-val" id="minAmountDisplay">{formatMoney(initialResult.minAmount)}</span>
+          <span class="amount-sep">~</span>
+          <span class="amount-val" id="maxAmountDisplay">{formatMoney(initialResult.maxAmount)}</span>
+          <span class="amount-unit">원</span>
+        </div>
+        <div class="range-subtext" id="manwonDisplay">
+          (약 {formatManwon(initialResult.minAmount)}원 ~ {formatManwon(initialResult.maxAmount)}원)
+        </div>
+      </div>
+    ) : (
+      <div class="prep-display" id="prepDisplay">
+        <div class="prep-icon">🔍</div>
+        <div class="prep-title">현장 방문 맞춤 견적 권장 서비스</div>
+        <div class="prep-desc">
+          본 서비스는 설비 상태, 매립 깊이, 누수 지점 등에 따라 편차가 커 표준 정액제 적용이 어렵습니다. 아래 견적 체크리스트를 바탕으로 최소 2~3개 업체의 현장 소견을 비교하세요.
+        </div>
+      </div>
+    )}
+  </div>
+
+  <!-- Cost Breakdown / Basis -->
+  <div class="result-section">
+    <h3 class="section-title">
+      <span class="icon">📊</span> 금액 산정 근거 및 세부 내역
+    </h3>
+    <ul class="breakdown-list" id="breakdownList">
+      {initialResult.basis.breakdown.map((item) => (
+        <li class="breakdown-item">
+          <span class="item-label">{item.label}</span>
+          <span class="item-amount">
+            {typeof item.amount === 'number' ? (
+              item.amount === 0 ? '기본 포함' : `+${formatMoney(item.amount)}원`
+            ) : (
+              item.amount
+            )}
+          </span>
+        </li>
+      ))}
+    </ul>
+    <p class="basis-note" id="basisNote">{initialResult.basis.explanation}</p>
+  </div>
+
+  <!-- Included & Excluded Items Grid -->
+  <div class="items-grid">
+    <div class="item-col col-included">
+      <h4 class="col-title text-success">
+        <span class="icon">✅</span> 기본 포함 항목
+      </h4>
+      <ul class="chip-list" id="includedList">
+        {initialResult.includedItems.map((item) => (
+          <li class="chip chip-inc">{item}</li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="item-col col-excluded">
+      <h4 class="col-title text-danger">
+        <span class="icon">❌</span> 별도 / 추가 청구 항목
+      </h4>
+      <ul class="chip-list" id="excludedList">
+        {initialResult.excludedItems.map((item) => (
+          <li class="chip chip-exc">{item}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Surcharge Warnings -->
+  {initialResult.surchargeWarnings.length > 0 && (
+    <div class="result-section surcharge-section" id="surchargeSection">
+      <h3 class="section-title text-warning">
+        <span class="icon">⚠️</span> 현장 추가요금 주의 요인 (바가지 방지)
+      </h3>
+      <ul class="warning-list" id="warningList">
+        {initialResult.surchargeWarnings.map((warn) => (
+          <li class="warning-item">{warn}</li>
+        ))}
+      </ul>
+    </div>
+  )}
+
+  <!-- Contractor Checklist -->
+  <div class="result-section checklist-section">
+    <h3 class="section-title">
+      <span class="icon">📝</span> 업체 문의 시 필수 확인 체크리스트
+    </h3>
+    <ul class="checklist-items" id="checklistItems">
+      {initialResult.checklist.map((item, idx) => (
+        <li class="check-item">
+          <label class="check-label">
+            <input type="checkbox" id={`chk-${idx}`} />
+            <span>{item}</span>
+          </label>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <!-- Source Evidence & Notice -->
+  <div class="evidence-box">
+    <div class="evidence-header">
+      <span class="evidence-icon">📌</span>
+      <span class="evidence-title">가격 자료 출처 및 신뢰도 검증</span>
+    </div>
+    <div class="evidence-details">
+      <p><strong>공식 출처:</strong> {sourceName} ({sourceTypeLabel})</p>
+      <p><strong>적용 조건:</strong> {conditions}</p>
+      <p><strong>검증 상태:</strong> {isVerified ? '검증 완료' : '확인 필요'} (최근 검증일: {verifiedAt})</p>
+      <p class="evidence-disclaimer">※ 본 견적은 시장 평균 단가 기준 참고치이며, 계약 전 반드시 해당 업체로부터 서면 확정 견적을 수령하시기 바랍니다.</p>
+    </div>
+  </div>
+
+  <!-- Copy Button -->
+  <div class="result-actions">
+    <button type="button" class="btn btn-secondary btn-block" id="copyResultBtn">
+      <span class="btn-icon">📋</span> 견적 요약 결과 복사하기
+    </button>
+    <div class="copy-alert" id="copyAlert" style="display: none;">
+      ✓ 견적 요약이 클립보드에 복사되었습니다!
+    </div>
+  </div>
+</div>
+
+<style>
+  .estimate-result-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--space-5);
+  }
+
+  .result-date {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+
+  .result-highlight-box {
+    background: linear-gradient(135deg, #EFF6FF 0%, #F0FDFA 100%);
+    border: 1px solid #BFDBFE;
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    text-align: center;
+    margin-bottom: var(--space-6);
+  }
+
+  .range-label {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .range-amounts {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: var(--space-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .amount-val {
+    font-size: var(--text-3xl);
+    font-weight: 800;
+    color: #1E3A8A;
+  }
+
+  .amount-sep {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-text-muted);
+  }
+
+  .amount-unit {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .range-subtext {
+    font-size: var(--text-sm);
+    color: var(--color-secondary);
+    font-weight: 700;
+    margin-top: var(--space-2);
+  }
+
+  .prep-display {
+    padding: var(--space-2);
+  }
+
+  .prep-icon {
+    font-size: 36px;
+    margin-bottom: var(--space-2);
+  }
+
+  .prep-title {
+    font-size: var(--text-xl);
+    font-weight: 800;
+    color: var(--color-secondary);
+    margin-bottom: var(--space-2);
+  }
+
+  .prep-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    line-height: 1.6;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .result-section {
+    margin-bottom: var(--space-6);
+  }
+
+  .section-title {
+    font-size: var(--text-base);
+    font-weight: 700;
+    margin: 0 0 var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .section-title .icon {
+    font-size: 16px;
+  }
+
+  .breakdown-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: #F8FAFC;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    font-size: var(--text-sm);
+  }
+
+  .breakdown-item:last-child {
+    border-bottom: none;
+  }
+
+  .item-label {
+    color: var(--color-text);
+    font-weight: 500;
+  }
+
+  .item-amount {
+    font-weight: 700;
+    color: var(--color-primary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .basis-note {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin: var(--space-2) 0 0;
+    line-height: 1.5;
+  }
+
+  .items-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  .item-col {
+    background-color: #F8FAFC;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+  }
+
+  .col-title {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    margin: 0 0 var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .chip-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .chip {
+    font-size: var(--text-xs);
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+  }
+
+  .chip-inc {
+    background-color: #DCFCE7;
+    color: #166534;
+    border: 1px solid #BBF7D0;
+  }
+
+  .chip-exc {
+    background-color: #FEE2E2;
+    color: #991B1B;
+    border: 1px solid #FECACA;
+  }
+
+  .surcharge-section {
+    background-color: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+  }
+
+  .warning-list {
+    list-style: disc;
+    margin: 0;
+    padding-left: var(--space-5);
+    font-size: var(--text-sm);
+    color: #92400E;
+    line-height: 1.6;
+  }
+
+  .checklist-section {
+    background-color: #F8FAFC;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+  }
+
+  .checklist-items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .check-item {
+    font-size: var(--text-sm);
+  }
+
+  .check-label {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    cursor: pointer;
+    line-height: 1.4;
+  }
+
+  .check-label input {
+    margin-top: 3px;
+    accent-color: var(--color-primary);
+  }
+
+  .evidence-box {
+    background-color: #F8FAFC;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  .evidence-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    margin-bottom: var(--space-2);
+    color: var(--color-text);
+  }
+
+  .evidence-details p {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin: 0 0 4px;
+    line-height: 1.5;
+  }
+
+  .evidence-details p:last-child {
+    margin-bottom: 0;
+  }
+
+  .evidence-disclaimer {
+    color: #94A3B8;
+    margin-top: var(--space-2) !important;
+  }
+
+  .result-actions {
+    position: relative;
+  }
+
+  .btn-block {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+  }
+
+  .copy-alert {
+    margin-top: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background-color: #DCFCE7;
+    color: #166534;
+    border-radius: var(--radius-md);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    .items-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .range-amounts {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .amount-val {
+      font-size: var(--text-2xl);
+    }
+
+    .amount-sep {
+      display: none;
+    }
+  }
+</style>

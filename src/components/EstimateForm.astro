@@ -1,0 +1,303 @@
+---
+import type { QuestionDefinition } from '../lib/registry/types';
+
+interface Props {
+  serviceId: string;
+  questions: QuestionDefinition[];
+  initialAnswers: Record<string, any>;
+}
+
+const { serviceId, questions, initialAnswers } = Astro.props;
+---
+
+<form class="estimate-form" id="estimateForm" data-service-id={serviceId}>
+  <div class="form-header">
+    <h2 class="form-title">조건별 맞춤 견적 옵션 선택</h2>
+    <p class="form-desc">
+      세부 조건을 선택하면 즉시 실시간 예상 비용과 업체 문의 체크리스트가 산출됩니다. (개인정보 수집 없음)
+    </p>
+  </div>
+
+  <div class="questions-container">
+    {questions.map((q) => {
+      const qVal = initialAnswers[q.id] ?? q.defaultValue;
+      const fieldId = `field-${serviceId}-${q.id}`;
+
+      return (
+        <div class="form-group" data-question-id={q.id}>
+          <label for={fieldId} class="form-label">
+            <span class="label-text">{q.label}</span>
+            {q.required && <span class="required-star" aria-label="필수 입력">*</span>}
+          </label>
+
+          {q.type === 'select' && (
+            <div class="select-wrapper">
+              <select 
+                id={fieldId} 
+                name={q.id} 
+                class="form-select" 
+                required={q.required}
+              >
+                {q.options?.map((opt) => (
+                  <option value={opt.value} selected={String(qVal) === String(opt.value)}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {q.type === 'number' && (
+            <div class="number-input-group">
+              <input
+                type="number"
+                id={fieldId}
+                name={q.id}
+                class="form-input form-number"
+                value={qVal}
+                min={q.min}
+                max={q.max}
+                step={q.step || 1}
+                required={q.required}
+              />
+              {q.unit && <span class="input-unit">{q.unit}</span>}
+            </div>
+          )}
+
+          {q.type === 'radio' && (
+            <div class="radio-group" role="radiogroup" aria-label={q.label}>
+              {q.options?.map((opt, oIdx) => (
+                <label class="radio-label">
+                  <input
+                    type="radio"
+                    name={q.id}
+                    value={opt.value}
+                    checked={String(qVal) === String(opt.value)}
+                    id={`${fieldId}-${oIdx}`}
+                  />
+                  <span class="radio-custom"></span>
+                  <span class="option-text">{opt.label}</span>
+                </label>
+              ))}
+            </div>
+          )}
+
+          {q.type === 'checkbox' && (
+            <div class="checkbox-group">
+              {q.options?.map((opt, oIdx) => {
+                const isChecked = Array.isArray(qVal) ? qVal.includes(opt.value) : false;
+                return (
+                  <label class="checkbox-label">
+                    <input
+                      type="checkbox"
+                      name={q.id}
+                      value={opt.value}
+                      checked={isChecked}
+                      id={`${fieldId}-${oIdx}`}
+                    />
+                    <span class="checkbox-custom"></span>
+                    <span class="option-text">{opt.label}</span>
+                  </label>
+                );
+              })}
+            </div>
+          )}
+
+          {q.type === 'boolean' && (
+            <label class="boolean-toggle-label">
+              <input
+                type="checkbox"
+                id={fieldId}
+                name={q.id}
+                value="true"
+                checked={Boolean(qVal)}
+              />
+              <span class="toggle-custom"></span>
+              <span class="toggle-text">{q.label} 적용</span>
+            </label>
+          )}
+
+          {q.helpText && (
+            <div class="form-helper">{q.helpText}</div>
+          )}
+        </div>
+      );
+    })}
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary btn-lg" id="calculateBtn">
+      <span class="btn-icon">⚡</span> 견적 계산하기
+    </button>
+    <button type="button" class="btn btn-secondary btn-lg" id="resetBtn">
+      기본값 복원
+    </button>
+  </div>
+
+  <div class="form-safety-note">
+    🔒 <strong>안심 안내:</strong> 바로견적은 사용자의 전화번호나 위치 주소를 일절 요구하지 않으며, 모든 계산은 브라우저 내에서 안전하게 처리됩니다.
+  </div>
+</form>
+
+<style>
+  .estimate-form {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .form-header {
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .form-title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin: 0 0 var(--space-2);
+    letter-spacing: -0.01em;
+  }
+
+  .form-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .questions-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .form-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .required-star {
+    color: var(--color-danger);
+    font-weight: bold;
+  }
+
+  .select-wrapper {
+    position: relative;
+  }
+
+  .number-input-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .form-number {
+    max-width: 160px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+
+  .input-unit {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+  }
+
+  .radio-group,
+  .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .radio-label,
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background-color: #F8FAFC;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: var(--text-sm);
+    transition: all var(--transition-fast);
+  }
+
+  .radio-label:hover,
+  .checkbox-label:hover {
+    border-color: var(--color-primary);
+    background-color: #EFF6FF;
+  }
+
+  .radio-label input,
+  .checkbox-label input {
+    accent-color: var(--color-primary);
+  }
+
+  .boolean-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    cursor: pointer;
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+
+  .boolean-toggle-label input {
+    accent-color: var(--color-primary);
+    width: 18px;
+    height: 18px;
+  }
+
+  .form-helper {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    line-height: 1.4;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .form-actions .btn-primary {
+    flex: 2;
+  }
+
+  .form-actions .btn-secondary {
+    flex: 1;
+  }
+
+  .form-safety-note {
+    margin-top: var(--space-4);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    background-color: #F8FAFC;
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    line-height: 1.4;
+  }
+
+  @media (max-width: 480px) {
+    .form-actions {
+      flex-direction: column;
+    }
+  }
+</style>

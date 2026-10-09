@@ -1,0 +1,204 @@
+---
+import type { ServiceDefinition } from '../lib/registry/types';
+import { getCategoryById } from '../lib/registry/categories';
+
+interface Props {
+  service: ServiceDefinition;
+}
+
+const { service } = Astro.props;
+const category = getCategoryById(service.categoryId || service.category || 'cleaning');
+
+// Price badge formatting
+const isRange = service.estimateType === 'range_estimate' && service.defaultMinAmount && service.defaultMaxAmount;
+const formatManwon = (won: number) => {
+  return `${Math.round(won / 10000)}만`;
+};
+const sourceName = service.priceEvidence?.sourceName || service.evidence?.provider || '표준 시장 요금표';
+const shortDesc = service.shortDescription || service.shortDesc;
+---
+
+<article class="service-card" data-service-id={service.id} data-category={service.categoryId || service.category}>
+  <div class="card-header">
+    <div class="header-badges">
+      <span class="badge category-badge">
+        <span aria-hidden="true">{category?.icon}</span>
+        {category?.name}
+      </span>
+      {isRange ? (
+        <span class="badge badge-success">범위 견적</span>
+      ) : (
+        <span class="badge badge-warning">견적 준비형</span>
+      )}
+    </div>
+    <span class="service-id-tag">No. {service.number || service.id}</span>
+  </div>
+
+  <h3 class="service-card-title">
+    <a href={`/estimate/${service.slug}`} class="service-title-link">
+      {service.title}
+    </a>
+  </h3>
+
+  <p class="service-card-desc">
+    {shortDesc}
+  </p>
+
+  <div class="price-preview-box">
+    <div class="price-label">예상 시장 기준</div>
+    <div class="price-val">
+      {isRange ? (
+        <span class="price-num">
+          {formatManwon(service.defaultMinAmount!)} ~ {formatManwon(service.defaultMaxAmount!)}
+          <span class="unit">원</span>
+        </span>
+      ) : (
+        <span class="prep-text">현장 변수 분석 &amp; 체크리스트</span>
+      )}
+    </div>
+    <div class="price-source-note">
+      출처: {sourceName}
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <a href={`/estimate/${service.slug}`} class="btn btn-primary btn-sm btn-block">
+      내 조건 견적 계산하기
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+</article>
+
+<style>
+  .service-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+    position: relative;
+  }
+
+  .service-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+  }
+
+  .header-badges {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .category-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background-color: #F1F5F9;
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+
+  .service-id-tag {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    background-color: var(--color-bg);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+  }
+
+  .service-card-title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    line-height: 1.35;
+    margin: 0 0 var(--space-2);
+  }
+
+  .service-title-link {
+    color: var(--color-text);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .service-title-link:hover {
+    color: var(--color-primary);
+  }
+
+  .service-card-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin: 0 0 var(--space-4);
+    flex: 1;
+  }
+
+  .price-preview-box {
+    background-color: #F8FAFC;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  .price-label {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .price-val {
+    font-size: var(--text-base);
+    font-weight: 800;
+    color: var(--color-primary);
+  }
+
+  .price-num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .price-num .unit {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-left: 2px;
+  }
+
+  .prep-text {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-secondary);
+  }
+
+  .price-source-note {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    margin-top: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .btn-block {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+</style>

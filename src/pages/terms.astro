@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const pageTitle = '이용약관 및 면책공고 | 바로견적';
+const pageDescription = '바로견적(BaroQuote)의 이용약관 및 서비스 면책공고입니다. 바로견적이 제공하는 모든 견적 정보는 시장 통계 기반 참고치이며 법적 구속력을 갖는 확정 시공 계약이 아님을 고지합니다.';
+
+const breadcrumbItems = [{ name: '이용약관 및 면책공고' }];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/terms">
+  <div class="container static-page">
+    <Breadcrumb items={breadcrumbItems} />
+
+    <header class="page-header">
+      <h1 class="page-title">이용약관 및 면책공고</h1>
+      <p class="page-subtitle">시행일자: 2026년 10월 9일</p>
+    </header>
+
+    <article class="content-body">
+      <section class="terms-section">
+        <h2>제1조 (목적)</h2>
+        <p>
+          본 약관은 바로견적(BaroQuote, 이하 "서비스")이 웹사이트를 통해 제공하는 생활서비스 예상 비용 산출, 가격 정보 비교, 현장 체크리스트 및 관련 정보 서비스의 이용 조건과 권리·의무 및 면책 사항을 규정함을 목적으로 합니다.
+        </p>
+      </section>
+
+      <section class="terms-section highlight-terms">
+        <h2>제2조 (정보의 성격 및 법적 면책 고지 — 필수 확인)</h2>
+        <p>
+          1. <strong>비계약·비중개 정보 제공:</strong> 본 서비스는 시공업체와 이용자 간의 도급 계약을 직접 체결하거나, 특정 업체를 알선·중개하는 전자상거래 플랫폼이 아닙니다.
+        </p>
+        <p>
+          2. <strong>예상 범위의 성격:</strong> 본 사이트에서 제공되는 모든 견적 금액, 예상 요금 범위 및 추가 비용 항목은 공개된 공공 통계 자료, 주요 프랜차이즈 및 실거래 가격표를 통계적으로 가공한 <strong>단순 참고용 추정치</strong>입니다.
+        </p>
+        <p>
+          3. <strong>현장 상황에 따른 편차:</strong> 실제 시공 현장의 구조, 노후도, 자재 등급, 층수, 엘리베이터 유무, 작업 난이도에 따라 시공 업체가 청구하는 최종 계약 금액은 본 사이트의 산출 결과와 상이할 수 있습니다.
+        </p>
+        <p>
+          4. <strong>책임의 제한:</strong> 이용자가 본 사이트의 산출 결과를 신뢰하여 제3자 시공업체와 체결한 계약, 시공 하자, 분쟁, 손해에 대하여 당사는 어떠한 법적 책임도 부담하지 않습니다. 모든 최종 계약은 시공 전 업체의 현장 방문 실측 및 서면 계약서를 기준으로 체결하시기 바랍니다.
+        </p>
+      </section>
+
+      <section class="terms-section">
+        <h2>제3조 (안전 시공 및 자격 요건 안내)</h2>
+        <p>
+          가스 배관 연결, 보일러 본체 설치, 고압 분전반 전기 공사, 건물 구조 변경 및 대형 누수 공사 등 관련 법령에 따라 국가기술자격 또는 등록 면허가 요구되는 작업은 반드시 유자격 시공자에게 의뢰하여야 하며, 당사의 정보를 근거로 위험한 자가 시공을 시도하여 발생하는 안전사고에 대해 당사는 책임을 지지 않습니다.
+        </p>
+      </section>
+
+      <section class="terms-section">
+        <h2>제4조 (지식재산권)</h2>
+        <p>
+          서비스가 자체 개발한 견적 산출 알고리즘, 데이터 가공 구조, 화면 디자인, 체크리스트 데이터베이스 및 텍스트 콘텐츠의 저작권은 바로견적에 있으며, 사전 서면 승인 없는 무단 복제, 크롤링, 재배포를 금합니다.
+        </p>
+      </section>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .static-page {
+    padding: var(--space-6) var(--space-4) var(--space-16);
+    max-width: 860px;
+  }
+
+  .page-header {
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .page-title {
+    font-size: var(--text-3xl);
+    font-weight: 800;
+    color: var(--color-text);
+    margin: 0 0 var(--space-2);
+  }
+
+  .page-subtitle {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .content-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .terms-section h2 {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    margin: 0 0 var(--space-3);
+    color: var(--color-text);
+  }
+
+  .terms-section p {
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: #334155;
+    margin: 0 0 var(--space-3);
+  }
+
+  .highlight-terms {
+    background-color: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+  }
+
+  .highlight-terms h2 {
+    color: #92400E;
+  }
+
+  .highlight-terms p {
+    color: #78350F;
+  }
+</style>

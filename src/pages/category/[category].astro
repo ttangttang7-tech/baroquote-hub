@@ -1,0 +1,290 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import CategoryCard from '../../components/CategoryCard.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import { CATEGORIES } from '../../lib/registry/categories';
+import { getServicesByCategory } from '../../lib/registry';
+
+export async function getStaticPaths() {
+  return CATEGORIES.map((cat) => ({
+    params: { category: cat.id },
+    props: { category: cat }
+  }));
+}
+
+const { category } = Astro.props;
+const services = getServicesByCategory(category.id);
+const otherCategories = CATEGORIES.filter(c => c.id !== category.id);
+
+const pageTitle = `${category.name} 예상비용 및 견적 계산기 (${services.length}선) | 바로견적`;
+const pageDescription = `${category.description} 30대 필수 생활서비스 중 ${category.name} 분야 ${services.length}개 도구의 표준 시장 가격표와 현장 추가요금 주의사항을 확인하세요.`;
+
+const breadcrumbItems = [
+  { name: category.name }
+];
+
+const categoryJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": `${category.name} 생활서비스 견적 도구 모음`,
+  "description": pageDescription,
+  "url": `https://quote.info-myview.co.kr/category/${category.id}`,
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": services.length,
+    "itemListElement": services.map((s, idx) => ({
+      "@type": "ListItem",
+      "position": idx + 1,
+      "name": s.title,
+      "url": `https://quote.info-myview.co.kr/estimate/${s.slug}`
+    }))
+  }
+};
+---
+
+<BaseLayout 
+  title={pageTitle} 
+  description={pageDescription} 
+  canonicalPath={`/category/${category.id}`}
+  currentCategory={category.id}
+  jsonLd={categoryJsonLd}
+>
+  <div class="container category-page">
+    <Breadcrumb items={breadcrumbItems} />
+
+    <!-- Category Header -->
+    <header class="category-header">
+      <div class="header-icon-wrap" aria-hidden="true">
+        {category.icon}
+      </div>
+      <div class="header-content">
+        <div class="category-pill">카테고리 디렉터리</div>
+        <h1 class="category-title">{category.name} 견적 가이드 &amp; 계산기</h1>
+        <p class="category-desc">
+          {category.description} 총 <strong>{services.length}개</strong>의 세부 서비스 예상 견적과 바가지 방지 체크리스트를 제공합니다.
+        </p>
+      </div>
+    </header>
+
+    <!-- Top Ad Slot -->
+    <AdSlot slotId={`cat-${category.id}-top`} format="horizontal" />
+
+    <!-- Services Grid in this category -->
+    <section class="category-services-section">
+      <div class="section-title-bar">
+        <h2 class="sub-title">{category.name} 세부 서비스 목록 ({services.length})</h2>
+        <span class="sub-desc">원하는 세부 항목을 클릭하여 맞춤 조건을 입력하세요.</span>
+      </div>
+
+      <div class="services-grid">
+        {services.map(service => (
+          <ServiceCard service={service} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Category Advice Box -->
+    <section class="category-tips-box">
+      <h3 class="tips-title">💡 {category.name} 업체 계약 시 필수 확인 사항</h3>
+      <div class="tips-grid">
+        <div class="tip-card">
+          <h4 class="tip-card-title">1. 사전 추가요금 조건 문서화</h4>
+          <p class="tip-card-desc">
+            엘리베이터 사용료, 폐기물 처리비, 배관 추가 연장비 등 유선 상담 시에는 언급되지 않다가 현장에서 갑작스럽게 청구되는 추가 비용 항목을 사전에 문자로 확정받으세요.
+          </p>
+        </div>
+        <div class="tip-card">
+          <h4 class="tip-card-title">2. A/S 보증 기간 및 배상책임</h4>
+          <p class="tip-card-desc">
+            시공 후 하자 발생 시 무상 보증 기간(최소 3개월~1년)과 작업 중 발생할 수 있는 가전·가구 파손에 대한 영업배상책임보험 가입 여부를 반드시 확인하세요.
+          </p>
+        </div>
+        <div class="tip-card">
+          <h4 class="tip-card-title">3. 표준 작업 범위 비교</h4>
+          <p class="tip-card-desc">
+            최저가만 내세우는 업체는 기본 분해 범위가 좁거나 필수 마감재를 생략할 수 있습니다. 바로견적의 '기본 포함 항목'을 기준으로 동일 조건인지 대조하세요.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mid Ad Slot -->
+    <AdSlot slotId={`cat-${category.id}-mid`} format="rectangle" />
+
+    <!-- Other Categories Cross-linking -->
+    <section class="other-categories-section">
+      <h2 class="section-title text-center">다른 생활서비스 카테고리 살펴보기</h2>
+      <div class="categories-grid">
+        {otherCategories.map(cat => (
+          <CategoryCard category={cat} />
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .category-page {
+    padding: var(--space-6) var(--space-4) var(--space-16);
+  }
+
+  .category-header {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    margin-bottom: var(--space-6);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .header-icon-wrap {
+    font-size: 48px;
+    width: 80px;
+    height: 80px;
+    background-color: #EFF6FF;
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .header-content {
+    flex: 1;
+  }
+
+  .category-pill {
+    display: inline-block;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--color-primary);
+    background-color: #EFF6FF;
+    padding: 2px 10px;
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-2);
+  }
+
+  .category-title {
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    color: var(--color-text);
+    margin: 0 0 var(--space-2);
+    letter-spacing: -0.02em;
+  }
+
+  .category-desc {
+    font-size: var(--text-base);
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .category-services-section {
+    margin: var(--space-8) 0;
+  }
+
+  .section-title-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--space-6);
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .sub-title {
+    font-size: var(--text-xl);
+    font-weight: 800;
+    margin: 0;
+  }
+
+  .sub-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .category-tips-box {
+    background-color: #F8FAFC;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    margin: var(--space-12) 0;
+  }
+
+  .tips-title {
+    font-size: var(--text-lg);
+    font-weight: 800;
+    color: var(--color-text);
+    margin: 0 0 var(--space-5);
+  }
+
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+  }
+
+  .tip-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+  }
+
+  .tip-card-title {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0 0 var(--space-2);
+  }
+
+  .tip-card-desc {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .other-categories-section {
+    margin-top: var(--space-16);
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-5);
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 768px) {
+    .category-header {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: var(--space-6);
+      gap: var(--space-4);
+    }
+
+    .tips-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .categories-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

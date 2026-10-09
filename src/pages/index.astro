@@ -1,0 +1,571 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CategoryCard from '../components/CategoryCard.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import AdSlot from '../components/AdSlot.astro';
+import { CATEGORIES } from '../lib/registry/categories';
+import { SERVICES, getServicesByCategory } from '../lib/registry';
+
+// Curated Editorial Recommendation (6 tools)
+const recommendedSlugs = [
+  'move-in-cleaning',
+  'air-conditioner-cleaning',
+  'studio-moving',
+  'full-service-moving',
+  'leak-detection',
+  'wallpaper-flooring'
+];
+const recommendedServices = SERVICES.filter(s => recommendedSlugs.includes(s.slug));
+
+const pageTitle = '바로견적 | 집수리·청소·이사 생활서비스 예상비용 및 바가지 방지 플랫폼';
+const pageDescription = '에어컨 청소, 입주청소, 원룸이사, 누수탐지 등 30대 필수 생활서비스의 시장 표준 예상비용 범위와 현장 추가요금 주의사항을 견적 받기 전에 미리 확인하세요.';
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container hero-inner">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        공공데이터 및 실거래 기준 30개 생활서비스 견적 분석
+      </div>
+
+      <h1 class="hero-title">
+        집수리·청소·이사 비용,<br class="mobile-br" />
+        <span class="text-gradient">견적 받기 전에</span> 확인하세요
+      </h1>
+
+      <p class="hero-subtitle">
+        30가지 생활서비스의 예상비용과 추가요금 조건을 간편하게 확인할 수 있습니다.<br class="pc-br" />
+        개인정보 입력 없이 표준 시장 가격표와 현장 바가지 예방 체크리스트를 즉시 비교하세요.
+      </p>
+
+      <!-- Instant Search Box -->
+      <div class="hero-search-wrapper">
+        <div class="search-input-box">
+          <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="9" cy="9" r="6" stroke="#64748B" stroke-width="2"/>
+            <path d="M13.5 13.5L17.5 17.5" stroke="#64748B" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <input
+            type="search"
+            id="toolSearchInput"
+            class="search-input"
+            placeholder="찾으시는 서비스나 키워드를 입력하세요 (예: 에어컨 청소, 원룸이사, 누수탐지, 도배)"
+            aria-label="생활서비스 견적 도구 검색"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="search-tags" aria-label="추천 인기 검색어">
+          <span class="tags-label">추천 키워드:</span>
+          <button type="button" class="tag-btn" data-search="에어컨 청소">에어컨 청소</button>
+          <button type="button" class="tag-btn" data-search="입주청소">입주청소</button>
+          <button type="button" class="tag-btn" data-search="원룸이사">원룸이사</button>
+          <button type="button" class="tag-btn" data-search="누수탐지">누수탐지</button>
+          <button type="button" class="tag-btn" data-search="도배">도배</button>
+          <button type="button" class="tag-btn" data-search="욕실 리모델링">욕실 리모델링</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Top Ad Slot -->
+  <div class="container">
+    <AdSlot slotId="home-top-responsive" format="horizontal" />
+  </div>
+
+  <!-- Search Results Live Container (Hidden by default) -->
+  <section class="search-results-section container" id="searchResultsSection" style="display: none;">
+    <div class="section-header-inline">
+      <h2 class="section-title">검색 결과 (<span id="searchResultCount">0</span>)</h2>
+      <button type="button" class="btn btn-sm btn-secondary" id="clearSearchBtn">검색 초기화</button>
+    </div>
+    <div class="services-grid" id="searchResultsGrid">
+      <!-- Injected via JavaScript -->
+    </div>
+  </section>
+
+  <!-- Category Shortcuts Section -->
+  <section class="categories-section container">
+    <div class="section-header">
+      <h2 class="section-title">6대 생활서비스 카테고리</h2>
+      <p class="section-subtitle">원하시는 서비스 분야를 선택하여 전문 견적 도구를 확인하세요.</p>
+    </div>
+
+    <div class="categories-grid">
+      {CATEGORIES.map(category => (
+        <CategoryCard category={category} />
+      ))}
+    </div>
+  </section>
+
+  <!-- Editorial Recommended Tools -->
+  <section class="recommended-section container">
+    <div class="section-header">
+      <div class="badge badge-info section-badge">에디터 추천 서비스</div>
+      <h2 class="section-title">많은 분들이 먼저 찾아보는 핵심 견적 도구</h2>
+      <p class="section-subtitle">이사철, 계절 교체 시기, 인테리어 전 필수 점검 항목입니다.</p>
+    </div>
+
+    <div class="services-grid">
+      {recommendedServices.map(service => (
+        <ServiceCard service={service} />
+      ))}
+    </div>
+  </section>
+
+  <!-- 3-Step Guide Section -->
+  <section class="guide-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">바로견적 3단계 이용방법</h2>
+        <p class="section-subtitle">개인정보 유출 걱정 없이 간편하고 확실하게 견적을 비교하세요.</p>
+      </div>
+
+      <div class="guide-steps-grid">
+        <div class="guide-step-card">
+          <div class="step-num">01</div>
+          <h3 class="step-title">서비스 선택</h3>
+          <p class="step-desc">
+            청소, 이사, 냉난방, 누수, 인테리어, 설치 등 총 30가지 생활서비스 중 견적이 필요한 항목을 선택합니다.
+          </p>
+        </div>
+
+        <div class="guide-step-card">
+          <div class="step-num">02</div>
+          <h3 class="step-title">세부 조건 입력</h3>
+          <p class="step-desc">
+            평수, 작업 범위, 특수 장비, 자재 등 견적에 영향을 주는 핵심 변수를 몇 번의 클릭으로 입력합니다.
+          </p>
+        </div>
+
+        <div class="guide-step-card">
+          <div class="step-num">03</div>
+          <h3 class="step-title">예상 견적 &amp; 체크리스트 확인</h3>
+          <p class="step-desc">
+            공개된 시장 기준 가격과 추가요금 위험 요인, 시공업체와 상담 시 물어봐야 할 질문지를 확인합니다.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mid Ad Slot -->
+  <div class="container">
+    <AdSlot slotId="home-mid-banner" format="horizontal" />
+  </div>
+
+  <!-- All 30 Tools Section -->
+  <section class="all-tools-section container" id="all-tools">
+    <div class="section-header">
+      <div class="badge badge-primary section-badge">전체 서비스 디렉터리</div>
+      <h2 class="section-title">30개 전체 견적 도구 둘러보기</h2>
+      <p class="section-subtitle">누락 없이 모든 생활서비스의 정량 산정 규칙과 현장 체크리스트를 제공합니다.</p>
+    </div>
+
+    <div class="category-grouped-tools">
+      {CATEGORIES.map(category => {
+        const catServices = getServicesByCategory(category.id);
+        return (
+          <div class="category-group" id={`cat-group-${category.id}`}>
+            <div class="group-header">
+              <div class="group-title-wrap">
+                <span class="group-icon">{category.icon}</span>
+                <h3 class="group-title">{category.name}</h3>
+                <span class="group-count">({catServices.length}개)</span>
+              </div>
+              <a href={`/category/${category.id}`} class="group-more-link">
+                카테고리 전체보기 →
+              </a>
+            </div>
+
+            <div class="services-grid">
+              {catServices.map(service => (
+                <ServiceCard service={service} />
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .hero-section {
+    background: linear-gradient(180deg, #EFF6FF 0%, var(--color-bg) 100%);
+    padding: var(--space-16) 0 var(--space-12);
+    text-align: center;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .hero-inner {
+    max-width: 800px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-4);
+    background-color: var(--color-surface);
+    border: 1px solid #BFDBFE;
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: var(--space-5);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-secondary);
+    border-radius: 50%;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    margin: 0 0 var(--space-4);
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #0D9488 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin: 0 auto var(--space-8);
+  }
+
+  .pc-br {
+    display: inline;
+  }
+  .mobile-br {
+    display: none;
+  }
+
+  /* Search */
+  .hero-search-wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .search-input-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-surface);
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 8px 24px rgba(29, 78, 216, 0.12);
+    overflow: hidden;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: var(--space-4);
+    pointer-events: none;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: var(--space-4) var(--space-4) var(--space-4) 48px;
+    border: none;
+    font-size: var(--text-base);
+    color: var(--color-text);
+    outline: none;
+    background: transparent;
+  }
+
+  .search-input::placeholder {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .search-tags {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    font-size: var(--text-xs);
+  }
+
+  .tags-label {
+    color: var(--color-text-muted);
+    font-weight: 600;
+  }
+
+  .tag-btn {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    padding: 3px 10px;
+    font-size: var(--text-xs);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .tag-btn:hover {
+    background-color: #EFF6FF;
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  /* Section Header */
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--space-8);
+  }
+
+  .section-header-inline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-6);
+  }
+
+  .section-badge {
+    margin-bottom: var(--space-2);
+  }
+
+  .section-title {
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--space-2);
+  }
+
+  .section-subtitle {
+    font-size: var(--text-base);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  /* Grids */
+  .categories-section {
+    padding: var(--space-12) 0;
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: var(--space-5);
+  }
+
+  .recommended-section {
+    padding: var(--space-12) 0;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+    gap: var(--space-6);
+  }
+
+  /* 3 Steps Guide */
+  .guide-section {
+    background-color: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-16) 0;
+    margin: var(--space-12) 0;
+  }
+
+  .guide-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+
+  .guide-step-card {
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    position: relative;
+  }
+
+  .step-num {
+    font-size: var(--text-2xl);
+    font-weight: 900;
+    color: var(--color-primary);
+    opacity: 0.8;
+    margin-bottom: var(--space-3);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .step-title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    margin: 0 0 var(--space-2);
+  }
+
+  .step-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* All Tools Grouped */
+  .all-tools-section {
+    padding: var(--space-12) 0;
+  }
+
+  .category-grouped-tools {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  .category-group {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+  }
+
+  .group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: 2px solid var(--color-bg);
+  }
+
+  .group-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .group-icon {
+    font-size: 24px;
+  }
+
+  .group-title {
+    font-size: var(--text-xl);
+    font-weight: 800;
+    margin: 0;
+    color: var(--color-text);
+  }
+
+  .group-count {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    font-weight: 600;
+  }
+
+  .group-more-link {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .group-more-link:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .pc-br {
+      display: none;
+    }
+    .mobile-br {
+      display: inline;
+    }
+
+    .guide-steps-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .categories-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .category-group {
+      padding: var(--space-4);
+    }
+  }
+</style>
+
+<script>
+  // Instant Search Logic across all 30 tools
+  const searchInput = document.getElementById('toolSearchInput') as HTMLInputElement | null;
+  const tagBtns = document.querySelectorAll('.tag-btn');
+  const searchResultsSection = document.getElementById('searchResultsSection');
+  const searchResultsGrid = document.getElementById('searchResultsGrid');
+  const searchResultCount = document.getElementById('searchResultCount');
+  const clearSearchBtn = document.getElementById('clearSearchBtn');
+  const allServiceCards = document.querySelectorAll('.category-group .service-card');
+
+  function performSearch(query: string) {
+    const q = query.trim().toLowerCase();
+    if (!q) {
+      if (searchResultsSection) searchResultsSection.style.display = 'none';
+      return;
+    }
+
+    const matchedCards: Element[] = [];
+    allServiceCards.forEach((card) => {
+      const text = card.textContent?.toLowerCase() || '';
+      if (text.includes(q)) {
+        matchedCards.push(card.cloneNode(true) as Element);
+      }
+    });
+
+    if (searchResultsSection && searchResultsGrid && searchResultCount) {
+      searchResultsGrid.innerHTML = '';
+      if (matchedCards.length > 0) {
+        matchedCards.forEach((card) => searchResultsGrid.appendChild(card));
+      } else {
+        searchResultsGrid.innerHTML = `<div class="p-6 text-center text-muted" style="grid-column: 1/-1;">'${query}'에 해당하는 견적 도구를 찾을 수 없습니다.</div>`;
+      }
+      searchResultCount.textContent = String(matchedCards.length);
+      searchResultsSection.style.display = 'block';
+      searchResultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      performSearch((e.target as HTMLInputElement).value);
+    });
+
+    tagBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const keyword = btn.getAttribute('data-search') || '';
+        searchInput.value = keyword;
+        performSearch(keyword);
+      });
+    });
+  }
+
+  if (clearSearchBtn && searchInput) {
+    clearSearchBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      if (searchResultsSection) searchResultsSection.style.display = 'none';
+    });
+  }
+</script>

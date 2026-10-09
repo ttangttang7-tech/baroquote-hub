@@ -1,0 +1,151 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const pageTitle = '서비스 소개 | 바로견적 (BaroQuote)';
+const pageDescription = '바로견적은 소비자가 집수리, 청소, 이사 등 생활서비스를 이용할 때 바가지 요금 피해를 방지하고 객관적인 시장 기준을 사전에 파악할 수 있도록 돕는 투명 견적 정보 플랫폼입니다.';
+
+const breadcrumbItems = [{ name: '서비스 소개' }];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/about">
+  <div class="container static-page">
+    <Breadcrumb items={breadcrumbItems} />
+
+    <header class="page-header">
+      <h1 class="page-title">바로견적(BaroQuote) 서비스 소개</h1>
+      <p class="page-subtitle">견적 받기 전, 바가지 없는 투명한 생활서비스의 표준 시장 기준을 제시합니다.</p>
+    </header>
+
+    <article class="content-body">
+      <section class="info-section">
+        <h2>1. 설립 배경 및 목표</h2>
+        <p>
+          이사, 청소, 누수, 도배 등 생활밀착 시공 서비스 시장은 업체마다 부르는 가격이 천차만별이고, 상담 시 제시했던 금액과 현장 시공 시 청구되는 금액 간의 괴리로 인해 많은 소비자들이 불필요한 분쟁과 금전적 피해를 겪고 있습니다.
+        </p>
+        <p>
+          <strong>바로견적</strong>은 공공기관 수수료 기준, 프랜차이즈 공식 요금표, 실제 거래 플랫폼의 빅데이터 시장 조사를 종합 분석하여, 소비자가 업체를 부르기 전에 '어느 정도가 적정선인가'를 객관적으로 가늠할 수 있는 표준 견적 범위와 주의사항을 제공합니다.
+        </p>
+      </section>
+
+      <section class="info-section">
+        <h2>2. 바로견적의 4대 핵심 원칙</h2>
+        <div class="principles-grid">
+          <div class="principle-card">
+            <div class="p-num">01</div>
+            <h3>개인정보 비수집 원칙</h3>
+            <p>전화번호, 성함, 상세 주소를 일절 수집하지 않으며, 견적 조회를 빌미로 광고 영업 전화를 유도하지 않습니다.</p>
+          </div>
+          <div class="principle-card">
+            <div class="p-num">02</div>
+            <h3>객관적 출처 기반 산정</h3>
+            <p>근거 없는 최저가 미끼나 가짜 견적을 배제하고, 공식 요금표와 실제 시장 거래 데이터를 기준으로 범위를 산정합니다.</p>
+          </div>
+          <div class="principle-card">
+            <div class="p-num">03</div>
+            <h3>현장 추가요금 투명 공개</h3>
+            <p>기본 작업비 외에 현장에서 빈번히 요구되는 사다리차, 곰팡이 오염, 배관 연장 등의 추가금 요인을 사전에 경고합니다.</p>
+          </div>
+          <div class="principle-card">
+            <div class="p-num">04</div>
+            <h3>체크리스트 기반 협상 지원</h3>
+            <p>시공업체와 상담할 때 꼭 물어봐야 할 질문 항목(A/S 기간, 배상보험, 부자재)을 체크리스트로 제공합니다.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="info-section">
+        <h2>3. 6대 카테고리 30개 서비스</h2>
+        <p>
+          바로견적은 현재 6대 전문 카테고리(청소·가사, 이사·운송, 냉난방, 누수·배관, 인테리어, 생활 설치)에서 엄선된 30대 핵심 생활서비스에 대한 정량 견적 엔진을 운영 중이며, 매 분기 데이터 검증을 통해 신규 생활 서비스를 정기 확장하고 있습니다.
+        </p>
+      </section>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .static-page {
+    padding: var(--space-6) var(--space-4) var(--space-16);
+    max-width: 860px;
+  }
+
+  .page-header {
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .page-title {
+    font-size: var(--text-3xl);
+    font-weight: 800;
+    color: var(--color-text);
+    margin: 0 0 var(--space-2);
+  }
+
+  .page-subtitle {
+    font-size: var(--text-base);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .content-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .info-section h2 {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin: 0 0 var(--space-4);
+    color: var(--color-text);
+  }
+
+  .info-section p {
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: #334155;
+    margin: 0 0 var(--space-3);
+  }
+
+  .principles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+    margin-top: var(--space-4);
+  }
+
+  .principle-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+  }
+
+  .p-num {
+    font-size: var(--text-xl);
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .principle-card h3 {
+    font-size: var(--text-base);
+    font-weight: 700;
+    margin: 0 0 var(--space-2);
+  }
+
+  .principle-card p {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 640px) {
+    .principles-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
