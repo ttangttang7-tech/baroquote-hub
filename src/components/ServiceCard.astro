@@ -9,29 +9,20 @@ interface Props {
 const { service } = Astro.props;
 const category = getCategoryById(service.categoryId || service.category || 'cleaning');
 
-// Price badge formatting
 const isRange = service.estimateType === 'range_estimate' && service.defaultMinAmount && service.defaultMaxAmount;
-const formatManwon = (won: number) => {
-  return `${Math.round(won / 10000)}만`;
-};
-const sourceName = service.priceEvidence?.sourceName || service.evidence?.provider || '표준 시장 요금표';
+const formatManwon = (won: number) => `${Math.round(won / 10000)}만`;
 const shortDesc = service.shortDescription || service.shortDesc;
 ---
 
 <article class="service-card" data-service-id={service.id} data-category={service.categoryId || service.category}>
-  <div class="card-header">
-    <div class="header-badges">
-      <span class="badge category-badge">
-        <span aria-hidden="true">{category?.icon}</span>
-        {category?.name}
-      </span>
-      {isRange ? (
-        <span class="badge badge-success">범위 견적</span>
-      ) : (
-        <span class="badge badge-warning">견적 준비형</span>
-      )}
-    </div>
-    <span class="service-id-tag">No. {service.number || service.id}</span>
+  <div class="card-top">
+    <span class="category-pill">{category?.name}</span>
+    <span class="verification-badge">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M13.333 4L6 11.333 2.667 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      시세 검증
+    </span>
   </div>
 
   <h3 class="service-card-title">
@@ -44,26 +35,23 @@ const shortDesc = service.shortDescription || service.shortDesc;
     {shortDesc}
   </p>
 
-  <div class="price-preview-box">
-    <div class="price-label">예상 시장 기준</div>
-    <div class="price-val">
+  <div class="price-strip">
+    <span class="price-title">예상 시세</span>
+    <div class="price-content">
       {isRange ? (
-        <span class="price-num">
+        <span class="price-amount">
           {formatManwon(service.defaultMinAmount!)} ~ {formatManwon(service.defaultMaxAmount!)}
-          <span class="unit">원</span>
+          <span class="won-unit">원</span>
         </span>
       ) : (
-        <span class="prep-text">현장 변수 분석 &amp; 체크리스트</span>
+        <span class="prep-badge">현장 맞춤 가이드</span>
       )}
-    </div>
-    <div class="price-source-note">
-      출처: {sourceName}
     </div>
   </div>
 
   <div class="card-footer">
-    <a href={`/estimate/${service.slug}`} class="btn btn-primary btn-sm btn-block">
-      내 조건 견적 계산하기
+    <a href={`/estimate/${service.slug}`} class="service-btn" aria-label={`${service.title} 맞춤 견적 확인하기`}>
+      <span>예상 견적 확인</span>
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
         <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
@@ -76,129 +64,128 @@ const shortDesc = service.shortDescription || service.shortDesc;
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
-    padding: var(--space-5);
+    padding: 22px;
     display: flex;
     flex-direction: column;
     box-shadow: var(--shadow-sm);
-    transition: all var(--transition-normal);
-    position: relative;
+    transition: all 0.2s ease;
   }
 
   .service-card:hover {
     border-color: var(--color-primary);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-hover);
     transform: translateY(-2px);
   }
 
-  .card-header {
+  .card-top {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--space-3);
+    gap: 8px;
+    margin-bottom: 12px;
   }
 
-  .header-badges {
-    display: flex;
+  .category-pill {
+    display: inline-flex;
     align-items: center;
-    gap: var(--space-2);
-    flex-wrap: wrap;
+    padding: 3px 10px;
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+    font-size: 0.78rem;
+    font-weight: 700;
+    border-radius: var(--radius-full);
   }
 
-  .category-badge {
+  .verification-badge {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    background-color: #F1F5F9;
-    color: var(--color-text-muted);
-    font-size: var(--text-xs);
-  }
-
-  .service-id-tag {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--color-text-muted);
-    background-color: var(--color-bg);
-    padding: 2px 6px;
-    border-radius: var(--radius-sm);
+    color: var(--color-success);
+    font-size: 0.75rem;
+    font-weight: 600;
   }
 
   .service-card-title {
-    font-size: var(--text-lg);
+    font-size: 1.15rem;
     font-weight: 700;
-    line-height: 1.35;
-    margin: 0 0 var(--space-2);
+    line-height: 1.4;
+    margin: 0 0 8px;
+    letter-spacing: -0.015em;
   }
 
   .service-title-link {
-    color: var(--color-text);
+    color: var(--color-text-main);
     text-decoration: none;
-    transition: color var(--transition-fast);
+    transition: color 0.15s ease;
   }
 
-  .service-title-link:hover {
+  .service-card:hover .service-title-link {
     color: var(--color-primary);
   }
 
   .service-card-desc {
-    font-size: var(--text-sm);
+    font-size: 0.885rem;
     color: var(--color-text-muted);
-    line-height: 1.5;
-    margin: 0 0 var(--space-4);
+    line-height: 1.55;
+    margin: 0 0 16px;
     flex: 1;
   }
 
-  .price-preview-box {
-    background-color: #F8FAFC;
-    border: 1px solid var(--color-border);
+  .price-strip {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background-color: #f8fafc;
     border-radius: var(--radius-md);
-    padding: var(--space-3);
-    margin-bottom: var(--space-4);
+    margin-bottom: 16px;
   }
 
-  .price-label {
-    font-size: 11px;
-    color: var(--color-text-muted);
+  .price-title {
+    font-size: 0.78rem;
     font-weight: 600;
-    margin-bottom: 2px;
+    color: var(--color-text-muted);
   }
 
-  .price-val {
-    font-size: var(--text-base);
+  .price-amount {
+    font-size: 1.05rem;
     font-weight: 800;
-    color: var(--color-primary);
-  }
-
-  .price-num {
+    color: var(--color-text-main);
     font-variant-numeric: tabular-nums;
   }
 
-  .price-num .unit {
-    font-size: var(--text-xs);
+  .won-unit {
+    font-size: 0.82rem;
     font-weight: 600;
-    color: var(--color-text);
+    color: var(--color-text-body);
     margin-left: 2px;
   }
 
-  .prep-text {
-    font-size: var(--text-sm);
+  .prep-badge {
+    font-size: 0.82rem;
     font-weight: 700;
     color: var(--color-secondary);
   }
 
-  .price-source-note {
-    font-size: 11px;
-    color: var(--color-text-muted);
-    margin-top: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .btn-block {
-    width: 100%;
+  .service-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
+    width: 100%;
+    padding: 11px 16px;
+    background-color: var(--color-surface);
+    color: var(--color-primary);
+    border: 1.5px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    font-size: 0.925rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.18s ease;
+  }
+
+  .service-card:hover .service-btn {
+    background-color: var(--color-primary);
+    color: #ffffff;
   }
 </style>

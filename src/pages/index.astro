@@ -17,54 +17,53 @@ const recommendedSlugs = [
 ];
 const recommendedServices = SERVICES.filter(s => recommendedSlugs.includes(s.slug));
 
-const pageTitle = '바로견적 | 집수리·청소·이사 생활서비스 예상비용 및 바가지 방지 플랫폼';
-const pageDescription = '에어컨 청소, 입주청소, 원룸이사, 누수탐지 등 30대 필수 생활서비스의 시장 표준 예상비용 범위와 현장 추가요금 주의사항을 견적 받기 전에 미리 확인하세요.';
+const pageTitle = '바로견적 | 견적 받기 전에, 적정 비용부터 확인하세요';
+const pageDescription = '청소·이사·집수리 등 생활서비스의 시장 가격과 추가요금 조건을 간편하게 확인하세요. 30대 필수 생활서비스 실거래 빅데이터 기반 예상 견적 및 바가지 예방 체크리스트 제공.';
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription} canonicalPath="/">
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="container hero-inner">
-      <div class="hero-badge">
-        <span class="badge-dot"></span>
-        공공데이터 및 실거래 기준 30개 생활서비스 견적 분석
+      <div class="hero-pill-badge">
+        <span class="badge-dot" aria-hidden="true"></span>
+        <span>실거래 빅데이터 기반 30개 생활서비스 견적 플랫폼</span>
       </div>
 
       <h1 class="hero-title">
-        집수리·청소·이사 비용,<br class="mobile-br" />
-        <span class="text-gradient">견적 받기 전에</span> 확인하세요
+        집수리·청소·이사 비용<br />
+        <span class="highlight">적정 견적부터</span> 확인하세요
       </h1>
 
-      <p class="hero-subtitle">
-        30가지 생활서비스의 예상비용과 추가요금 조건을 간편하게 확인할 수 있습니다.<br class="pc-br" />
-        개인정보 입력 없이 표준 시장 가격표와 현장 바가지 예방 체크리스트를 즉시 비교하세요.
+      <p class="hero-desc">
+        청소·이사·집수리 등 생활서비스의 시장 가격과 추가요금 조건을 투명하게 확인하세요.<br class="pc-br" />
+        개인정보 입력 없이 표준 시장 가격표와 현장 바가지 예방 체크리스트를 즉시 비교할 수 있습니다.
       </p>
 
-      <!-- Instant Search Box -->
+      <!-- Pill Search Box -->
       <div class="hero-search-wrapper">
-        <div class="search-input-box">
+        <div class="search-box">
           <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <circle cx="9" cy="9" r="6" stroke="#64748B" stroke-width="2"/>
-            <path d="M13.5 13.5L17.5 17.5" stroke="#64748B" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="9" cy="9" r="6" stroke="#0D9488" stroke-width="2"/>
+            <path d="M13.5 13.5L17.5 17.5" stroke="#0D9488" stroke-width="2" stroke-linecap="round"/>
           </svg>
           <input
             type="search"
             id="toolSearchInput"
             class="search-input"
-            placeholder="찾으시는 서비스나 키워드를 입력하세요 (예: 에어컨 청소, 원룸이사, 누수탐지, 도배)"
+            placeholder="어떤 서비스 비용이 궁금하세요? (예: 입주청소, 에어컨 설치, 누수탐지)"
             aria-label="생활서비스 견적 도구 검색"
             autocomplete="off"
           />
         </div>
 
-        <div class="search-tags" aria-label="추천 인기 검색어">
-          <span class="tags-label">추천 키워드:</span>
-          <button type="button" class="tag-btn" data-search="에어컨 청소">에어컨 청소</button>
-          <button type="button" class="tag-btn" data-search="입주청소">입주청소</button>
-          <button type="button" class="tag-btn" data-search="원룸이사">원룸이사</button>
-          <button type="button" class="tag-btn" data-search="누수탐지">누수탐지</button>
-          <button type="button" class="tag-btn" data-search="도배">도배</button>
-          <button type="button" class="tag-btn" data-search="욕실 리모델링">욕실 리모델링</button>
+        <div class="search-keywords" aria-label="인기 검색어">
+          <span class="kw-label">인기 서비스:</span>
+          <button type="button" class="kw-btn" data-search="입주청소">입주청소</button>
+          <button type="button" class="kw-btn" data-search="에어컨 분해청소">에어컨 청소</button>
+          <button type="button" class="kw-btn" data-search="원룸이사">원룸이사</button>
+          <button type="button" class="kw-btn" data-search="누수탐지">누수탐지</button>
+          <button type="button" class="kw-btn" data-search="욕실 리모델링">욕실 리모델링</button>
         </div>
       </div>
     </div>
@@ -79,18 +78,18 @@ const pageDescription = '에어컨 청소, 입주청소, 원룸이사, 누수탐
   <section class="search-results-section container" id="searchResultsSection" style="display: none;">
     <div class="section-header-inline">
       <h2 class="section-title">검색 결과 (<span id="searchResultCount">0</span>)</h2>
-      <button type="button" class="btn btn-sm btn-secondary" id="clearSearchBtn">검색 초기화</button>
+      <button type="button" class="btn btn-secondary" id="clearSearchBtn">검색 초기화</button>
     </div>
     <div class="services-grid" id="searchResultsGrid">
       <!-- Injected via JavaScript -->
     </div>
   </section>
 
-  <!-- Category Shortcuts Section -->
+  <!-- 6 Categories Section -->
   <section class="categories-section container">
     <div class="section-header">
       <h2 class="section-title">6대 생활서비스 카테고리</h2>
-      <p class="section-subtitle">원하시는 서비스 분야를 선택하여 전문 견적 도구를 확인하세요.</p>
+      <p class="section-subtitle">원하시는 분야를 선택하면 세부 견적 도구로 바로 이동합니다.</p>
     </div>
 
     <div class="categories-grid">
@@ -103,9 +102,9 @@ const pageDescription = '에어컨 청소, 입주청소, 원룸이사, 누수탐
   <!-- Editorial Recommended Tools -->
   <section class="recommended-section container">
     <div class="section-header">
-      <div class="badge badge-info section-badge">에디터 추천 서비스</div>
-      <h2 class="section-title">많은 분들이 먼저 찾아보는 핵심 견적 도구</h2>
-      <p class="section-subtitle">이사철, 계절 교체 시기, 인테리어 전 필수 점검 항목입니다.</p>
+      <span class="section-tag">가장 많이 찾는 서비스</span>
+      <h2 class="section-title">추천 핵심 견적 도구</h2>
+      <p class="section-subtitle">이사철, 계절 교체 시기, 인테리어 전 필수 확인 서비스입니다.</p>
     </div>
 
     <div class="services-grid">
@@ -119,32 +118,32 @@ const pageDescription = '에어컨 청소, 입주청소, 원룸이사, 누수탐
   <section class="guide-section">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">바로견적 3단계 이용방법</h2>
-        <p class="section-subtitle">개인정보 유출 걱정 없이 간편하고 확실하게 견적을 비교하세요.</p>
+        <h2 class="section-title">바로견적 3단계 이용안내</h2>
+        <p class="section-subtitle">복잡한 절차나 개인정보 유출 없이 1분 만에 시장 적정가를 확인하세요.</p>
       </div>
 
-      <div class="guide-steps-grid">
-        <div class="guide-step-card">
-          <div class="step-num">01</div>
-          <h3 class="step-title">서비스 선택</h3>
-          <p class="step-desc">
-            청소, 이사, 냉난방, 누수, 인테리어, 설치 등 총 30가지 생활서비스 중 견적이 필요한 항목을 선택합니다.
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-num">01</div>
+          <h3 class="guide-title">서비스 선택</h3>
+          <p class="guide-desc">
+            청소, 이사, 냉난방, 누수, 인테리어, 생활설치 등 총 30가지 생활서비스 중 필요한 항목을 선택합니다.
           </p>
         </div>
 
-        <div class="guide-step-card">
-          <div class="step-num">02</div>
-          <h3 class="step-title">세부 조건 입력</h3>
-          <p class="step-desc">
-            평수, 작업 범위, 특수 장비, 자재 등 견적에 영향을 주는 핵심 변수를 몇 번의 클릭으로 입력합니다.
+        <div class="guide-card">
+          <div class="guide-num">02</div>
+          <h3 class="guide-title">조건 선택</h3>
+          <p class="guide-desc">
+            평수, 작업 범위, 특수 장비, 자재 등 견적에 영향을 주는 핵심 변수를 클릭으로 가볍게 선택합니다.
           </p>
         </div>
 
-        <div class="guide-step-card">
-          <div class="step-num">03</div>
-          <h3 class="step-title">예상 견적 &amp; 체크리스트 확인</h3>
-          <p class="step-desc">
-            공개된 시장 기준 가격과 추가요금 위험 요인, 시공업체와 상담 시 물어봐야 할 질문지를 확인합니다.
+        <div class="guide-card">
+          <div class="guide-num">03</div>
+          <h3 class="guide-title">적정 비용 &amp; 체크리스트 확인</h3>
+          <p class="guide-desc">
+            실거래 빅데이터 기반 예상 범위와 현장 추가요금 주의사항, 업체 상담 시 핵심 질문을 확인합니다.
           </p>
         </div>
       </div>
@@ -159,9 +158,9 @@ const pageDescription = '에어컨 청소, 입주청소, 원룸이사, 누수탐
   <!-- All 30 Tools Section -->
   <section class="all-tools-section container" id="all-tools">
     <div class="section-header">
-      <div class="badge badge-primary section-badge">전체 서비스 디렉터리</div>
-      <h2 class="section-title">30개 전체 견적 도구 둘러보기</h2>
-      <p class="section-subtitle">누락 없이 모든 생활서비스의 정량 산정 규칙과 현장 체크리스트를 제공합니다.</p>
+      <span class="section-tag">전체 디렉터리</span>
+      <h2 class="section-title">30개 생활서비스 전체 견적 도구</h2>
+      <p class="section-subtitle">누락 없이 모든 생활서비스의 정량 산정 규칙과 현장 체크리스트를 둘러보세요.</p>
     </div>
 
     <div class="category-grouped-tools">
@@ -170,12 +169,12 @@ const pageDescription = '에어컨 청소, 입주청소, 원룸이사, 누수탐
         return (
           <div class="category-group" id={`cat-group-${category.id}`}>
             <div class="group-header">
-              <div class="group-title-wrap">
+              <div class="group-title-box">
                 <span class="group-icon">{category.icon}</span>
                 <h3 class="group-title">{category.name}</h3>
-                <span class="group-count">({catServices.length}개)</span>
+                <span class="group-count">({catServices.length}개 서비스)</span>
               </div>
-              <a href={`/category/${category.id}`} class="group-more-link">
+              <a href={`/category/${category.id}`} class="group-link">
                 카테고리 전체보기 →
               </a>
             </div>
@@ -195,58 +194,62 @@ const pageDescription = '에어컨 청소, 입주청소, 원룸이사, 누수탐
 <style>
   /* Hero */
   .hero-section {
-    background: linear-gradient(180deg, #EFF6FF 0%, var(--color-bg) 100%);
-    padding: var(--space-16) 0 var(--space-12);
+    background: linear-gradient(180deg, #f0fdfa 0%, #ffffff 100%);
+    padding: 48px 0 36px;
     text-align: center;
     border-bottom: 1px solid var(--color-border);
   }
 
   .hero-inner {
-    max-width: 800px;
+    max-width: 820px;
+    margin: 0 auto;
   }
 
-  .hero-badge {
+  .hero-pill-badge {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-1) var(--space-4);
-    background-color: var(--color-surface);
-    border: 1px solid #BFDBFE;
+    gap: 8px;
+    padding: 6px 16px;
+    background-color: #ffffff;
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-full);
-    font-size: var(--text-xs);
+    font-size: 0.82rem;
     font-weight: 600;
     color: var(--color-primary);
-    margin-bottom: var(--space-5);
-    box-shadow: var(--shadow-sm);
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
   }
 
   .badge-dot {
     width: 8px;
     height: 8px;
-    background-color: var(--color-secondary);
+    background-color: var(--color-primary);
     border-radius: 50%;
   }
 
   .hero-title {
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: clamp(1.85rem, 4.5vw, 2.75rem);
     font-weight: 800;
-    line-height: 1.25;
-    letter-spacing: -0.03em;
-    color: var(--color-text);
-    margin: 0 0 var(--space-4);
+    line-height: 1.35;
+    letter-spacing: -0.025em;
+    color: var(--color-text-main);
+    margin: 0 0 16px;
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
 
-  .text-gradient {
-    background: linear-gradient(135deg, var(--color-primary) 0%, #0D9488 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  .highlight {
+    color: var(--color-primary);
   }
 
-  .hero-subtitle {
-    font-size: var(--text-lg);
+  .hero-desc {
+    font-size: 1.05rem;
     color: var(--color-text-muted);
-    line-height: 1.6;
-    margin: 0 auto var(--space-8);
+    line-height: 1.65;
+    margin: 0 auto 32px;
+    max-width: 640px;
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
 
   .pc-br {
@@ -258,166 +261,180 @@ const pageDescription = '에어컨 청소, 입주청소, 원룸이사, 누수탐
 
   /* Search */
   .hero-search-wrapper {
-    max-width: 680px;
+    max-width: 640px;
     margin: 0 auto;
   }
 
-  .search-input-box {
+  .search-box {
     position: relative;
     display: flex;
     align-items: center;
-    background-color: var(--color-surface);
-    border: 2px solid var(--color-primary);
-    border-radius: var(--radius-xl);
-    box-shadow: 0 8px 24px rgba(29, 78, 216, 0.12);
-    overflow: hidden;
+    background-color: #ffffff;
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-full);
+    box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.06);
+    transition: all 0.2s ease;
+  }
+
+  .search-box:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
   }
 
   .search-icon {
     position: absolute;
-    left: var(--space-4);
+    left: 18px;
     pointer-events: none;
   }
 
   .search-input {
     width: 100%;
-    padding: var(--space-4) var(--space-4) var(--space-4) 48px;
+    height: 54px;
+    padding: 0 20px 0 50px;
     border: none;
-    font-size: var(--text-base);
-    color: var(--color-text);
+    font-size: 0.95rem;
+    color: var(--color-text-main);
     outline: none;
     background: transparent;
+    border-radius: var(--radius-full);
   }
 
   .search-input::placeholder {
     color: var(--color-text-muted);
-    font-size: var(--text-sm);
+    font-size: 0.9rem;
   }
 
-  .search-tags {
+  .search-keywords {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    gap: var(--space-2);
-    margin-top: var(--space-4);
-    font-size: var(--text-xs);
+    gap: 8px;
+    margin-top: 16px;
+    font-size: 0.82rem;
   }
 
-  .tags-label {
+  .kw-label {
     color: var(--color-text-muted);
     font-weight: 600;
   }
 
-  .tag-btn {
-    background: var(--color-surface);
+  .kw-btn {
+    background-color: #ffffff;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-full);
-    padding: 3px 10px;
-    font-size: var(--text-xs);
-    color: var(--color-text);
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-body);
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: all 0.15s ease;
   }
 
-  .tag-btn:hover {
-    background-color: #EFF6FF;
+  .kw-btn:hover {
+    background-color: var(--color-primary-light);
     border-color: var(--color-primary);
     color: var(--color-primary);
   }
 
-  /* Section Header */
+  /* Section Headers */
   .section-header {
     text-align: center;
-    margin-bottom: var(--space-8);
+    margin-bottom: 32px;
   }
 
   .section-header-inline {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--space-6);
+    margin-bottom: 24px;
   }
 
-  .section-badge {
-    margin-bottom: var(--space-2);
+  .section-tag {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    background-color: var(--color-primary-light);
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    margin-bottom: 8px;
   }
 
   .section-title {
-    font-size: var(--text-2xl);
+    font-size: 1.6rem;
     font-weight: 800;
-    color: var(--color-text);
+    color: var(--color-text-main);
     letter-spacing: -0.02em;
-    margin: 0 0 var(--space-2);
+    margin: 0 0 8px;
   }
 
   .section-subtitle {
-    font-size: var(--text-base);
+    font-size: 0.95rem;
     color: var(--color-text-muted);
     margin: 0;
   }
 
   /* Grids */
   .categories-section {
-    padding: var(--space-12) 0;
+    padding: 44px 0 24px;
   }
 
   .categories-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: 16px;
   }
 
   .recommended-section {
-    padding: var(--space-12) 0;
+    padding: 40px 0 24px;
   }
 
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: 20px;
   }
 
-  /* 3 Steps Guide */
+  /* 3-Step Guide */
   .guide-section {
-    background-color: var(--color-surface);
+    background-color: #ffffff;
     border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
-    padding: var(--space-16) 0;
-    margin: var(--space-12) 0;
+    padding: 48px 0;
+    margin: 36px 0;
   }
 
-  .guide-steps-grid {
+  .guide-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-6);
+    gap: 20px;
   }
 
-  .guide-step-card {
-    background-color: var(--color-bg);
+  .guide-card {
+    background-color: var(--color-background);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
-    padding: var(--space-6);
-    position: relative;
+    padding: 24px;
   }
 
-  .step-num {
-    font-size: var(--text-2xl);
+  .guide-num {
+    font-size: 1.5rem;
     font-weight: 900;
     color: var(--color-primary);
-    opacity: 0.8;
-    margin-bottom: var(--space-3);
+    margin-bottom: 10px;
     font-variant-numeric: tabular-nums;
   }
 
-  .step-title {
-    font-size: var(--text-lg);
+  .guide-title {
+    font-size: 1.1rem;
     font-weight: 700;
-    margin: 0 0 var(--space-2);
+    margin: 0 0 8px;
+    color: var(--color-text-main);
   }
 
-  .step-desc {
-    font-size: var(--text-sm);
+  .guide-desc {
+    font-size: 0.885rem;
     color: var(--color-text-muted);
     margin: 0;
     line-height: 1.6;
@@ -425,66 +442,70 @@ const pageDescription = '에어컨 청소, 입주청소, 원룸이사, 누수탐
 
   /* All Tools Grouped */
   .all-tools-section {
-    padding: var(--space-12) 0;
+    padding: 36px 0 60px;
   }
 
   .category-grouped-tools {
     display: flex;
     flex-direction: column;
-    gap: var(--space-12);
+    gap: 36px;
   }
 
   .category-group {
-    background-color: var(--color-surface);
+    background-color: #ffffff;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-2xl);
-    padding: var(--space-8);
+    border-radius: var(--radius-xl);
+    padding: 28px;
   }
 
   .group-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--space-6);
-    padding-bottom: var(--space-4);
-    border-bottom: 2px solid var(--color-bg);
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--color-border);
   }
 
-  .group-title-wrap {
+  .group-title-box {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: 10px;
   }
 
   .group-icon {
-    font-size: 24px;
+    font-size: 22px;
   }
 
   .group-title {
-    font-size: var(--text-xl);
-    font-weight: 800;
+    font-size: 1.25rem;
+    font-weight: 750;
     margin: 0;
-    color: var(--color-text);
+    color: var(--color-text-main);
   }
 
   .group-count {
-    font-size: var(--text-sm);
+    font-size: 0.85rem;
     color: var(--color-text-muted);
-    font-weight: 600;
+    font-weight: 500;
   }
 
-  .group-more-link {
-    font-size: var(--text-sm);
+  .group-link {
+    font-size: 0.885rem;
     font-weight: 600;
     color: var(--color-primary);
     text-decoration: none;
   }
 
-  .group-more-link:hover {
+  .group-link:hover {
     text-decoration: underline;
   }
 
   @media (max-width: 768px) {
+    .hero-section {
+      padding: 36px 0 28px;
+    }
+
     .pc-br {
       display: none;
     }
@@ -492,20 +513,28 @@ const pageDescription = '에어컨 청소, 입주청소, 원룸이사, 누수탐
       display: inline;
     }
 
-    .guide-steps-grid {
+    .search-input {
+      height: 48px;
+      font-size: 0.9rem;
+    }
+
+    .guide-grid {
       grid-template-columns: 1fr;
+      gap: 14px;
     }
 
     .services-grid {
       grid-template-columns: 1fr;
+      gap: 16px;
     }
 
     .categories-grid {
       grid-template-columns: 1fr;
+      gap: 12px;
     }
 
     .category-group {
-      padding: var(--space-4);
+      padding: 18px;
     }
   }
 </style>
@@ -513,7 +542,7 @@ const pageDescription = '에어컨 청소, 입주청소, 원룸이사, 누수탐
 <script>
   // Instant Search Logic across all 30 tools
   const searchInput = document.getElementById('toolSearchInput') as HTMLInputElement | null;
-  const tagBtns = document.querySelectorAll('.tag-btn');
+  const tagBtns = document.querySelectorAll('.kw-btn');
   const searchResultsSection = document.getElementById('searchResultsSection');
   const searchResultsGrid = document.getElementById('searchResultsGrid');
   const searchResultCount = document.getElementById('searchResultCount');
@@ -540,7 +569,7 @@ const pageDescription = '에어컨 청소, 입주청소, 원룸이사, 누수탐
       if (matchedCards.length > 0) {
         matchedCards.forEach((card) => searchResultsGrid.appendChild(card));
       } else {
-        searchResultsGrid.innerHTML = `<div class="p-6 text-center text-muted" style="grid-column: 1/-1;">'${query}'에 해당하는 견적 도구를 찾을 수 없습니다.</div>`;
+        searchResultsGrid.innerHTML = `<div class="p-6 text-center text-muted" style="grid-column: 1/-1; padding: 32px; text-align: center; color: var(--color-text-muted);">'${query}'에 해당하는 견적 도구를 찾을 수 없습니다.</div>`;
       }
       searchResultCount.textContent = String(matchedCards.length);
       searchResultsSection.style.display = 'block';

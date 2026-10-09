@@ -12,9 +12,9 @@ const { serviceId, questions, initialAnswers } = Astro.props;
 
 <form class="estimate-form" id="estimateForm" data-service-id={serviceId}>
   <div class="form-header">
-    <h2 class="form-title">조건별 맞춤 견적 옵션 선택</h2>
+    <h2 class="form-title">조건 선택</h2>
     <p class="form-desc">
-      세부 조건을 선택하면 즉시 실시간 예상 비용과 업체 문의 체크리스트가 산출됩니다. (개인정보 수집 없음)
+      조건을 선택하면 실시간 시장 예상 견적과 체크리스트가 즉시 계산됩니다.
     </p>
   </div>
 
@@ -75,7 +75,6 @@ const { serviceId, questions, initialAnswers } = Astro.props;
                     checked={String(qVal) === String(opt.value)}
                     id={`${fieldId}-${oIdx}`}
                   />
-                  <span class="radio-custom"></span>
                   <span class="option-text">{opt.label}</span>
                 </label>
               ))}
@@ -95,7 +94,6 @@ const { serviceId, questions, initialAnswers } = Astro.props;
                       checked={isChecked}
                       id={`${fieldId}-${oIdx}`}
                     />
-                    <span class="checkbox-custom"></span>
                     <span class="option-text">{opt.label}</span>
                   </label>
                 );
@@ -112,7 +110,6 @@ const { serviceId, questions, initialAnswers } = Astro.props;
                 value="true"
                 checked={Boolean(qVal)}
               />
-              <span class="toggle-custom"></span>
               <span class="toggle-text">{q.label} 적용</span>
             </label>
           )}
@@ -126,16 +123,17 @@ const { serviceId, questions, initialAnswers } = Astro.props;
   </div>
 
   <div class="form-actions">
-    <button type="submit" class="btn btn-primary btn-lg" id="calculateBtn">
-      <span class="btn-icon">⚡</span> 견적 계산하기
+    <button type="submit" class="btn btn-primary btn-submit" id="calculateBtn">
+      예상 견적 확인하기
     </button>
-    <button type="button" class="btn btn-secondary btn-lg" id="resetBtn">
-      기본값 복원
+    <button type="button" class="btn btn-secondary btn-reset" id="resetBtn">
+      초기화
     </button>
   </div>
 
   <div class="form-safety-note">
-    🔒 <strong>안심 안내:</strong> 바로견적은 사용자의 전화번호나 위치 주소를 일절 요구하지 않으며, 모든 계산은 브라우저 내에서 안전하게 처리됩니다.
+    <span class="lock-icon" aria-hidden="true">🔒</span>
+    <span>개인정보(전화번호·주소) 입력 없이 브라우저에서 안전하게 실시간 계산됩니다.</span>
   </div>
 </form>
 
@@ -144,25 +142,26 @@ const { serviceId, questions, initialAnswers } = Astro.props;
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
-    padding: var(--space-6);
+    padding: 26px;
     box-shadow: var(--shadow-sm);
   }
 
   .form-header {
-    margin-bottom: var(--space-6);
-    padding-bottom: var(--space-4);
+    margin-bottom: 24px;
+    padding-bottom: 16px;
     border-bottom: 1px solid var(--color-border);
   }
 
   .form-title {
-    font-size: var(--text-xl);
-    font-weight: 700;
-    margin: 0 0 var(--space-2);
-    letter-spacing: -0.01em;
+    font-size: 1.25rem;
+    font-weight: 750;
+    margin: 0 0 6px;
+    color: var(--color-text-main);
+    letter-spacing: -0.015em;
   }
 
   .form-desc {
-    font-size: var(--text-sm);
+    font-size: 0.885rem;
     color: var(--color-text-muted);
     margin: 0;
     line-height: 1.5;
@@ -171,26 +170,26 @@ const { serviceId, questions, initialAnswers } = Astro.props;
   .questions-container {
     display: flex;
     flex-direction: column;
-    gap: var(--space-5);
+    gap: 22px;
   }
 
   .form-group {
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    gap: 8px;
   }
 
   .form-label {
     display: flex;
     align-items: center;
     gap: 4px;
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--color-text);
+    font-size: 0.925rem;
+    font-weight: 650;
+    color: var(--color-text-main);
   }
 
   .required-star {
-    color: var(--color-danger);
+    color: var(--color-error);
     font-weight: bold;
   }
 
@@ -201,7 +200,7 @@ const { serviceId, questions, initialAnswers } = Astro.props;
   .number-input-group {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: 10px;
   }
 
   .form-number {
@@ -211,7 +210,7 @@ const { serviceId, questions, initialAnswers } = Astro.props;
   }
 
   .input-unit {
-    font-size: var(--text-sm);
+    font-size: 0.9rem;
     font-weight: 600;
     color: var(--color-text-muted);
   }
@@ -220,41 +219,65 @@ const { serviceId, questions, initialAnswers } = Astro.props;
   .checkbox-group {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-3);
+    gap: 8px;
   }
 
   .radio-label,
   .checkbox-label {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-3);
-    background-color: #F8FAFC;
-    border: 1px solid var(--color-border);
+    gap: 8px;
+    padding: 10px 14px;
+    min-height: 44px;
+    background-color: #f8fafc;
+    border: 1.5px solid var(--color-border);
     border-radius: var(--radius-md);
     cursor: pointer;
-    font-size: var(--text-sm);
-    transition: all var(--transition-fast);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-body);
+    transition: all 0.15s ease;
+    user-select: none;
   }
 
   .radio-label:hover,
   .checkbox-label:hover {
     border-color: var(--color-primary);
-    background-color: #EFF6FF;
+    background-color: var(--color-primary-light);
+  }
+
+  .radio-label:has(input:checked),
+  .checkbox-label:has(input:checked) {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+    font-weight: 700;
   }
 
   .radio-label input,
   .checkbox-label input {
     accent-color: var(--color-primary);
+    width: 16px;
+    height: 16px;
   }
 
   .boolean-toggle-label {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: 8px;
     cursor: pointer;
-    font-size: var(--text-sm);
-    font-weight: 500;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 10px 14px;
+    background-color: #f8fafc;
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: all 0.15s ease;
+  }
+
+  .boolean-toggle-label:hover {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-light);
   }
 
   .boolean-toggle-label input {
@@ -264,38 +287,52 @@ const { serviceId, questions, initialAnswers } = Astro.props;
   }
 
   .form-helper {
-    font-size: var(--text-xs);
+    font-size: 0.78rem;
     color: var(--color-text-muted);
     line-height: 1.4;
   }
 
   .form-actions {
     display: flex;
-    gap: var(--space-3);
-    margin-top: var(--space-8);
-    padding-top: var(--space-6);
+    gap: 10px;
+    margin-top: 28px;
+    padding-top: 20px;
     border-top: 1px solid var(--color-border);
   }
 
-  .form-actions .btn-primary {
-    flex: 2;
+  .btn-submit {
+    flex: 3;
+    height: 50px;
+    font-size: 1.02rem;
   }
 
-  .form-actions .btn-secondary {
+  .btn-reset {
     flex: 1;
+    height: 50px;
   }
 
   .form-safety-note {
-    margin-top: var(--space-4);
-    font-size: var(--text-xs);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    font-size: 0.78rem;
     color: var(--color-text-muted);
-    background-color: #F8FAFC;
-    padding: var(--space-3);
+    background-color: #f8fafc;
+    padding: 10px 12px;
     border-radius: var(--radius-md);
-    line-height: 1.4;
+    line-height: 1.45;
+  }
+
+  .lock-icon {
+    flex-shrink: 0;
   }
 
   @media (max-width: 480px) {
+    .estimate-form {
+      padding: 18px;
+    }
+
     .form-actions {
       flex-direction: column;
     }
