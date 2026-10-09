@@ -1,0 +1,37 @@
+{
+  "name": "baroquote-hub",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "바로견적(BaroQuote) - 30개 생활서비스 예상비용 및 견적 산출 전문 플랫폼",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build && node scripts/ensure-sitemap.mjs",
+    "preview": "astro preview",
+    "check": "astro check",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "audit:registry": "tsx scripts/audit-registry.mjs",
+    "audit:prices": "tsx scripts/audit-prices.mjs",
+    "audit:seo": "tsx scripts/audit-seo.mjs",
+    "audit": "npm run audit:registry && npm run audit:prices && npm run audit:seo",
+    "verify": "npm run check && npm run typecheck && npm run test && npm run audit && npm run test:e2e && npm run build"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/sitemap": "^3.2.1",
+    "astro": "^5.4.2",
+    "typescript": "^5.7.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.50.1",
+    "tsx": "^4.23.15",
+    "vitest": "^3.0.7"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}
