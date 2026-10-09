@@ -24,15 +24,15 @@ export const SERVICES: ServiceDefinition[] = [...ALL_SERVICES]
     priceEvidence: {
       ...s.evidence,
       sourceName: s.evidence.provider,
-      sourceType: s.evidence.reliabilityLevel === 'high' ? 'official_rate_card' : 'platform_average',
+      sourceType: s.evidence.sourceType || 'platform_average',
       conditions: s.evidence.notes || `${s.evidence.priceUnit} 기준, VAT ${s.evidence.vatIncluded ? '포함' : '별도'}`,
       verifiedAt: s.evidence.lastVerifiedAt,
-      verified: true
+      verified: s.evidence.verificationStatus === 'verified'
     },
     faqs: s.seo.faq,
     relatedServiceIds: [],
-    defaultMinAmount: s.evidence.basePrice,
-    defaultMaxAmount: Math.round(s.evidence.basePrice * 1.3),
+    defaultMinAmount: s.evidence.minPrice || s.evidence.basePrice,
+    defaultMaxAmount: s.evidence.maxPrice || Math.round(s.evidence.basePrice * 1.3),
     estimateType: 'range_estimate' as const
   }));
 

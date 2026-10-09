@@ -1,6 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { SERVICES } from '../src/lib/registry/index.ts';
+import { CATEGORIES } from '../src/lib/registry/categories.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -9,100 +11,91 @@ const distDir = path.join(projectRoot, 'dist');
 const sitemapXmlPath = path.join(distDir, 'sitemap.xml');
 
 const siteUrl = 'https://quote.info-myview.co.kr';
-const today = new Date().toISOString().split('T')[0];
 
-console.log('🔍 [ensure-sitemap] Verifying /sitemap.xml generation in dist...');
+console.log('🔍 [ensure-sitemap] Starting Dynamic /sitemap.xml generation from Registry...');
 
 if (!fs.existsSync(distDir)) {
   console.error('❌ dist directory does not exist! Please run astro build first.');
   process.exit(1);
 }
 
-// 1. Collect all static pages
+// 1. Static informational pages with specific update dates (do not blindly overwrite with today)
 const staticPages = [
-  { path: '', priority: '1.0', changefreq: 'daily' },
-  { path: '/about', priority: '0.6', changefreq: 'monthly' },
-  { path: '/privacy', priority: '0.4', changefreq: 'yearly' },
-  { path: '/terms', priority: '0.4', changefreq: 'yearly' },
+  { path: '', priority: '1.0', changefreq: 'daily', lastmod: '2026-10-09' },
+  { path: '/about', priority: '0.6', changefreq: 'monthly', lastmod: '2026-10-09' },
+  { path: '/privacy', priority: '0.4', changefreq: 'yearly', lastmod: '2026-10-01' },
+  { path: '/terms', priority: '0.4', changefreq: 'yearly', lastmod: '2026-10-01' },
 ];
 
-// 2. Collect 6 categories
-const categories = [
-  'cleaning',
-  'moving',
-  'heating-cooling',
-  'plumbing',
-  'interior',
-  'installation',
-];
+// Determine latest service verification date for homepage lastmod
+const latestServiceDate = SERVICES.reduce((latest, s) => {
+  const d = s.evidence?.lastVerifiedAt || '2026-10-09';
+  return d > latest ? d : latest;
+}, '2026-10-01');
+staticPages[0].lastmod = latestServiceDate;
 
-// 3. Collect all 30 service slugs
-const serviceSlugs = [
-  // Cleaning (7)
-  'move-in-cleaning',
-  'air-conditioner-cleaning',
-  'washing-machine-cleaning',
-  'mold-removal',
-  'housekeeper-service',
-  'mattress-cleaning',
-  'office-cleaning-service',
-  // Moving (5)
-  'studio-moving',
-  'full-service-moving',
-  'bulky-waste-removal',
-  'freight-truck-delivery',
-  'ladder-truck-moving',
-  // Heating / Cooling (3)
-  'ac-relocation-installation',
-  'boiler-repair-replacement',
-  'heating-pipe-flushing',
-  // Plumbing (3)
-  'leak-detection',
-  'faucet-replacement',
-  'drain-unclogging',
-  // Interior (8)
-  'wallpaper-flooring',
-  'bathroom-renovation',
-  'kitchen-cabinet-replacement',
-  'tile-grout-repair',
-  'interior-demolition-restoration',
-  'insect-screen-replacement',
-  'blinds-curtains-installation',
-  'rooftop-waterproofing',
-  // Installation (4)
-  'smart-lock-installation',
-  'wall-mounted-tv-installation',
-  'lighting-installation',
-  'kitchen-hood-replacement',
-];
+// 2. Dynamic Categories from Registry
+const categoryUrls = CATEGORIES.map((cat) => {
+  const catServices = SERVICES.filter((s) => (s.categoryId || s.category) === cat.id);
+  const catLatestDate = catServices.reduce((latest, s) => {
+    const d = s.evidence?.lastVerifiedAt || '2026-10-09';
+    return d > latest ? d : latest;
+  }, '2026-10-01');
 
+  return {
+    loc: `${siteUrl}/category/${cat.id}`,
+    lastmod: catLatestDate,
+    changefreq: 'weekly',
+    priority: '0.8',
+  };
+});
+
+// 3. Dynamic Services from Registry (Scales automatically to 30, 40, 50, etc.)
+const serviceUrls = SERVICES.map((service) => {
+  const verifiedDate = service.evidence?.lastVerifiedAt || service.priceEvidence?.verifiedAt || '2026-10-09';
+  return {
+    loc: `${siteUrl}/estimate/${service.slug}`,
+    lastmod: verifiedDate,
+    changefreq: 'weekly',
+    priority: '0.9',
+  };
+});
+
+// Combine all URLs
 const allUrls = [
-  ...staticPages.map(p => ({
-    loc: `${siteUrl}${p.path}`,
-    lastmod: today,
+  ...staticPages.map((p) => ({
+    loc: p.path === '' ? `${siteUrl}/` : `${siteUrl}${p.path}`,
+    lastmod: p.lastmod,
     changefreq: p.changefreq,
-    priority: p.priority
+    priority: p.priority,
   })),
-  ...categories.map(c => ({
-    loc: `${siteUrl}/category/${c}`,
-    lastmod: today,
-    changefreq: 'weekly',
-    priority: '0.8'
-  })),
-  ...serviceSlugs.map(s => ({
-    loc: `${siteUrl}/estimate/${s}`,
-    lastmod: today,
-    changefreq: 'weekly',
-    priority: '0.9'
-  }))
+  ...categoryUrls,
+  ...serviceUrls,
 ];
 
+// Check duplicate URLs
+const seenLocs = new Set();
+const duplicates = [];
+for (const u of allUrls) {
+  if (seenLocs.has(u.loc)) {
+    duplicates.push(u.loc);
+  }
+  seenLocs.add(u.loc);
+}
+
+if (duplicates.length > 0) {
+  console.error(`❌ Duplicate URLs detected in sitemap generation (${duplicates.length} items):`, duplicates);
+  process.exit(1);
+}
+
+console.log(`📊 Registry services dynamically loaded: ${SERVICES.length}`);
+console.log(`📊 Registry categories dynamically loaded: ${CATEGORIES.length}`);
 console.log(`📊 Total URLs to be indexed in official /sitemap.xml: ${allUrls.length}`);
 
 // Generate clean, standard compliant XML
 const xmlLines = [
   '<?xml version="1.0" encoding="UTF-8"?>',
-  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
 ];
 
 for (const u of allUrls) {

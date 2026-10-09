@@ -39,17 +39,29 @@ export interface QuestionDefinition {
   required?: boolean;
 }
 
+export type VerificationStatus = 'verified' | 'partially_verified' | 'unverified' | 'stale';
+
+export type SourceType =
+  | 'official_standard'
+  | 'platform_average'
+  | 'market_survey'
+  | 'regulatory_guideline';
+
 export interface PriceEvidence {
   provider: string;
   sourceUrl: string;
   basePrice: number;
+  minPrice?: number;
+  maxPrice?: number;
   priceUnit: string;
   vatIncluded: boolean;
   travelFeeIncluded: boolean;
   materialsIncluded: boolean;
   surveyedAt: string;
   lastVerifiedAt: string;
-  reliabilityLevel: 'high' | 'medium';
+  verificationStatus: VerificationStatus;
+  reliabilityLevel: 'high' | 'medium' | 'low';
+  sourceType: SourceType;
   notes: string;
 }
 

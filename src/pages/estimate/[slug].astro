@@ -46,26 +46,22 @@ const breadcrumbItems = [
   { name: service.title }
 ];
 
-// JSON-LD Structured Data: Service & FAQ
+// JSON-LD Structured Data: WebApplication (Information Tool) & FAQPage
 const jsonLd = [
   {
     "@context": "https://schema.org",
-    "@type": "Service",
-    "name": service.title,
+    "@type": "WebApplication",
+    "name": `${service.title} 견적 계산기`,
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
     "description": service.seo.description,
-    "provider": {
-      "@type": "Organization",
-      "name": "바로견적",
-      "url": "https://quote.info-myview.co.kr"
-    },
-    "serviceType": category?.name,
+    "url": `https://quote.info-myview.co.kr/estimate/${service.slug}`,
     "offers": {
-      "@type": "AggregateOffer",
-      "priceCurrency": "KRW",
-      "lowPrice": initialResult.minAmount || service.defaultMinAmount || 0,
-      "highPrice": initialResult.maxAmount || service.defaultMaxAmount || 0,
-      "offerCount": "1"
-    }
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "KRW"
+    },
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
   },
   {
     "@context": "https://schema.org",
@@ -101,7 +97,7 @@ const jsonLd = [
         </a>
         <span class="service-badge-id">No. {service.number || service.id}</span>
         <span class="verification-badge">
-          기준일자: {verifiedDate} 검증완료
+          기준일자: {verifiedDate} {evidenceData?.verificationStatus === 'verified' ? '검증완료' : '참고시세'}
         </span>
       </div>
 
