@@ -57,6 +57,10 @@ const formattedTitle = title.includes('바로견적') ? title : `${title} | 바�
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <link rel="stylesheet" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
+    {import.meta.env.PROD && (
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067434476189083" crossorigin="anonymous"></script>
+    )}
+
     <!-- JSON-LD Structured Data -->
     {jsonLd && (
       <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
