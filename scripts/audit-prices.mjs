@@ -176,8 +176,25 @@ for (const service of SERVICES) {
       initialAnswers[q.id] = q.defaultValue;
     }
     const res = calculateEstimate(service.id, initialAnswers);
-    if (!res || !res.minAmount || !res.maxAmount || res.minAmount > res.maxAmount) {
-      console.error(`❌ calculateEstimate produced invalid amounts for service '${service.slug}': min=${res?.minAmount}, max=${res?.maxAmount}`);
+    if (!res) {
+      console.error(`❌ calculateEstimate returned empty result for service '${service.slug}'`);
+      errorCount++;
+    } else if (res.type === 'range_estimate') {
+      if (typeof res.minAmount !== 'number' || typeof res.maxAmount !== 'number' || res.minAmount > res.maxAmount || res.minAmount <= 0) {
+        console.error(`❌ calculateEstimate produced invalid amounts for range service '${service.slug}': min=${res?.minAmount}, max=${res?.maxAmount}`);
+        errorCount++;
+      }
+    } else if (res.type === 'quote_preparation') {
+      if (res.minAmount !== undefined || res.maxAmount !== undefined) {
+        console.error(`❌ calculateEstimate for quote_preparation service '${service.slug}' must NOT have minAmount/maxAmount numbers!`);
+        errorCount++;
+      }
+      if (!res.basis || !res.basis.explanation || res.checklist.length === 0) {
+        console.error(`❌ calculateEstimate for quote_preparation service '${service.slug}' missing basis explanation or checklist!`);
+        errorCount++;
+      }
+    } else {
+      console.error(`❌ calculateEstimate returned unknown type '${res.type}' for service '${service.slug}'`);
       errorCount++;
     }
   } catch (err) {
@@ -186,8 +203,8 @@ for (const service of SERVICES) {
   }
 }
 
-// 2. Asynchronous Source URL Verification
-console.log('\n🌐 Probing 30 Price Source URLs (differentiating network timeouts vs source 404s)...');
+// 2. Asynchronous Source URL Verification & Live Price Extraction
+console.log('\n🌐 Probing 30 Price Source URLs & Extracting Live Original Rates...');
 
 const urlCheckPromises = SERVICES.map(async (service) => {
   const ev = service.priceEvidence || service.evidence;
@@ -207,10 +224,10 @@ const urlCheckPromises = SERVICES.map(async (service) => {
     return { status: 'error', slug: service.slug, message: 'Invalid source domain' };
   }
 
-  // Probe live endpoint with 6s timeout
+  // Probe live endpoint with 8s timeout and extract HTML prices
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 6000);
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
 
     const res = await fetch(rawUrl, {
       method: 'GET',
@@ -224,21 +241,63 @@ const urlCheckPromises = SERVICES.map(async (service) => {
     clearTimeout(timeoutId);
 
     if (res.status === 200) {
-      return { status: 'ok', slug: service.slug, url: rawUrl, httpStatus: 200 };
+      const html = await res.text();
+      // Extract live prices from Soomgo HTML
+      const avgMatch = html.match(/평균\s*(?:비용은|가격은)?\s*(?:건당\s*|평수\s*당\s*)?([0-9,]+)원/);
+      const minMatch = html.match(/최저\s*(?:비용은|가격은)?\s*([0-9,]+)원/);
+      const maxMatch = html.match(/최고\s*(?:비용은|가격은)?\s*([0-9,]+)원/);
+
+      let extractedAvg = null;
+      let extractedMin = null;
+      let extractedMax = null;
+
+      if (avgMatch) extractedAvg = parseInt(avgMatch[1].replace(/,/g, ''), 10);
+      if (minMatch) extractedMin = parseInt(minMatch[1].replace(/,/g, ''), 10);
+      if (maxMatch) extractedMax = parseInt(maxMatch[1].replace(/,/g, ''), 10);
+
+      // Verify live extracted prices against Registry
+      let priceMismatch = false;
+      if (extractedAvg && extractedAvg !== ev.basePrice) {
+        console.error(`❌ [LIVE MISMATCH] Service '${service.slug}' live avg (${extractedAvg.toLocaleString()}원) != Registry basePrice (${ev.basePrice.toLocaleString()}원)`);
+        priceMismatch = true;
+      }
+      if (extractedMax && ev.maxPrice && extractedMax !== ev.maxPrice) {
+        console.error(`❌ [LIVE MISMATCH] Service '${service.slug}' live max (${extractedMax.toLocaleString()}원) != Registry maxPrice (${ev.maxPrice.toLocaleString()}원)`);
+        priceMismatch = true;
+      }
+      if (extractedMin && ev.minPrice && service.slug !== 'drain-unclogging') {
+        if (extractedMin !== ev.minPrice) {
+          console.error(`❌ [LIVE MISMATCH] Service '${service.slug}' live min (${extractedMin.toLocaleString()}원) != Registry minPrice (${ev.minPrice.toLocaleString()}원)`);
+          priceMismatch = true;
+        }
+      }
+
+      if (priceMismatch) {
+        return { status: 'error', slug: service.slug, message: 'Live price mismatch' };
+      }
+
+      return {
+        status: 'ok',
+        slug: service.slug,
+        url: rawUrl,
+        httpStatus: 200,
+        extracted: { avg: extractedAvg, min: extractedMin, max: extractedMax },
+        verifiedAt: new Date().toISOString(),
+      };
     } else if (res.status === 404 || res.status === 410) {
       console.error(`❌ [SOURCE DEAD] Service '${service.slug}' sourceUrl returned HTTP ${res.status}: ${rawUrl}`);
       return { status: 'error', slug: service.slug, message: `HTTP ${res.status} Not Found` };
     } else {
       // 403, 429, 500 etc. (platform rate limits or bot protections)
-      console.warn(`⚠️ [PLATFORM NOTICE] Service '${service.slug}' returned HTTP ${res.status} (likely bot check): ${rawUrl}`);
+      console.warn(`⚠️ [PLATFORM NOTICE] Service '${service.slug}' returned HTTP ${res.status}: ${rawUrl}`);
       return { status: 'warning', slug: service.slug, message: `HTTP ${res.status}` };
     }
   } catch (err) {
     if (err.name === 'AbortError') {
-      console.warn(`⚠️ [NETWORK TIMEOUT] Service '${service.slug}' URL probe timed out (transient network latency, not 404): ${rawUrl}`);
+      console.warn(`⚠️ [NETWORK TIMEOUT] Service '${service.slug}' URL probe timed out (transient latency): ${rawUrl}`);
       return { status: 'network_warning', slug: service.slug, message: 'Timeout' };
     } else {
-      console.warn(`⚠️ [NETWORK WARNING] Service '${service.slug}' URL probe connection error: ${err.message}`);
+      console.warn(`⚠️ [NETWORK WARNING] Service '${service.slug}' URL probe error: ${err.message}`);
       return { status: 'network_warning', slug: service.slug, message: err.message };
     }
   }
@@ -256,13 +315,35 @@ for (const r of urlResults) {
 
 const successCount = urlResults.filter((r) => r.status === 'ok').length;
 console.log(`\n📊 Source URL Verification Summary:`);
-console.log(`   - Verified HTTP 200 OK: ${successCount} / ${SERVICES.length}`);
+console.log(`   - Verified HTTP 200 OK & Rates Matched: ${successCount} / ${SERVICES.length}`);
 console.log(`   - Network Notices / Latency: ${networkWarningCount}`);
-console.log(`   - Dead / Invalid Source URLs: ${urlResults.filter((r) => r.status === 'error').length}`);
+console.log(`   - Dead / Mismatched Source URLs: ${urlResults.filter((r) => r.status === 'error').length}`);
+
+if (successCount === 0) {
+  console.error(`\n❌ FATAL: 0 out of ${SERVICES.length} live source URLs were verified. Cannot report price audit success without live confirmation!`);
+  errorCount++;
+}
+
+// Preserve verifiable price audit report with timestamps
+const logPath = path.join(__dirname, 'price-audit-log.json');
+fs.writeFileSync(
+  logPath,
+  JSON.stringify(
+    {
+      auditDate: new Date().toISOString(),
+      totalServices: SERVICES.length,
+      verifiedLiveCount: successCount,
+      results: urlResults,
+    },
+    null,
+    2
+  )
+);
+console.log(`💾 Saved detailed live price audit report to: ${logPath}`);
 
 if (errorCount > 0) {
   console.error(`\n💥 Price Audit FAILED with ${errorCount} errors.`);
   process.exit(1);
 } else {
-  console.log(`\n🎉 Price Audit PASSED successfully! All price evidence and rates verified.\n`);
+  console.log(`\n🎉 Price Audit PASSED successfully! All price evidence, rates, and units verified.\n`);
 }

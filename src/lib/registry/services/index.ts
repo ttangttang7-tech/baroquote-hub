@@ -33,7 +33,7 @@ export const SERVICES: ServiceDefinition[] = [...ALL_SERVICES]
     relatedServiceIds: [],
     defaultMinAmount: s.evidence.minPrice || s.evidence.basePrice,
     defaultMaxAmount: s.evidence.maxPrice || Math.round(s.evidence.basePrice * 1.3),
-    estimateType: 'range_estimate' as const
+    estimateType: (s.estimateType || (s.evidence.verificationStatus === 'verified' ? 'range_estimate' : 'quote_preparation')) as 'range_estimate' | 'quote_preparation'
   }));
 
 export function getServiceBySlug(slug: string): ServiceDefinition | undefined {

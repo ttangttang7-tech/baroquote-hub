@@ -505,13 +505,18 @@ const jsonLd = [
     } else {
       if (rangeDisplay) rangeDisplay.style.display = 'none';
       if (prepDisplay) prepDisplay.style.display = 'block';
+
+      const prepTitleEl = document.getElementById('prepTitle');
+      const prepDescEl = document.getElementById('prepDesc');
+      if (prepTitleEl) prepTitleEl.textContent = result.prepTitle || '현장 방문 실측 맞춤 견적 권장 서비스';
+      if (prepDescEl) prepDescEl.textContent = result.basis.explanation || '본 서비스는 현장 상태, 시공 범위에 따라 편차가 커 실측 맞춤 견적을 권장합니다.';
     }
 
     // 3. Update Breakdown
     if (breakdownList) {
       breakdownList.innerHTML = result.basis.breakdown.map((item) => {
         const amtStr = typeof item.amount === 'number'
-          ? (item.amount === 0 ? '기본 포함' : `+${formatMoney(item.amount)}원`)
+          ? (item.amount === 0 ? (result.type === 'range_estimate' ? '기본 포함' : '핵심 요인') : `+${formatMoney(item.amount)}원`)
           : item.amount;
         return `
           <li class="breakdown-item">

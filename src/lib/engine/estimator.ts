@@ -50,10 +50,22 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
   }
 
   const priceBreakdown: PriceBreakdownItem[] = [];
+  const verificationStatus = userInputs.__forceVerificationStatus || service.evidence?.verificationStatus || 'verified';
+  const isOfficeCleaning = service.slug === 'office-cleaning-service';
+  const hasInsufficientBasis =
+    verificationStatus === 'unverified' ||
+    verificationStatus === 'stale' ||
+    verificationStatus === 'partially_verified' ||
+    isOfficeCleaning ||
+    service.estimateType === 'quote_preparation';
+
+  let type: 'range_estimate' | 'quote_preparation' = hasInsufficientBasis ? 'quote_preparation' : 'range_estimate';
+  let prepTitle: string | undefined = undefined;
+  let prepExplanation: string | undefined = undefined;
+
   let baseCost = 0;
   let minCost = 0;
   let maxCost = 0;
-  let type: 'range_estimate' | 'quote_preparation' = 'range_estimate';
   const inclusions: string[] = [];
   const exclusions: string[] = [];
   const extraFeeWarnings: string[] = [];
@@ -89,8 +101,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = baseCost + contDelta + verDelta + addDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.15);
+      minCost = Math.round(totalTarget - Math.max(15000, totalTarget * 0.08));
+      maxCost = Math.round(totalTarget + Math.max(25000, totalTarget * 0.12));
 
       inclusions.push('방/거실 바닥, 창틀 4면, 실내 유리창 안쪽, 몰딩 분진 제거');
       inclusions.push('주방 상하부장 내부 분해, 가스레인지/후드 필터 기름때 세척');
@@ -121,8 +133,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = multiUnitTotal + scopeDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.1);
+      minCost = Math.round(totalTarget - Math.max(10000, totalTarget * 0.07));
+      maxCost = Math.round(totalTarget + Math.max(15000, totalTarget * 0.11));
 
       inclusions.push('전면 프론트 판넬, 필터, 송풍팬 분해 고압 물세척');
       inclusions.push('열교환기(냉각핀) 전용 친환경 세척제 분사 및 고압 살균 세척');
@@ -153,8 +165,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = baseCost + contDelta + dryerDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.15);
+      minCost = Math.round(totalTarget - Math.max(10000, totalTarget * 0.08));
+      maxCost = Math.round(totalTarget + Math.max(15000, totalTarget * 0.13));
 
       inclusions.push('세탁조 통 전체 탈거, 스파이더 삼발이 분해 고압 세척');
       inclusions.push('고무 패킹 곰팡이 특수 제거 및 거름망/세제 투입구 살균');
@@ -184,8 +196,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = baseCost + wallDelta + coatDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.15);
+      minCost = Math.round(totalTarget - Math.max(20000, totalTarget * 0.09));
+      maxCost = Math.round(totalTarget + Math.max(30000, totalTarget * 0.16));
 
       inclusions.push('곰팡이 균사체 화학적 박멸 및 오존 살균 정화');
       inclusions.push('항균 프라이머 도포 및 친환경 결로 방지 코팅');
@@ -246,8 +258,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = baseCost + careDelta + (inputs.care_type !== 'dry' ? stainDelta : 0);
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.15);
+      minCost = Math.round(totalTarget - Math.max(6000, totalTarget * 0.07));
+      maxCost = Math.round(totalTarget + Math.max(10000, totalTarget * 0.14));
 
       inclusions.push('심층 진동 집진 헤드로 진드기 사체/미세먼지 집진, UV 자외선 살균');
       inclusions.push('피톤치드 항균 코팅 및 침대 프레임 주변 먼지 흡입');
@@ -260,30 +272,43 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
     }
 
     case 'office-cleaning-service': {
+      type = 'quote_preparation';
+      prepTitle = '사무실 정기청소 월 관리비용 현장 실측 맞춤 가이드';
+
       const area = Math.max(10, Math.min(200, Number(inputs.office_area) || 30));
       const freqOpt = service.questions.find((q) => q.id === 'frequency_per_week')?.options?.find((o) => o.value === String(inputs.frequency_per_week));
-      const freqDelta = freqOpt?.priceDelta || 180000;
-      const areaFactor = Math.round((area / 30) * freqDelta);
-      baseCost = areaFactor;
-      priceBreakdown.push({ name: `사무실 ${area}평 ${freqOpt?.label} 정기청소`, amount: baseCost });
-
       const scopeOpt = service.questions.find((q) => q.id === 'scope_option')?.options?.find((o) => o.value === inputs.scope_option);
-      const scopeDelta = scopeOpt?.priceDelta || 0;
-      if (scopeDelta !== 0) {
-        priceBreakdown.push({ name: `관리 범위 (${scopeOpt?.label})`, amount: scopeDelta });
+
+      priceBreakdown.push({
+        name: `사업장 실평수 (${area}평)`,
+        amount: 0,
+        description: '공간 면적에 따른 이동 동선 및 기본 청소 작업시간 결정 요인',
+      });
+      priceBreakdown.push({
+        name: `주간 방문 주기 (${freqOpt?.label || '주 2회'})`,
+        amount: 0,
+        description: '방문 횟수별 전담 클리너 인건비 및 월간 회차 산정 기준',
+      });
+      if (scopeOpt) {
+        priceBreakdown.push({
+          name: `관리 영역 (${scopeOpt.label})`,
+          amount: 0,
+          description: '단독 화장실, 탕비실 오염원 처리 및 유리 파티션 관리 여부',
+        });
       }
 
-      const totalTarget = baseCost + scopeDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.15);
+      prepExplanation =
+        '숨고에 공개된 상업공간 청소 시세는 1회성 준공/이사 대청소 건당 평균 400,000원(최저 15만~최고 100만) 기준입니다. 정기 방문 클리닝은 주간 방문 횟수, 실평수, 쓰레기 배출 환경, 야간/주간 출입 보안 조건에 따라 월간 계약금이 결정되므로, 단일 정액가 대신 복수 업체의 방문 실측 소견 비교를 권장합니다.';
 
       inclusions.push('업무공간 바닥 쓸기 및 전용 약품 물걸레 청소');
       inclusions.push('개인/공용 쓰레기통 비우기 및 분리수거장 배출');
       exclusions.push('직원 책상 위 서류 정리, 정기 바닥 왁스 코팅 박리 작업');
       extraFeeWarnings.push('계단 청소 추가 또는 탕비실 커피머신 분해 청소 시 별도 공임');
+      extraFeeWarnings.push('야간/새벽(22시~06시) 출입 작업 시 야간근로수당 가산 발생');
       contractorChecklist.push('위생관리용역업 정식 등록 업체 및 전자세금계산서 발행 가능한가?');
       contractorChecklist.push('출입 보안(카드키/도어락) 및 CCTV 관리 지침이 명문화되어 있는가?');
-      cautions.push('종량제 쓰레기봉투 및 화장실 소모품은 사업장에서 정기 구비해 두셔야 합니다.');
+      contractorChecklist.push('종량제 쓰레기봉투 및 화장실 소모품 공급 주체를 명시했는가?');
+      cautions.push('정기계약 전 1회 유료 시범 청소를 먼저 진행하여 퀄리티를 검증해보세요.');
       break;
     }
 
@@ -312,8 +337,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = baseCost + distDelta + evDelta + helperDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.15);
+      minCost = Math.round(totalTarget - Math.max(15000, totalTarget * 0.06));
+      maxCost = Math.round(totalTarget + Math.max(25000, totalTarget * 0.15));
 
       inclusions.push('1톤 탑차/카고 차량 운송, 큰 짐(침대/매트리스/서랍장) 포장 보양');
       inclusions.push('도착지 가구 배치 및 잔여 박스 회수 (반포장 기준)');
@@ -349,8 +374,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = baseCost + distDelta + ladderDelta + peakDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.15);
+      minCost = Math.round(totalTarget - Math.max(40000, totalTarget * 0.08));
+      maxCost = Math.round(totalTarget + Math.max(60000, totalTarget * 0.16));
 
       inclusions.push('전문 패커 3인 + 주방 도우미 1인(5톤 기준) 투입');
       inclusions.push('바닥재 흠집 방지 보양재 설치, 가구·가전 전용 커버 포장');
@@ -381,8 +406,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = baseCost + disDelta + envDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.15);
+      minCost = Math.round(totalTarget - Math.max(12000, totalTarget * 0.07));
+      maxCost = Math.round(totalTarget + Math.max(20000, totalTarget * 0.14));
 
       inclusions.push('가정 내 직접 방문, 가구 반출, 1톤 트럭 상차, 폐기장 직송');
       inclusions.push('폐기물 처리장 정식 반입 처리 수수료');
@@ -479,8 +504,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = baseCost + pipeDelta + bracketDelta + gasDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.15);
+      minCost = Math.round(totalTarget - Math.max(12000, totalTarget * 0.07));
+      maxCost = Math.round(totalTarget + Math.max(20000, totalTarget * 0.13));
 
       inclusions.push('기본 배관 5m, 벽 타공 1회, 전원 연결, 드레인 호스');
       inclusions.push('정상 가동 시운전 및 토출 온도 점검');
@@ -510,8 +535,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = baseCost + areaDelta + bundleDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.1);
+      minCost = Math.round(totalTarget - Math.max(20000, totalTarget * 0.06));
+      maxCost = Math.round(totalTarget + Math.max(30000, totalTarget * 0.12));
 
       inclusions.push('친환경 콘덴싱 가스보일러 본체, 룸콘(온도조절기), 신규 연통 일체');
       inclusions.push('법정 의무 KFI 인증 일산화탄소(CO) 경보기 설치, 가스 후렉시블관 교체');
@@ -575,8 +600,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = baseCost + eqDelta + repDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.2);
+      minCost = Math.round(totalTarget - Math.max(20000, totalTarget * 0.08));
+      maxCost = Math.round(totalTarget + Math.max(35000, totalTarget * 0.18));
 
       inclusions.push('배관 공압 검사(직수/온수/난방), 청음기 핀포인트 탐지');
       inclusions.push('굴착 수리 시 배관 교체 연결 및 몰탈 미장 마감 (수리 포함 옵션 시)');
@@ -637,8 +662,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = baseCost + eqDelta + urgDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.15);
+      minCost = Math.round(totalTarget - Math.max(20000, totalTarget * 0.06));
+      maxCost = Math.round(totalTarget + Math.max(30000, totalTarget * 0.12));
 
       inclusions.push('배관 내부 이물질 파쇄 및 석션 흡입 제거, 물 빠짐 테스트');
       exclusions.push('배관 파손으로 인한 땅파기 배관 교체 토목공사');
@@ -671,8 +696,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = wPyeongAdjust + fPyeongAdjust + occDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.15);
+      minCost = Math.round(totalTarget - Math.max(10000, totalTarget * 0.08));
+      maxCost = Math.round(totalTarget + Math.max(18000, totalTarget * 0.14));
 
       inclusions.push('친환경 도배 풀, 부직포 띄움 초배지, 삼중지 퍼티 작업');
       inclusions.push('도배사 인건비, 기본 폐기물 정리 및 바닥 쓸기');
@@ -702,8 +727,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = baseCost + gDelta + lDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.15);
+      minCost = Math.round(totalTarget - Math.max(20000, totalTarget * 0.08));
+      maxCost = Math.round(totalTarget + Math.max(35000, totalTarget * 0.18));
 
       inclusions.push('벽 타일(300×600) 및 바닥 타일(300×300), 치마형 양변기/세면대');
       inclusions.push('댐퍼 슬라이드 거울장, SMC 평천장, LED 매립등 2개, 힘펠 환풍기');
@@ -734,8 +759,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = baseCost + cDelta + dDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.15);
+      minCost = Math.round(totalTarget - Math.max(6000, totalTarget * 0.06));
+      maxCost = Math.round(totalTarget + Math.max(10000, totalTarget * 0.12));
 
       inclusions.push('상·하부장 맞춤 수납장, 인조대리석 상판, 스테인리스 사각 싱크볼');
       inclusions.push('원홀 수전, 슬라이딩 후드, 서랍 댐퍼 힌지, 칼꽂이, 수저분리함');
@@ -766,8 +791,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = baseCost + mDelta + wDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.15);
+      minCost = Math.round(totalTarget - Math.max(8000, totalTarget * 0.07));
+      maxCost = Math.round(totalTarget + Math.max(15000, totalTarget * 0.16));
 
       inclusions.push('기존 백시멘트 깊이 3mm 수작업 V컷 그라인더 파내기');
       inclusions.push('진공청소기 분진 흡입, 친환경 프라이머 도포 및 줄눈제 충진');
@@ -794,8 +819,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = areaAdjust + wDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.2);
+      minCost = Math.round(totalTarget - Math.max(40000, totalTarget * 0.09));
+      maxCost = Math.round(totalTarget + Math.max(70000, totalTarget * 0.18));
 
       inclusions.push('전문 철거공 인력 투입, 해머드릴/뿌레카 파쇄 및 집진 작업');
       inclusions.push('건설폐기물 마대 수거 및 트럭 상차, 반출지 직송');
@@ -825,8 +850,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = windowTotal + dDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.15);
+      minCost = Math.round(totalTarget - Math.max(30000, totalTarget * 0.08));
+      maxCost = Math.round(totalTarget + Math.max(50000, totalTarget * 0.15));
 
       inclusions.push('창틀 1층 탈거 후 야외 제작, 고강도 개스킷 고무 롤러 압착');
       inclusions.push('창문 하단 빗물구멍 미세 거름망 스티커 전창 부착 서비스');
@@ -856,8 +881,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = baseCost + wDelta + cDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.15);
+      minCost = Math.round(totalTarget - Math.max(50000, totalTarget * 0.08));
+      maxCost = Math.round(totalTarget + Math.max(80000, totalTarget * 0.15));
 
       inclusions.push('전문 실측 가공, 고강도 알루미늄 커튼 레일 또는 브래킷 부자재');
       inclusions.push('수평계 레이저 레벨링 정밀 시공 및 주름 형태 점검');
@@ -883,8 +908,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = areaAdjust + gDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.2);
+      minCost = Math.round(totalTarget - Math.max(60000, totalTarget * 0.08));
+      maxCost = Math.round(totalTarget + Math.max(100000, totalTarget * 0.16));
 
       inclusions.push('고압 물세척 바탕정리, 프라이머 하도 도포, 우레탄 실란트 균열 보수');
       inclusions.push('우레탄 중도 3mm 도포, 자외선 차단 상도 탑코트 코팅 마감');
@@ -946,8 +971,8 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       const totalTarget = baseCost + wDelta + bDelta;
-      minCost = Math.round(totalTarget * 0.95);
-      maxCost = Math.round(totalTarget * 1.15);
+      minCost = Math.round(totalTarget - Math.max(40000, totalTarget * 0.07));
+      maxCost = Math.round(totalTarget + Math.max(70000, totalTarget * 0.15));
 
       inclusions.push('벽면 레이저 수평 타공, 안전 하중 100kg 전용 앙카 체결');
       inclusions.push('셋톱박스 및 와이파이 공유기 전용 거치대 후면 숨김');
@@ -1036,6 +1061,43 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
     }
   }
 
+  // Handle quote_preparation type explicitly
+  if (type === 'quote_preparation') {
+    const finalPrepTitle = prepTitle || `${service.title} 현장 실측 맞춤 견적 가이드`;
+    const finalExplanation =
+      prepExplanation ||
+      `${service.title}는 단일 정액가 적용이 어려워 현장 방문 실측 및 복수 업체 비교를 권장하는 맞춤 견적 준비형 서비스입니다.`;
+
+    return {
+      type: 'quote_preparation',
+      status: 'warning',
+      serviceId: service.id,
+      minPrice: undefined,
+      maxPrice: undefined,
+      formattedRange: '현장 실측 맞춤 견적 (단일 정액가 산출 불가)',
+      prepTitle: finalPrepTitle,
+      inputSummary,
+      priceBreakdown,
+      inclusions,
+      exclusions,
+      extraFeeWarnings,
+      contractorChecklist,
+      verificationDate: service.evidence.lastVerifiedAt,
+      cautions,
+      // Compatibility fields
+      minAmount: undefined,
+      maxAmount: undefined,
+      basis: {
+        breakdown: priceBreakdown.map((p) => ({ label: p.name, amount: p.amount })),
+        explanation: finalExplanation,
+      },
+      includedItems: inclusions,
+      excludedItems: exclusions,
+      surchargeWarnings: extraFeeWarnings,
+      checklist: contractorChecklist,
+    };
+  }
+
   // Final sanity validation to ensure 0 errors
   if (minCost > maxCost) {
     const temp = minCost;
@@ -1050,7 +1112,7 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
     : `${formatKoreanWon(minCost)} ~ ${formatKoreanWon(maxCost)}`;
 
   return {
-    type,
+    type: 'range_estimate',
     status: 'success',
     serviceId: service.id,
     minPrice: minCost,
@@ -1068,7 +1130,7 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
     minAmount: minCost,
     maxAmount: maxCost,
     basis: {
-      breakdown: priceBreakdown.map(p => ({ label: p.name, amount: p.amount })),
+      breakdown: priceBreakdown.map((p) => ({ label: p.name, amount: p.amount })),
       explanation: `${service.title} 표준 시장 작업공임 및 선택 옵션 반영 기준`
     },
     includedItems: inclusions,

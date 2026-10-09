@@ -83,10 +83,10 @@ const formatManwon = (val: number) => {
       </div>
     ) : (
       <div class="prep-display" id="prepDisplay">
-        <div class="prep-icon">🔍</div>
-        <div class="prep-title">현장 방문 맞춤 견적 권장 서비스</div>
-        <div class="prep-desc">
-          본 서비스는 설비 상태, 매립 깊이, 누수 지점 등에 따라 편차가 커 표준 정액제 적용이 어렵습니다. 아래 견적 체크리스트를 바탕으로 최소 2~3개 업체의 현장 소견을 비교하세요.
+        <div class="prep-icon">📋</div>
+        <div class="prep-title" id="prepTitle">{initialResult.prepTitle || '현장 방문 실측 맞춤 견적 권장 서비스'}</div>
+        <div class="prep-desc" id="prepDesc">
+          {initialResult.basis.explanation || '본 서비스는 현장 상태, 시공 범위, 자재 스펙에 따라 편차가 커 단일 정액가 대신 현장 실측 맞춤 견적을 권장합니다. 아래 점검 항목을 바탕으로 2~3개 업체의 견적서를 비교하세요.'}
         </div>
       </div>
     )}
@@ -95,7 +95,7 @@ const formatManwon = (val: number) => {
   <!-- Cost Breakdown / Basis -->
   <div class="result-section">
     <h3 class="section-title">
-      <span class="icon">📊</span> 금액 산정 근거 및 세부 내역
+      <span class="icon">📊</span> {initialResult.type === 'range_estimate' ? '금액 산정 근거 및 세부 내역' : '비용 결정 핵심 요인 및 산정 기준'}
     </h3>
     <ul class="breakdown-list" id="breakdownList">
       {initialResult.basis.breakdown.map((item) => (
@@ -103,7 +103,7 @@ const formatManwon = (val: number) => {
           <span class="item-label">{item.label}</span>
           <span class="item-amount">
             {typeof item.amount === 'number' ? (
-              item.amount === 0 ? '기본 포함' : `+${formatMoney(item.amount)}원`
+              item.amount === 0 ? (initialResult.type === 'range_estimate' ? '기본 포함' : '핵심 요인') : `+${formatMoney(item.amount)}원`
             ) : (
               item.amount
             )}

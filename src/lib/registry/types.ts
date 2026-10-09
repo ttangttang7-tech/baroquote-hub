@@ -82,6 +82,7 @@ export interface EstimateResult {
   minPrice?: number;
   maxPrice?: number;
   formattedRange?: string;
+  prepTitle?: string;
   inputSummary: InputSummaryItem[];
   priceBreakdown: PriceBreakdownItem[];
   inclusions: string[];

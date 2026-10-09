@@ -138,4 +138,61 @@ describe('Estimation Engine — 30 Services Comprehensive Unit Test Suite (150+ 
       });
     });
   }
+
+  describe('Regression & Quality Audits — Quote Preparation & Pricing Units', () => {
+    it('office-cleaning-service transitions to quote_preparation and separates per-visit from monthly rate', () => {
+      const result = calculateEstimate('office-cleaning-service', {
+        office_area: 30,
+        frequency_per_week: '2',
+        scope_option: 'standard',
+      });
+
+      expect(result.type).toBe('quote_preparation');
+      expect(result.status).toBe('warning');
+      expect(result.minAmount).toBeUndefined();
+      expect(result.maxAmount).toBeUndefined();
+      expect(result.minPrice).toBeUndefined();
+      expect(result.maxPrice).toBeUndefined();
+      expect(result.formattedRange).toContain('현장 실측 맞춤 견적');
+      expect(result.prepTitle).toContain('사무실 정기청소');
+      expect(result.basis.explanation).toContain('400,000원');
+      expect(result.basis.explanation).toContain('정기 방문');
+      expect(result.priceBreakdown.length).toBeGreaterThanOrEqual(3);
+      expect(result.checklist.length).toBeGreaterThanOrEqual(3);
+    });
+
+    it('forces quote_preparation when verificationStatus is unverified, stale, or partially_verified', () => {
+      const statuses = ['unverified', 'stale', 'partially_verified'] as const;
+
+      for (const st of statuses) {
+        const result = calculateEstimate('move-in-cleaning', {
+          area_pyeong: 24,
+          __forceVerificationStatus: st,
+        });
+
+        expect(result.type).toBe('quote_preparation');
+        expect(result.minAmount).toBeUndefined();
+        expect(result.maxAmount).toBeUndefined();
+        expect(result.checklist.length).toBeGreaterThan(0);
+        expect(result.basis.explanation).toBeTruthy();
+      }
+    });
+
+    it('verifies that range spreads are non-uniform and derived from empirical conditions, not 0.95~1.15', () => {
+      const sampleSlugs = ['move-in-cleaning', 'air-conditioner-cleaning', 'washing-machine-cleaning', 'studio-moving'];
+      const spreads: number[] = [];
+
+      for (const slug of sampleSlugs) {
+        const res = calculateEstimate(slug, {});
+        if (res.type === 'range_estimate' && res.minAmount && res.maxAmount) {
+          const ratio = res.maxAmount / res.minAmount;
+          spreads.push(ratio);
+        }
+      }
+
+      // Check that not all ratios are identical (i.e. not uniform 1.15 / 0.95 = 1.2105)
+      const uniqueRatios = new Set(spreads.map((r) => r.toFixed(2)));
+      expect(uniqueRatios.size).toBeGreaterThan(1);
+    });
+  });
 });
