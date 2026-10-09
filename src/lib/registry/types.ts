@@ -59,6 +59,7 @@ export interface PriceEvidence {
   materialsIncluded: boolean;
   surveyedAt: string;
   lastVerifiedAt: string;
+  verificationCycleDays?: number;
   verificationStatus: VerificationStatus;
   reliabilityLevel: 'high' | 'medium' | 'low';
   sourceType: SourceType;

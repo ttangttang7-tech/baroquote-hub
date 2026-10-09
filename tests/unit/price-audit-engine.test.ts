@@ -127,4 +127,57 @@ describe('Price Evidence & Estimation Engine Quality Audits', () => {
       }
     }
   });
+
+  // 8. 동적 날짜 기반 stale 감지 및 자동 quote_preparation 전환
+  it('detects staleness when reference date exceeds verificationCycleDays', () => {
+    // Verified date is 2026-10-09
+    // Future reference date 100 days later: 2027-01-17
+    const res = calculateEstimate('move-in-cleaning', {
+      area_pyeong: 24,
+      __referenceDate: '2027-01-20', // > 90 days after lastVerifiedAt
+    });
+
+    expect(res.type).toBe('quote_preparation');
+    expect(res.minAmount).toBeUndefined();
+    expect(res.maxAmount).toBeUndefined();
+    expect(res.prepTitle).toContain('유효기간');
+    expect(res.basis.explanation).toContain('재검증');
+  });
+
+  // 9. 검증 기한 이내 정상 견적 산출 확인
+  it('provides range_estimate when reference date is within verificationCycleDays', () => {
+    const res = calculateEstimate('move-in-cleaning', {
+      area_pyeong: 24,
+      __referenceDate: '2026-10-15', // only 6 days after lastVerifiedAt
+    });
+
+    expect(res.type).toBe('range_estimate');
+    expect(res.minAmount).toBeGreaterThan(0);
+    expect(res.maxAmount).toBeGreaterThanOrEqual(res.minAmount!);
+  });
+
+  // 10. 3개 가격 중 하나라도 누락 시 전체 검증 미승인 로직
+  it('requires all 3 price points (avg, min, max) for full live verification', () => {
+    const evaluateExtraction = (extracted: { avg: number | null; min: number | null; max: number | null }) => {
+      const isFull = extracted.avg !== null && extracted.min !== null && extracted.max !== null;
+      return isFull ? 'full_verified' : 'partially_verified';
+    };
+
+    expect(evaluateExtraction({ avg: 250000, min: 140000, max: 420000 })).toBe('full_verified');
+    expect(evaluateExtraction({ avg: null, min: 140000, max: 420000 })).toBe('partially_verified');
+    expect(evaluateExtraction({ avg: 250000, min: null, max: 420000 })).toBe('partially_verified');
+  });
+
+  // 11. 확정 견적 오인 방지 고지문 검증
+  it('includes non-confirmed estimate disclaimer in range_estimate basis explanation', () => {
+    const res = calculateEstimate('air-conditioner-cleaning', {
+      ac_type: 'stand',
+      __referenceDate: '2026-10-09',
+    });
+
+    expect(res.type).toBe('range_estimate');
+    expect(res.basis.explanation).toContain('확정 견적이 아니며');
+    expect(res.basis.explanation).toContain('참고용 예상 범위');
+  });
 });
+

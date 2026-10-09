@@ -16,6 +16,20 @@ export function formatKoreanWon(amount: number): string {
   return `${amount.toLocaleString()}원`;
 }
 
+export const DEFAULT_STALE_THRESHOLD_DAYS = 90; // 분기별(90일) 주기
+
+export function isPriceEvidenceStale(
+  evidence?: { lastVerifiedAt?: string; verificationCycleDays?: number },
+  referenceDate: Date = new Date()
+): boolean {
+  if (!evidence || !evidence.lastVerifiedAt) return true;
+  const verifiedTime = Date.parse(evidence.lastVerifiedAt);
+  if (isNaN(verifiedTime)) return true;
+  const cycleDays = evidence.verificationCycleDays || DEFAULT_STALE_THRESHOLD_DAYS;
+  const diffDays = (referenceDate.getTime() - verifiedTime) / (1000 * 60 * 60 * 24);
+  return diffDays > cycleDays;
+}
+
 export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<string, any> = {}): EstimateResult {
   const service = getServiceBySlug(serviceSlugOrId) || getServiceById(serviceSlugOrId);
   if (!service) {
@@ -50,18 +64,30 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
   }
 
   const priceBreakdown: PriceBreakdownItem[] = [];
-  const verificationStatus = userInputs.__forceVerificationStatus || service.evidence?.verificationStatus || 'verified';
+  const refDate = userInputs.__referenceDate ? new Date(userInputs.__referenceDate) : new Date();
+  const isStaleByDate = isPriceEvidenceStale(service.evidence, refDate);
+  const rawStatus = service.evidence?.verificationStatus || 'verified';
+  const effectiveStatus = userInputs.__forceVerificationStatus || (isStaleByDate ? 'stale' : rawStatus);
+
   const isOfficeCleaning = service.slug === 'office-cleaning-service';
   const hasInsufficientBasis =
-    verificationStatus === 'unverified' ||
-    verificationStatus === 'stale' ||
-    verificationStatus === 'partially_verified' ||
+    effectiveStatus === 'unverified' ||
+    effectiveStatus === 'stale' ||
+    effectiveStatus === 'partially_verified' ||
     isOfficeCleaning ||
     service.estimateType === 'quote_preparation';
 
   let type: 'range_estimate' | 'quote_preparation' = hasInsufficientBasis ? 'quote_preparation' : 'range_estimate';
   let prepTitle: string | undefined = undefined;
   let prepExplanation: string | undefined = undefined;
+
+  if (effectiveStatus === 'stale') {
+    prepTitle = '가격 자료 유효기간 만료 (정기 재검증 진행 중)';
+    prepExplanation = `본 서비스의 기존 시장 가격 자료는 유효기간(${service.evidence?.verificationCycleDays || DEFAULT_STALE_THRESHOLD_DAYS}일)을 경과하여 최신 실거래 시세 재검증을 진행하고 있습니다. 왜곡된 금액 제공을 방지하기 위해 숫자 견적 대신 아래 현장 실측 가이드와 업체 견적 비교 체크리스트를 우선 안내해 드립니다.`;
+  } else if (effectiveStatus === 'partially_verified' && !isOfficeCleaning) {
+    prepTitle = '부분 검증 서비스 (현장 실측 맞춤 견적 권장)';
+    prepExplanation = `본 서비스는 기본 출장비 및 기초 작업비만 일부 확인된 상태이며, 현장 조건에 따른 편차가 커 정확한 사전 정액 추정이 어렵습니다. 확정 견적 전 아래 체크리스트로 2~3개 업체의 견적을 비교하세요.`;
+  }
 
   let baseCost = 0;
   let minCost = 0;
@@ -1131,7 +1157,7 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
     maxAmount: maxCost,
     basis: {
       breakdown: priceBreakdown.map((p) => ({ label: p.name, amount: p.amount })),
-      explanation: `${service.title} 표준 시장 작업공임 및 선택 옵션 반영 기준`
+      explanation: `${service.title} 표준 시장 실거래 통계(기준가: ${formatKoreanWon(service.evidence?.basePrice || 0)}) 및 선택 조건별 가산금을 반영한 시장 참고용 예상 범위입니다. (업체 확정 견적이 아니며, 현장 환경 및 시공 난이도에 따라 변동될 수 있습니다.)`
     },
     includedItems: inclusions,
     excludedItems: exclusions,
