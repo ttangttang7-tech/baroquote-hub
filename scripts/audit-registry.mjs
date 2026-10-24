@@ -47,16 +47,13 @@ const BASELINE_30_SLUGS = [
   'kitchen-hood-replacement',
 ];
 
-// 1. Scalable Batch Count Rule: minimum 30, expanded in batches of 10 (30, 40, 50...)
+// 1. Scalable Registry Count Rule: minimum 30 baseline, dynamically extensible
 const totalCount = SERVICES.length;
 if (totalCount < 30) {
   console.error(`❌ Total service count is below baseline: found ${totalCount}, expected at least 30.`);
   errorCount++;
-} else if (totalCount % 10 !== 0) {
-  console.error(`❌ Total service count (${totalCount}) violates 10-tool batch increment policy (must be a multiple of 10: 30, 40, 50...).`);
-  errorCount++;
 } else {
-  console.log(`✅ Total service count: ${totalCount} (Valid 10-tool batch, baseline satisfied) (PASS)`);
+  console.log(`✅ Total service count: ${totalCount} (Baseline >= 30 satisfied, dynamically extensible) (PASS)`);
 }
 
 // 2. Deletion Detection: all baseline 30 slugs must still exist

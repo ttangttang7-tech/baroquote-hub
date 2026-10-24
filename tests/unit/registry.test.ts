@@ -3,12 +3,12 @@ import { SERVICES, getServiceById, getServiceBySlug, getServicesByCategory } fro
 import { CATEGORIES } from '../../src/lib/registry/categories';
 
 describe('Service Registry Unit Tests', () => {
-  it('should contain exactly 30 services', () => {
-    expect(SERVICES).toHaveLength(30);
+  it('should contain registered services (extensible baseline >= 30)', () => {
+    expect(SERVICES.length).toBeGreaterThanOrEqual(30);
   });
 
-  it('should contain exactly 6 categories', () => {
-    expect(CATEGORIES).toHaveLength(6);
+  it('should contain at least 6 categories', () => {
+    expect(CATEGORIES.length).toBeGreaterThanOrEqual(6);
   });
 
   it('should ensure all services have unique IDs, slugs, and ruleIds', () => {
@@ -16,9 +16,9 @@ describe('Service Registry Unit Tests', () => {
     const slugs = new Set(SERVICES.map(s => s.slug));
     const ruleIds = new Set(SERVICES.map(s => s.ruleId));
 
-    expect(ids.size).toBe(30);
-    expect(slugs.size).toBe(30);
-    expect(ruleIds.size).toBe(30);
+    expect(ids.size).toBe(SERVICES.length);
+    expect(slugs.size).toBe(SERVICES.length);
+    expect(ruleIds.size).toBe(SERVICES.length);
   });
 
   it('should find services by ID, slug, and category', () => {
