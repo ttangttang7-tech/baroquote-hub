@@ -1,6 +1,6 @@
 {
-  "auditDate": "2026-10-09T15:35:24.924Z",
-  "todayBoundary": "2026-10-09",
+  "auditDate": "2026-10-24T08:36:02.249Z",
+  "todayBoundary": "2026-10-24",
   "totalServices": 30,
   "http200Count": 30,
   "fullVerifiedCount": 28,
@@ -35,9 +35,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -66,9 +66,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -97,9 +97,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -128,9 +128,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -159,9 +159,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -190,9 +190,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -221,9 +221,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -252,9 +252,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -283,9 +283,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -314,9 +314,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -345,9 +345,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -376,9 +376,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -407,9 +407,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -438,9 +438,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -469,9 +469,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -500,9 +500,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -531,9 +531,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -562,9 +562,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -593,9 +593,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -624,9 +624,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -655,9 +655,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "partially_verified",
@@ -692,9 +692,9 @@
         "anomalyReason": "숨고 원문 최저가 70,000원이 평균가 50,000원보다 높은 플랫폼 데이터 이상치(모순) 확인. 레지스트리는 현장 기초 통수 50,000원으로 합리적 산정하였으나, 원문 최저가 불일치로 partially_verified 엄격 분류"
       },
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -723,9 +723,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -754,9 +754,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -790,9 +790,9 @@
         "roundingDelta": 4433,
         "rationale": "숨고 원문 평균 3,504,433원, 소비자 인지성 및 견적 편의를 위한 만원 단위 반올림(3,500,000원) 표기 확인"
       },
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -821,9 +821,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -852,9 +852,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -883,9 +883,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -914,9 +914,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     },
     {
       "status": "ok",
@@ -945,9 +945,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 0,
+      "ageInDays": 15,
       "isStale": false,
-      "verifiedAt": "2026-10-09T15:35:24.924Z"
+      "verifiedAt": "2026-10-24T08:36:02.249Z"
     }
   ]
 }
