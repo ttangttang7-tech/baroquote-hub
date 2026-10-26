@@ -1,9 +1,9 @@
 {
-  "auditDate": "2026-10-24T08:36:02.249Z",
-  "todayBoundary": "2026-10-24",
-  "totalServices": 30,
-  "http200Count": 30,
-  "fullVerifiedCount": 28,
+  "auditDate": "2026-10-26T08:24:27.201Z",
+  "todayBoundary": "2026-10-26",
+  "totalServices": 60,
+  "http200Count": 60,
+  "fullVerifiedCount": 58,
   "roundedVerifiedCount": 1,
   "partialVerifiedCount": 1,
   "unverifiedCount": 0,
@@ -35,9 +35,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -66,9 +66,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -97,9 +97,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -128,9 +128,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -159,9 +159,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -190,9 +190,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -221,9 +221,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -252,9 +252,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -283,9 +283,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -314,9 +314,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -345,9 +345,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -376,9 +376,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -407,9 +407,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -438,9 +438,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -469,9 +469,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -500,9 +500,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -531,9 +531,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -562,9 +562,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -593,9 +593,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -624,9 +624,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -655,9 +655,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "partially_verified",
@@ -681,7 +681,7 @@
         "basePrice": 50000,
         "minPrice": 50000,
         "maxPrice": 300000,
-        "priceUnit": "건당 (평균 5만원 / 최저 5만 ~ 최고 30만원)",
+        "priceUnit": "건당 (상단 평균 7만/최저 5만 vs 본문 평균 5만/최저 7만 상충)",
         "lastVerifiedAt": "2026-10-09"
       },
       "discrepancyDetails": {
@@ -692,9 +692,9 @@
         "anomalyReason": "숨고 원문 최저가 70,000원이 평균가 50,000원보다 높은 플랫폼 데이터 이상치(모순) 확인. 레지스트리는 현장 기초 통수 50,000원으로 합리적 산정하였으나, 원문 최저가 불일치로 partially_verified 엄격 분류"
       },
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -723,9 +723,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -754,9 +754,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -790,9 +790,9 @@
         "roundingDelta": 4433,
         "rationale": "숨고 원문 평균 3,504,433원, 소비자 인지성 및 견적 편의를 위한 만원 단위 반올림(3,500,000원) 표기 확인"
       },
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -821,9 +821,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -852,9 +852,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -883,9 +883,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -914,9 +914,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     },
     {
       "status": "ok",
@@ -945,9 +945,939 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 15,
+      "ageInDays": 17,
       "isStale": false,
-      "verifiedAt": "2026-10-24T08:36:02.249Z"
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "sofa-fabric-cleaning",
+      "url": "https://soomgo.com/prices/%EC%86%8C%ED%8C%8C-%EC%B2%AD%EC%86%8C",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 90000,
+        "min": 58000,
+        "max": 150000
+      },
+      "registryPrices": {
+        "basePrice": 90000,
+        "minPrice": 58000,
+        "maxPrice": 150000,
+        "priceUnit": "건당 (3인용 기본 기준 9만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "carpet-rug-cleaning",
+      "url": "https://soomgo.com/prices/%EC%B9%B4%ED%8E%98%ED%8A%B8-%EC%B2%AD%EC%86%8C",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 80000,
+        "min": 55000,
+        "max": 300000
+      },
+      "registryPrices": {
+        "basePrice": 80000,
+        "minPrice": 55000,
+        "maxPrice": 300000,
+        "priceUnit": "건당 (거실 중형 러그 기준 8만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "refrigerator-cleaning",
+      "url": "https://soomgo.com/prices/%EB%83%89%EC%9E%A5%EA%B3%A0-%EC%B2%AD%EC%86%8C",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 120000,
+        "min": 70000,
+        "max": 200000
+      },
+      "registryPrices": {
+        "basePrice": 120000,
+        "minPrice": 70000,
+        "maxPrice": 200000,
+        "priceUnit": "건당 (양문형 기본 12만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "kitchen-hood-cleaning",
+      "url": "https://soomgo.com/prices/%ED%9B%84%EB%93%9C-%EC%B2%AD%EC%86%8C",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 150000,
+        "min": 90000,
+        "max": 520000
+      },
+      "registryPrices": {
+        "basePrice": 150000,
+        "minPrice": 90000,
+        "maxPrice": 520000,
+        "priceUnit": "건당 (가정용 통후드 기준 15만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "pest-control-service",
+      "url": "https://soomgo.com/prices/%ED%95%B4%EC%B6%A9-%EB%B0%A9%EC%97%AD",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 100000,
+        "min": 60000,
+        "max": 220000
+      },
+      "registryPrices": {
+        "basePrice": 100000,
+        "minPrice": 60000,
+        "maxPrice": 220000,
+        "priceUnit": "건당 (20평형 1회 집중 시공 기준 10만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "window-glass-cleaning",
+      "url": "https://soomgo.com/prices/%EA%B1%B4%EB%AC%BC-%EC%99%B8%EB%B6%80-%EC%B2%AD%EC%86%8C-%EC%99%B8%EB%B2%BD-%EC%9C%A0%EB%A6%AC%EC%B0%BD",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 250000,
+        "min": 100000,
+        "max": 600000
+      },
+      "registryPrices": {
+        "basePrice": 250000,
+        "minPrice": 100000,
+        "maxPrice": 600000,
+        "priceUnit": "건당 (20평형대 아파트 외창 전체 기준 25만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "office-moving",
+      "url": "https://soomgo.com/prices/%EC%82%AC%EB%AC%B4%EC%8B%A4-%EC%83%81%EC%97%85%EA%B3%B5%EA%B0%84-%EC%9D%B4%EC%82%AC",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 700000,
+        "min": 300000,
+        "max": 1500000
+      },
+      "registryPrices": {
+        "basePrice": 700000,
+        "minPrice": 300000,
+        "maxPrice": 1500000,
+        "priceUnit": "건당 (사무실 기본 이사 70만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "storage-moving",
+      "url": "https://soomgo.com/prices/%EA%B5%AD%EB%82%B4-%EC%9D%B4%EC%82%AC",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 580000,
+        "min": 200000,
+        "max": 1660000
+      },
+      "registryPrices": {
+        "basePrice": 580000,
+        "minPrice": 200000,
+        "maxPrice": 1660000,
+        "priceUnit": "건당 (기본 이사 58만원, 2회 및 창고료 합산)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "piano-moving",
+      "url": "https://soomgo.com/prices/%ED%94%BC%EC%95%84%EB%85%B8-%EC%9A%B4%EB%B0%98",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 150000,
+        "min": 70000,
+        "max": 280000
+      },
+      "registryPrices": {
+        "basePrice": 150000,
+        "minPrice": 70000,
+        "maxPrice": 280000,
+        "priceUnit": "건당 (업라이트 EV 이동 기준 15만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "furniture-assembly-disassembly",
+      "url": "https://soomgo.com/prices/%EA%B0%80%EA%B5%AC-%EC%A1%B0%EB%A6%BD",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 100000,
+        "min": 40000,
+        "max": 260000
+      },
+      "registryPrices": {
+        "basePrice": 100000,
+        "minPrice": 40000,
+        "maxPrice": 260000,
+        "priceUnit": "건당 (침대 1조 조립 기준 10만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "water-heater-installation",
+      "url": "https://soomgo.com/prices/%EC%98%A8%EC%88%98%EA%B8%B0-%EC%84%A4%EC%B9%98-%EC%88%98%EB%A6%AC",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 250000,
+        "min": 100000,
+        "max": 540000
+      },
+      "registryPrices": {
+        "basePrice": 250000,
+        "minPrice": 100000,
+        "maxPrice": 540000,
+        "priceUnit": "건당 (기본 설치비 25만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "induction-cooktop-installation",
+      "url": "https://soomgo.com/prices/%EC%9D%B8%EB%8D%95%EC%85%98-%EC%84%A4%EC%B9%98",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 90000,
+        "min": 60000,
+        "max": 250000
+      },
+      "registryPrices": {
+        "basePrice": 90000,
+        "minPrice": 60000,
+        "maxPrice": 250000,
+        "priceUnit": "건당 (기본 설치비 9만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "furniture-relocation-service",
+      "url": "https://soomgo.com/prices/%EA%B0%80%EA%B5%AC-%EC%9D%B4%EB%8F%99%EC%9E%AC%EB%B0%B0%EC%B9%98",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 100000,
+        "min": 50000,
+        "max": 230000
+      },
+      "registryPrices": {
+        "basePrice": 100000,
+        "minPrice": 50000,
+        "maxPrice": 230000,
+        "priceUnit": "건당 (기본 이동재배치 10만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "ventilation-fan-installation",
+      "url": "https://soomgo.com/prices/%ED%99%98%ED%92%8D%EA%B8%B0-%EA%B5%90%EC%B2%B4-%EC%84%A4%EC%B9%98",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 100000,
+        "min": 50000,
+        "max": 260000
+      },
+      "registryPrices": {
+        "basePrice": 100000,
+        "minPrice": 50000,
+        "maxPrice": 260000,
+        "priceUnit": "건당 (기본 환풍기 교체 10만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "tile-repair-installation",
+      "url": "https://soomgo.com/prices/%ED%83%80%EC%9D%BC-%EC%8B%9C%EA%B3%B5",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 400000,
+        "min": 150000,
+        "max": 1900000
+      },
+      "registryPrices": {
+        "basePrice": 400000,
+        "minPrice": 150000,
+        "maxPrice": 1900000,
+        "priceUnit": "시공당 (기본 타일보수 40만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "furniture-repair-service",
+      "url": "https://soomgo.com/prices/%EA%B0%80%EA%B5%AC-%EC%88%98%EB%A6%AC",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 80000,
+        "min": 40000,
+        "max": 300000
+      },
+      "registryPrices": {
+        "basePrice": 80000,
+        "minPrice": 40000,
+        "maxPrice": 300000,
+        "priceUnit": "건당 (기본 경첩/수리 8만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "balcony-elastic-coating",
+      "url": "https://soomgo.com/prices/%ED%83%84%EC%84%B1-%EB%B0%94%EC%9D%B4%EC%98%A4%EC%84%B8%EB%9D%BC%EB%AF%B9-%EC%BD%94%ED%8A%B8",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 500000,
+        "min": 300000,
+        "max": 800000
+      },
+      "registryPrices": {
+        "basePrice": 500000,
+        "minPrice": 300000,
+        "maxPrice": 800000,
+        "priceUnit": "건당 (베란다 1~2개소 50만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "drain-odor-trap-installation",
+      "url": "https://soomgo.com/prices/%EC%95%85%EC%B7%A8-%EC%A0%9C%EA%B1%B0",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 95000,
+        "min": 30000,
+        "max": 300000
+      },
+      "registryPrices": {
+        "basePrice": 95000,
+        "minPrice": 30000,
+        "maxPrice": 300000,
+        "priceUnit": "건당 (기본 악취차단 9.5만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "floor-wood-repair",
+      "url": "https://soomgo.com/prices/%EB%A7%88%EB%A3%A8-%EB%B3%B4%EC%88%98",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 250000,
+        "min": 150000,
+        "max": 700000
+      },
+      "registryPrices": {
+        "basePrice": 250000,
+        "minPrice": 150000,
+        "maxPrice": 700000,
+        "priceUnit": "건당 (부분 보수 교체 25만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "window-sash-replacement",
+      "url": "https://soomgo.com/prices/%EC%B0%BD%EB%AC%B8-%EC%84%A4%EC%B9%98-%EC%88%98%EB%A6%AC",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 2863000,
+        "min": 1500000,
+        "max": 4500000
+      },
+      "registryPrices": {
+        "basePrice": 2863000,
+        "minPrice": 1500000,
+        "maxPrice": 4500000,
+        "priceUnit": "시공당 (창호 교체 시공 286.3만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "entrance-middle-door-installation",
+      "url": "https://soomgo.com/prices/%EC%A4%91%EB%AC%B8-%EC%8B%9C%EA%B3%B5",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 750000,
+        "min": 550000,
+        "max": 1300000
+      },
+      "registryPrices": {
+        "basePrice": 750000,
+        "minPrice": 550000,
+        "maxPrice": 1300000,
+        "priceUnit": "건당 (기본 3연동 중문 75만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "door-frame-replacement",
+      "url": "https://soomgo.com/prices/%EB%AC%B8-%EC%84%A4%EC%B9%98-%EC%88%98%EB%A6%AC",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 200000,
+        "min": 70000,
+        "max": 1050000
+      },
+      "registryPrices": {
+        "basePrice": 200000,
+        "minPrice": 70000,
+        "maxPrice": 1050000,
+        "priceUnit": "건당 (문짝 1개 교체 기준 20만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "wood-flooring-installation",
+      "url": "https://soomgo.com/prices/%EB%A7%88%EB%A3%A8-%EC%8B%9C%EA%B3%B5",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 1693000,
+        "min": 660000,
+        "max": 2700000
+      },
+      "registryPrices": {
+        "basePrice": 1693000,
+        "minPrice": 660000,
+        "maxPrice": 2700000,
+        "priceUnit": "건당 (20평형 강마루 시공 169.3만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "interior-paint-coating",
+      "url": "https://soomgo.com/prices/%ED%8E%98%EC%9D%B8%ED%8A%B8-%EC%8B%9C%EA%B3%B5",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 600000,
+        "min": 230000,
+        "max": 1800000
+      },
+      "registryPrices": {
+        "basePrice": 600000,
+        "minPrice": 230000,
+        "maxPrice": 1800000,
+        "priceUnit": "건당 (실내 방문/몰딩 도장 60만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "interior-film-wrap",
+      "url": "https://soomgo.com/prices/%EC%9D%B8%ED%85%8C%EB%A6%AC%EC%96%B4-%ED%95%84%EB%A6%84-%EC%8B%9C%EA%B3%B5",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 580000,
+        "min": 180000,
+        "max": 2700000
+      },
+      "registryPrices": {
+        "basePrice": 580000,
+        "minPrice": 180000,
+        "maxPrice": 2700000,
+        "priceUnit": "건당 (싱크대/방문 래핑 58만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "built-in-closet-custom",
+      "url": "https://soomgo.com/prices/%EB%B6%99%EB%B0%95%EC%9D%B4%EC%9E%A5-%EC%8B%9C%EA%B3%B5",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 1028485,
+        "min": 825000,
+        "max": 1350000
+      },
+      "registryPrices": {
+        "basePrice": 1028485,
+        "minPrice": 825000,
+        "maxPrice": 1350000,
+        "priceUnit": "건당 (10자 기본 붙박이장 102.8만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "cctv-installation",
+      "url": "https://soomgo.com/prices/CCTV-%EC%84%A4%EC%B9%98",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 400000,
+        "min": 25000,
+        "max": 1150000
+      },
+      "registryPrices": {
+        "basePrice": 400000,
+        "minPrice": 25000,
+        "maxPrice": 1150000,
+        "priceUnit": "건당 (기본 CCTV 2대 설치 40만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "ev-charger-installation",
+      "url": "https://soomgo.com/prices/%EC%A0%84%EA%B8%B0%EC%B0%A8-%EC%B6%A9%EC%A0%84%EA%B8%B0-%EC%84%A4%EC%B9%98-%EC%88%98%EB%A6%AC",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 900000,
+        "min": 500000,
+        "max": 1300000
+      },
+      "registryPrices": {
+        "basePrice": 900000,
+        "minPrice": 500000,
+        "maxPrice": 1300000,
+        "priceUnit": "건당 (기본 7kW 완속충전기 설치 90만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "intercom-doorphone-installation",
+      "url": "https://soomgo.com/prices/%EC%97%B4%EC%87%A0-%EB%8F%84%EC%96%B4%EB%9D%BD-%EC%84%A4%EC%B9%98-%EC%88%98%EB%A6%AC",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 130000,
+        "min": 45000,
+        "max": 320000
+      },
+      "registryPrices": {
+        "basePrice": 130000,
+        "minPrice": 45000,
+        "maxPrice": 320000,
+        "priceUnit": "시공당 (비디오폰 설치 공임 13만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
+    },
+    {
+      "status": "ok",
+      "slug": "electrical-outlet-wiring",
+      "url": "https://soomgo.com/prices/%EC%A0%84%EA%B8%B0-%EB%B0%B0%EC%84%A0-%EC%84%A4%EC%B9%98-%EC%88%98%EB%A6%AC",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": true,
+      "liveVerificationLevel": "full_verified",
+      "fieldStatus": {
+        "avg": "exact_match",
+        "min": "exact_match",
+        "max": "exact_match"
+      },
+      "extracted": {
+        "avg": 100000,
+        "min": 30000,
+        "max": 500000
+      },
+      "registryPrices": {
+        "basePrice": 100000,
+        "minPrice": 30000,
+        "maxPrice": 500000,
+        "priceUnit": "시공당 (기본 콘센트 배선 공사 10만원)",
+        "lastVerifiedAt": "2026-10-24"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 2,
+      "isStale": false,
+      "verifiedAt": "2026-10-26T08:24:27.201Z"
     }
   ]
 }

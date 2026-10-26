@@ -1,4 +1,10 @@
 import type { CategoryDefinition } from './types';
+import { CLEANING_SERVICES } from './services/cleaning';
+import { MOVING_SERVICES } from './services/moving';
+import { HEATING_COOLING_SERVICES } from './services/heatingCooling';
+import { PLUMBING_SERVICES } from './services/plumbing';
+import { INTERIOR_SERVICES } from './services/interior';
+import { INSTALLATION_SERVICES } from './services/installation';
 
 export const CATEGORIES: CategoryDefinition[] = [
   {
@@ -7,7 +13,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     slug: 'cleaning',
     description: '입주·이사청소, 에어컨·세탁기 분해청소, 가사도우미 및 특수 청소 견적',
     icon: '🧹',
-    serviceCount: 7,
+    get serviceCount() { return CLEANING_SERVICES.length; },
   },
   {
     id: 'moving',
@@ -15,7 +21,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     slug: 'moving',
     description: '원룸·포장이사, 용달 화물, 폐기물 수거 및 사다리차 이용 견적',
     icon: '📦',
-    serviceCount: 5,
+    get serviceCount() { return MOVING_SERVICES.length; },
   },
   {
     id: 'heating-cooling',
@@ -23,7 +29,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     slug: 'heating-cooling',
     description: '에어컨 이전설치, 보일러 수리·교체 및 배관 세척 견적',
     icon: '❄️',
-    serviceCount: 3,
+    get serviceCount() { return HEATING_COOLING_SERVICES.length; },
   },
   {
     id: 'plumbing',
@@ -31,7 +37,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     slug: 'plumbing',
     description: '누수탐지, 하수구·배관 막힘 통수, 수전 교체 견적',
     icon: '🔧',
-    serviceCount: 3,
+    get serviceCount() { return PLUMBING_SERVICES.length; },
   },
   {
     id: 'interior',
@@ -39,7 +45,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     slug: 'interior',
     description: '도배·장판, 욕실·주방 리모델링, 줄눈, 철거, 방수, 방충망·블라인드 시공 견적',
     icon: '🏠',
-    serviceCount: 8,
+    get serviceCount() { return INTERIOR_SERVICES.length; },
   },
   {
     id: 'installation',
@@ -47,7 +53,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     slug: 'installation',
     description: '디지털 도어락, 벽걸이 TV, LED 조명, 주방후드 설치·교체 견적',
     icon: '💡',
-    serviceCount: 4,
+    get serviceCount() { return INSTALLATION_SERVICES.length; },
   },
 ];
 

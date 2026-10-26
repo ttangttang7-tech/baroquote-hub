@@ -31,9 +31,9 @@ test.describe('BaroQuote Platform E2E Test Suite', () => {
     await page.locator('#clearSearchBtn').click();
     await expect(searchResults).toBeHidden();
 
-    // Check All 30 tools are listed across category groups
+    // Check All tools are listed across category groups
     const allToolsInGroups = page.locator('.category-group .service-card');
-    await expect(allToolsInGroups).toHaveCount(30);
+    await expect(allToolsInGroups).toHaveCount(SERVICES.length);
   });
 
   test('Category Pages — All 6 categories load cleanly', async ({ page }) => {

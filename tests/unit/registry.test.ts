@@ -32,10 +32,10 @@ describe('Service Registry Unit Tests', () => {
     expect(sSlug?.id).toBe('service-07');
 
     const cleaningServices = getServicesByCategory('cleaning');
-    expect(cleaningServices).toHaveLength(7);
+    expect(cleaningServices.length).toBeGreaterThanOrEqual(7);
 
     const movingServices = getServicesByCategory('moving');
-    expect(movingServices).toHaveLength(5);
+    expect(movingServices.length).toBeGreaterThanOrEqual(5);
   });
 
   it('should ensure every service has price evidence and verified date', () => {

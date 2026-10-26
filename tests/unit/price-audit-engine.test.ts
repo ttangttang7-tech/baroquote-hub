@@ -260,5 +260,125 @@ describe('Price Evidence & Estimation Engine Quality Audits', () => {
     expect(res.maxAmount).toBeUndefined();
     expect(res.basis.explanation).toContain('정기 방문 클리닝');
   });
+
+  // 하수구 청소 시세 상·하단 충돌에 따른 quote_preparation 전환 및 숫자 견적 출력 차단 검증
+  it('forces quote_preparation on drain-unclogging due to conflicting source evidence', () => {
+    const drainService = getServiceBySlug('drain-unclogging');
+    expect(drainService).toBeDefined();
+    expect(drainService!.estimateType).toBe('quote_preparation');
+    expect(drainService!.evidence.verificationStatus).toBe('partially_verified');
+    expect(drainService!.evidence.notes).toContain('상단 요약(평균 70,000원');
+    expect(drainService!.evidence.notes).toContain('본문(평균 50,000원');
+
+    const res = calculateEstimate('drain-unclogging', {
+      blockage_type: 'sink',
+      urgency: 'normal',
+    });
+
+    expect(res.type).toBe('quote_preparation');
+    expect(res.minAmount).toBeUndefined();
+    expect(res.maxAmount).toBeUndefined();
+    expect(res.minPrice).toBeUndefined();
+    expect(res.maxPrice).toBeUndefined();
+    expect(res.prepTitle).toContain('하수구 청소 시세 상충 안내');
+    expect(res.basis.explanation).toContain('시세 데이터 충돌 및 모순');
+  });
+
+  // 잘못된 입력값(음수, NaN, Infinity, 범위초과, 미등록옵션) 계산 차단 방어 검증
+  describe('Strict Input Validation & Calculation Blocking', () => {
+    it('blocks calculation on negative number input', () => {
+      const res = calculateEstimate('move-in-cleaning', {
+        area_pyeong: -10,
+      });
+
+      expect(res.type).toBe('quote_preparation');
+      expect(res.status).toBe('warning');
+      expect(res.minPrice).toBeUndefined();
+      expect(res.maxPrice).toBeUndefined();
+      expect(res.minAmount).toBeUndefined();
+      expect(res.maxAmount).toBeUndefined();
+      expect(res.formattedRange).toContain('입력값 오류 (견적 계산 차단)');
+      expect(res.prepTitle).toContain('입력값 유효성 오류');
+      expect(res.basis.explanation).toContain('음수, NaN, Infinity');
+    });
+
+    it('blocks calculation on NaN or Infinity input', () => {
+      const resNaN = calculateEstimate('move-in-cleaning', {
+        area_pyeong: NaN,
+      });
+      expect(resNaN.type).toBe('quote_preparation');
+      expect(resNaN.minPrice).toBeUndefined();
+      expect(resNaN.formattedRange).toContain('입력값 오류 (견적 계산 차단)');
+
+      const resInf = calculateEstimate('move-in-cleaning', {
+        area_pyeong: Infinity,
+      });
+      expect(resInf.type).toBe('quote_preparation');
+      expect(resInf.minPrice).toBeUndefined();
+      expect(resInf.formattedRange).toContain('입력값 오류 (견적 계산 차단)');
+    });
+
+    it('blocks calculation on out-of-range number input', () => {
+      const res = calculateEstimate('move-in-cleaning', {
+        area_pyeong: 99999, // max is 80
+      });
+
+      expect(res.type).toBe('quote_preparation');
+      expect(res.minPrice).toBeUndefined();
+      expect(res.formattedRange).toContain('입력값 오류 (견적 계산 차단)');
+      expect(res.basis.explanation).toContain('허용 최대치');
+    });
+
+    it('blocks calculation on invalid select option value', () => {
+      const res = calculateEstimate('move-in-cleaning', {
+        contamination_level: 'illegal_castle_option',
+      });
+
+      expect(res.type).toBe('quote_preparation');
+      expect(res.minPrice).toBeUndefined();
+      expect(res.formattedRange).toContain('입력값 오류 (견적 계산 차단)');
+      expect(res.basis.explanation).toContain('유효하지 않은 옵션 선택값');
+    });
+  });
+
+  // 전기공사 및 CCTV 법령 및 안전 문구 검증
+  describe('Legal Notice & Safety Verification Compliance', () => {
+    it('verifies 2026-09-18 Electrical Construction Business Act Enforcement Decree Article 5 in electrical-outlet-wiring', () => {
+      const s = getServiceBySlug('electrical-outlet-wiring');
+      expect(s).toBeDefined();
+      const allText = JSON.stringify(s);
+      expect(allText).toContain('2026년 9월 18일');
+      expect(allText).toContain('전기공사업법 시행령 제5조');
+      expect(allText).toContain('전기공사기술자가 하는 경우');
+      expect(allText).toContain('1,000V 이하·5kW 이하');
+    });
+
+    it('verifies EV charger installation conditional specification notice', () => {
+      const s = getServiceBySlug('ev-charger-installation');
+      expect(s).toBeDefined();
+      const allText = JSON.stringify(s);
+      expect(allText).toContain('전기공사업법 제3조');
+      expect(allText).toContain('제조사 시공설명서 권장');
+      expect(allText).toContain('한전 기본공급약관');
+    });
+
+    it('verifies CCTV installation distinction between public and private spaces under Personal Information Protection Act Article 25/15 and Protection of Communications Secrets Act', () => {
+      const s = getServiceBySlug('cctv-installation');
+      expect(s).toBeDefined();
+      const allText = JSON.stringify(s);
+      expect(allText).toContain('개인정보 보호법 제25조');
+      expect(allText).toContain('공개된 장소');
+      expect(allText).toContain('제25조 제5항');
+      expect(allText).toContain('제15조');
+      expect(allText).toContain('통신비밀보호법');
+
+      // Verify estimator output cautions
+      const res = calculateEstimate('cctv-installation', {
+        camera_units: 'cameras_2',
+      });
+      expect(res.cautions.some((c) => c.includes('개인정보 보호법 제25조') && c.includes('제15조') && c.includes('통신비밀보호법'))).toBe(true);
+      expect(res.contractorChecklist.some((c) => c.includes('공개된 장소') && c.includes('제25조 제5항'))).toBe(true);
+    });
+  });
 });
 
