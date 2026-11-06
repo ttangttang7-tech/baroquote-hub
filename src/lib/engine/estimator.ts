@@ -739,32 +739,41 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
     }
 
     case 'drain-unclogging': {
+      type = 'quote_preparation';
+      prepTitle = '하수구 청소 시세 상충 안내 (현장 맞춤 견적 권장)';
+      prepExplanation =
+        '숨고 원문 플랫폼의 상단 요약(평균 7만/최저 5만/최고 30만)과 본문 상세(평균 5만/최저 7만/최고 30만) 간 시세 데이터 충돌 및 모순이 확인되어 왜곡된 숫자 견적 출력을 전면 차단하고 현장 실측 맞춤 견적 준비형으로 안내합니다.';
+
       const bOpt = service.questions.find((q) => q.id === 'blockage_location')?.options?.find((o) => o.value === inputs.blockage_location);
-      baseCost = bOpt?.priceDelta || 80000;
-      priceBreakdown.push({ name: `${bOpt?.label || '하수구'} 기본 통수`, amount: baseCost });
-
       const eqOpt = service.questions.find((q) => q.id === 'equipment_level')?.options?.find((o) => o.value === inputs.equipment_level);
-      const eqDelta = eqOpt?.priceDelta || 0;
-      if (eqDelta !== 0) {
-        priceBreakdown.push({ name: `장비 옵션 (${eqOpt?.label})`, amount: eqDelta });
-      }
-
       const urgOpt = service.questions.find((q) => q.id === 'urgency_level')?.options?.find((o) => o.value === inputs.urgency_level);
-      const urgDelta = urgOpt?.priceDelta || 0;
-      if (urgDelta !== 0) {
-        priceBreakdown.push({ name: `긴급 출동 할증`, amount: urgDelta });
-      }
 
-      const totalTarget = baseCost + eqDelta + urgDelta;
-      minCost = Math.round(totalTarget - Math.max(20000, totalTarget * 0.06));
-      maxCost = Math.round(totalTarget + Math.max(30000, totalTarget * 0.12));
+      priceBreakdown.push({
+        name: `막힘 발생 위치 (${bOpt?.label || '하수구'})`,
+        amount: 0,
+        description: '싱크대 기름 슬러지 역류, 변기 이물질, 메인 횡주관 등 작업 포인트',
+      });
+      priceBreakdown.push({
+        name: `투입 장비 및 공법 (${eqOpt?.label || '기본 장비'})`,
+        amount: 0,
+        description: '석션 흡입기, 샤프트 스케일링, 고압세척 엔진기 등 장비 투입 수준',
+      });
+      priceBreakdown.push({
+        name: `출동 긴급도 (${urgOpt?.label || '일반 주간'})`,
+        amount: 0,
+        description: '주간 일반 방문 또는 심야·야간 긴급 출동에 따른 현장 여건',
+      });
 
-      inclusions.push('배관 내부 이물질 파쇄 및 석션 흡입 제거, 물 빠짐 테스트');
-      exclusions.push('배관 파손으로 인한 땅파기 배관 교체 토목공사');
+      inclusions.push('배관 내부 이물질 파쇄 및 석션 흡입 제거, 물 빠짐 통수 테스트');
+      inclusions.push('작업 전후 배관 내시경 카메라 진단 확인 (해당 장비 선택 시)');
+      exclusions.push('배관 파손·침하로 인한 굴착 및 배관 전면 교체 토목공사');
       extraFeeWarnings.push('오랜 기름 슬러지가 10m 이상 굳어 있어 고압세척 전환 시 추가 요금');
-      contractorChecklist.push('해결 실패(통수 불가) 시 출장비를 받지 않는 조건인가?');
-      contractorChecklist.push('내시경 카메라로 배관 속 기름 슬러지가 다 빠진 화면을 보여주는가?');
+      extraFeeWarnings.push('공동주택 메인 횡주관 역류로 사다리차나 특수 고압호스 연장 필요 시 가산');
+      contractorChecklist.push('통수 실패(해결 불가) 시 출장비 및 작업비를 청구하지 않는 조건인가?');
+      contractorChecklist.push('작업 전/후 배관 내시경 카메라로 슬러지 제거 상태를 고객에게 직접 확인시켜 주는가?');
+      contractorChecklist.push('시공 후 일정 기간(통상 1~3개월) 동일 부위 재발 시 무상 AS를 보증하는가?');
       cautions.push('화학 배수관 세정제(락스 등)를 과다 투입한 상태라면 기사님께 미리 고지해 화상을 방지하세요.');
+      cautions.push('배관 역류 현상 및 누수 피해 증거 사진을 미리 촬영해두면 분쟁 예방에 도움이 됩니다.');
       break;
     }
 
@@ -1331,17 +1340,30 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
 
     case 'office-moving': {
       type = 'quote_preparation';
-      baseCost = 1200000;
+      baseCost = 0;
       prepTitle = '사무실·상업공간 이전 실측 맞춤 견적 가이드';
-      prepExplanation = '사무실 이전은 책상·파티션 수량, 전산서버 특수포장, 빌딩 화물승강기 승인 및 보양 규정에 따라 견적이 결정되므로 사전 현장 실측이 필수적입니다.';
+      prepExplanation =
+        '사무실 이전은 전용 면적, 책상·파티션 수량 및 분해조립 난이도, 전산 서버랙 특수포장, 빌딩 화물 승강기 승인 및 보양 규정에 따라 견적이 결정되므로 단일 정액가 대신 현장 사전 실측 맞춤 견적을 권장합니다.';
 
       const oOpt = service.questions.find((q) => q.id === 'office_scale')?.options?.find((o) => o.value === inputs.office_scale);
       const pOpt = service.questions.find((q) => q.id === 'partition_work')?.options?.find((o) => o.value === inputs.partition_work);
       const lOpt = service.questions.find((q) => q.id === 'building_logistics')?.options?.find((o) => o.value === inputs.building_logistics);
 
-      priceBreakdown.push({ name: `사무실 규모 (${oOpt?.label || '표준 오피스'})`, amount: 800000 });
-      priceBreakdown.push({ name: `파티션/집기 분해조립 (${pOpt?.label || '파티션 조립'})`, amount: 300000 });
-      priceBreakdown.push({ name: `빌딩 반출입 환경 (${lOpt?.label || '화물 승강기'})`, amount: 100000 });
+      priceBreakdown.push({
+        name: `사무실 규모 및 근무 인원 (${oOpt?.label || '표준 오피스'})`,
+        amount: 0,
+        description: '공간 평수 및 집기 수량에 따른 투입 차량(톤수) 및 인부 인원 결정 요인',
+      });
+      priceBreakdown.push({
+        name: `파티션 및 사무집기 분해조립 (${pOpt?.label || '파티션 조립'})`,
+        amount: 0,
+        description: '시스템 파티션 규격, 전산 배선 연결, 대형 회의테이블 분해 난이도',
+      });
+      priceBreakdown.push({
+        name: `빌딩 반출입 환경 (${lOpt?.label || '화물 승강기'})`,
+        amount: 0,
+        description: '화물 승강기 이용 가능 여부, 지하 하역장 층고 및 사다리차 진입 조건',
+      });
 
       inclusions.push('사무실 개인 짐 전용 플라스틱 박스 및 라벨 스티커 사전 불출');
       inclusions.push('책상, 회의테이블, 시스템 파티션 분해 및 신규 사무실 배치 조립');
@@ -1350,7 +1372,9 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       extraFeeWarnings.push('야간/주말 철야 작업 진행 시 야간 인건비 할증이 적용될 수 있음');
       contractorChecklist.push('적재물 배상책임보험 및 이사 종합 화물보험에 가입된 정식 허가 업체인가?');
       contractorChecklist.push('파티션 및 전산선 재결선 배치도(도면)를 사전에 숙지하고 작업하는가?');
+      contractorChecklist.push('빌딩 관리실 보양 기준(바닥·벽면·엘리베이터)을 충족하는 전용 보양재를 사용하는가?');
       cautions.push('개인 PC의 중요 데이터는 사전에 외장하드나 클라우드에 백업해 두세요.');
+      cautions.push('사무실 현장 구조, 파티션 배치, 서버랙 사진을 미리 촬영해 견적 시 첨부하세요.');
       break;
     }
 
@@ -2071,6 +2095,785 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       break;
     }
 
+    case 'dishwasher-installation': {
+      const dOpt = service.questions.find((q) => q.id === 'dishwasher_type')?.options?.find((o) => o.value === inputs.dishwasher_type);
+      const dDelta = dOpt?.priceDelta || 0;
+      const cOpt = service.questions.find((q) => q.id === 'cabinet_reform_type')?.options?.find((o) => o.value === inputs.cabinet_reform_type);
+      const cDelta = cOpt?.priceDelta || 0;
+      const pOpt = service.questions.find((q) => q.id === 'plumbing_work')?.options?.find((o) => o.value === inputs.plumbing_work);
+      const pDelta = pOpt?.priceDelta || 0;
+
+      baseCost = 90000 + dDelta;
+      priceBreakdown.push({ name: `식기세척기 설치 기본 공임 (${dOpt?.label || '표준 빌트인'})`, amount: baseCost });
+      if (cDelta !== 0) {
+        priceBreakdown.push({ name: `하부장 리폼 공사 가산 (${cOpt?.label})`, amount: cDelta });
+      }
+      if (pDelta !== 0) {
+        priceBreakdown.push({ name: `상판 타공 및 배관 작업 (${pOpt?.label})`, amount: pDelta });
+      }
+
+      const totalTarget = baseCost + cDelta + pDelta;
+      minCost = Math.round(totalTarget * 0.85);
+      maxCost = Math.round(totalTarget * 1.25);
+
+      inclusions.push('주방 수전 온·냉수 앵글밸브 전용 T형 아답터 분기 및 급수관 연결');
+      inclusions.push('배수관 악취 및 하수 역류 방지 U자 트랩 고정 결속');
+      inclusions.push('식기세척기 본체 수평 레벨링 및 초기 누수·배수 테스트');
+      exclusions.push('식기세척기 본체 기기값');
+      exclusions.push('10년 이상 노후 앵글밸브 및 싱크볼 배수관 전체 교체비');
+      exclusions.push('인덕션/식기세척기 동시 사용을 위한 분전함 전용 단독 배선 공사');
+      extraFeeWarnings.push('천연대리석/엔지니어드스톤(칸스톤) 특수 상판 타공 시 추가 공임 발생');
+      extraFeeWarnings.push('싱크대 걸레받이 높이(최소 150mm 미만) 재단 및 상판 쳐짐 보강 시 추가비');
+      contractorChecklist.push('빌트인 600mm 규격 공간이 정확히 확보되었으며 상판 하부 지지목 보강이 안전한가?');
+      contractorChecklist.push('급수 밸브 체결 후 고압 통수 시 이음매 미세 누수가 없는지 테프론 씰링을 확인했는가?');
+      contractorChecklist.push('배수 호스가 꺾이거나 눌리지 않고 원활하게 배수가 배출되는지 시운전했는가?');
+      cautions.push('사전 실측 안내: 12인용·14인용 빌트인 모델은 싱크대 높이(815~825mm)와 깊이(600mm)가 확보되지 않으면 상판 올림 공사나 걸레받이 재단이 필요하므로 사전 실측 치수를 반드시 공유해야 합니다.');
+      break;
+    }
+
+    case 'bidet-installation-replacement': {
+      const wOpt = service.questions.find((q) => q.id === 'bidet_work_type')?.options?.find((o) => o.value === inputs.bidet_work_type);
+      const wDelta = wOpt?.priceDelta || 0;
+      const oOpt = service.questions.find((q) => q.id === 'outlet_presence')?.options?.find((o) => o.value === inputs.outlet_presence);
+      const oDelta = oOpt?.priceDelta || 0;
+      const dOpt = service.questions.find((q) => q.id === 'disposal_needed')?.options?.find((o) => o.value === inputs.disposal_needed);
+      const dDelta = dOpt?.priceDelta || 0;
+
+      baseCost = 45000 + wDelta;
+      priceBreakdown.push({ name: `비데 설치·교체 기본 공임 (${wOpt?.label || '기본 교체'})`, amount: baseCost });
+      if (oDelta !== 0) {
+        priceBreakdown.push({ name: `콘센트 배선 보강 가산 (${oOpt?.label})`, amount: oDelta });
+      }
+      if (dDelta !== 0) {
+        priceBreakdown.push({ name: `폐비데 수거 폐기 대행 (${dOpt?.label})`, amount: dDelta });
+      }
+
+      const totalTarget = baseCost + oDelta + dDelta;
+      minCost = Math.round(totalTarget * 0.85);
+      maxCost = Math.round(totalTarget * 1.25);
+
+      inclusions.push('기존 변기 시트 또는 노후 비데 분해 탈거');
+      inclusions.push('양변기 본체 고정 브래킷 및 캐치플레이트 볼트 체결');
+      inclusions.push('급수 앵글밸브 T형 어댑터 및 정수 필터 연결');
+      inclusions.push('초기 전원 통전 및 노즐 세정·온수 분사 동작 테스트');
+      exclusions.push('비데 신품 기기값');
+      exclusions.push('도기 파손 및 크랙 보수비');
+      exclusions.push('벽체 매립 전기 콘센트 신설 공사');
+      extraFeeWarnings.push('수로 밀폐형 치마형 변기의 경우 상부 체결 특수 볼트 부속비 발생 가능');
+      extraFeeWarnings.push('기존 앵글밸브 고착으로 인한 밸브 통교체 필요 시 부속비 추가');
+      contractorChecklist.push('T형 분기밸브 고무 가스켓이 정확히 삽입되어 수압에 의한 미세 누수가 없는가?');
+      contractorChecklist.push('치마형 변기 또는 라운드 변기 규격에 맞춰 본체가 앞뒤로 흔들림 없이 고정되었는가?');
+      contractorChecklist.push('접지 콘센트에 정상 연결되어 물청소 시 감전 누전 위험이 차단되었는가?');
+      cautions.push('안전 고지: 습식 욕실에서 물청소를 자주 할 경우 비데 조작부 침수로 인한 누전 사고가 발생할 수 있으므로, 반드시 방수 등급(IPX4 이상)을 확인하고 물청소 시 플러그를 뽑거나 방수 커버를 유지해야 합니다.');
+      break;
+    }
+
+    case 'ac-refrigerant-recharge': {
+      const uOpt = service.questions.find((q) => q.id === 'ac_unit_type')?.options?.find((o) => o.value === inputs.ac_unit_type);
+      const uDelta = uOpt?.priceDelta || 0;
+      const gOpt = service.questions.find((q) => q.id === 'gas_type')?.options?.find((o) => o.value === inputs.gas_type);
+      const gDelta = gOpt?.priceDelta || 0;
+      const vOpt = service.questions.find((q) => q.id === 'vacuum_work')?.options?.find((o) => o.value === inputs.vacuum_work);
+      const vDelta = vOpt?.priceDelta || 0;
+
+      baseCost = 70000 + uDelta;
+      priceBreakdown.push({ name: `에어컨 냉매 충전 기본 공임 (${uOpt?.label || '스탠드형'})`, amount: baseCost });
+      if (gDelta !== 0) {
+        priceBreakdown.push({ name: `냉매 가스 규격 조정 (${gOpt?.label})`, amount: gDelta });
+      }
+      if (vDelta !== 0) {
+        priceBreakdown.push({ name: `진공 작업 및 정량 충전 가산 (${vOpt?.label})`, amount: vDelta });
+      }
+
+      const totalTarget = baseCost + gDelta + vDelta;
+      minCost = Math.round(totalTarget * 0.85);
+      maxCost = Math.round(totalTarget * 1.25);
+
+      inclusions.push('매니폴드 게이지를 이용한 저압·고압 배관 압력 정밀 계측');
+      inclusions.push('실외기 서비스 밸브 냉매 가스 규격 정량 주입');
+      inclusions.push('냉매 충전 후 15분 이상 가동하여 실내기 송풍구 토출 온도 계측 점검');
+      exclusions.push('실외기 콤프레셔 압축기 및 메인 PCB 회로 기판 수리비');
+      exclusions.push('매립 배관 파손 부위 용접 및 질소 세척 공사');
+      exclusions.push('아파트 2층 이상 외벽 앵글 난간 작업 시 위험수당 (2~3만원 별도 협의)');
+      extraFeeWarnings.push('에어컨 실외기가 외부 난간에 거치된 경우 위험수당 2~3만원 추가 발생 가능');
+      extraFeeWarnings.push('냉매가 100% 전량 누출된 경우 누설 부위 테프론/너트 재가공비 발생 가능');
+      contractorChecklist.push('눈대중이 아닌 정밀 매니폴드 게이지 또는 전자저울로 제조사 규정 정량을 주입하는가?');
+      contractorChecklist.push('실외기 서비스 밸브 및 실내외 연결부 플레어 너트에 비눗물 미세 누설 반응 검사를 했는가?');
+      contractorChecklist.push('충전 완료 후 실내기 바람 토출구 온도가 실내온도 대비 10℃ 이상 차갑게 떨어지는 것을 확인했는가?');
+      cautions.push('시세 및 원리 고지: 에어컨 냉매는 소모되는 기름이 아닌 밀폐 순환 기체입니다. 가스가 빠져 찬바람이 안 나온다면 반드시 어딘가에 미세 누설이 발생한 것이므로, 누설 원인을 잡지 않고 단순 가스만 충전하면 수주 내에 다시 가스가 빠져나갈 수 있습니다.');
+      break;
+    }
+
+    case 'bathroom-silicone-resealing': {
+      const sOpt = service.questions.find((q) => q.id === 'sealing_scope')?.options?.find((o) => o.value === inputs.sealing_scope);
+      const sDelta = sOpt?.priceDelta || 0;
+      const mOpt = service.questions.find((q) => q.id === 'mold_removal_grade')?.options?.find((o) => o.value === inputs.mold_removal_grade);
+      const mDelta = mOpt?.priceDelta || 0;
+      const matOpt = service.questions.find((q) => q.id === 'silicone_material')?.options?.find((o) => o.value === inputs.silicone_material);
+      const matDelta = matOpt?.priceDelta || 0;
+
+      baseCost = 90000 + sDelta;
+      priceBreakdown.push({ name: `욕실 실리콘 시공 기본 공임 (${sOpt?.label || '욕조+세면대'})`, amount: baseCost });
+      if (mDelta !== 0) {
+        priceBreakdown.push({ name: `곰팡이 살균 탈지 공정 (${mOpt?.label})`, amount: mDelta });
+      }
+      if (matDelta !== 0) {
+        priceBreakdown.push({ name: `자재 사양 가산 (${matOpt?.label})`, amount: matDelta });
+      }
+
+      const totalTarget = baseCost + mDelta + matDelta;
+      minCost = Math.round(totalTarget * 0.85);
+      maxCost = Math.round(totalTarget * 1.25);
+
+      inclusions.push('기존 오염 및 곰팡이 침투 실리콘 스크래퍼 전면 제거');
+      inclusions.push('타일 틈새 유분·이물질 알코올 탈지 및 표면 건조');
+      inclusions.push('KS 규격 방미 항균 바이오 실리콘 정품 도포 및 마감 헤라 코킹');
+      inclusions.push('시공 부위 라인 마스킹 테이핑 보양 및 잔여물 수거');
+      exclusions.push('욕실 바닥 타일 줄눈(백시멘트 메지) 전체 재시공');
+      exclusions.push('욕조 하부 파손 및 방수층 누수 전면 공사');
+      exclusions.push('타일 깨짐 크랙 보수 및 거울 교체비');
+      extraFeeWarnings.push('기존 실리콘 내부 흑곰팡이 침투가 깊어 건조 및 열풍기 소독 시간 장기 소요 시 추가비');
+      extraFeeWarnings.push('대형 안방 욕실 젠다이 2개소 또는 샤워부스 유리벽 전체 코킹 추가 시 가산');
+      contractorChecklist.push('기존 실리콘 위에 덧바르지 않고(덧방 금지) 낡은 실리콘을 100% 완전히 긁어냈는가?');
+      contractorChecklist.push('욕실 전용 항균제(방미제)가 함유된 정품 바이오 실리콘 자재를 사용하는가?');
+      contractorChecklist.push('실리콘 코킹 라인 모서리가 빈틈없이 밀착되어 틈새로 샤워 물이 침투하지 않도록 마감했는가?');
+      cautions.push('건조 시간 엄수: 바이오 실리콘은 표면이 굳는 데 2~3시간, 내부 완전 경화까지 최소 24시간이 걸립니다. 실리콘 모양이 찌그러지거나 들뜨는 것을 방지하기 위해 시공 후 24시간 동안은 절대 욕실 물 사용을 금지해야 합니다.');
+      break;
+    }
+
+    case 'door-closer-replacement': {
+      const sOpt = service.questions.find((q) => q.id === 'closer_supply_mode')?.options?.find((o) => o.value === inputs.closer_supply_mode);
+      const sDelta = sOpt?.priceDelta || 0;
+      const dOpt = service.questions.find((q) => q.id === 'door_type')?.options?.find((o) => o.value === inputs.door_type);
+      const dDelta = dOpt?.priceDelta || 0;
+      const bOpt = service.questions.find((q) => q.id === 'bracket_rework')?.options?.find((o) => o.value === inputs.bracket_rework);
+      const bDelta = bOpt?.priceDelta || 0;
+
+      baseCost = 65000 + sDelta;
+      priceBreakdown.push({ name: `도어클로저 교체 기본 공임 (${sOpt?.label || '신품 자재 포함'})`, amount: baseCost });
+      if (dDelta !== 0) {
+        priceBreakdown.push({ name: `도어 사양 가산 (${dOpt?.label})`, amount: dDelta });
+      }
+      if (bDelta !== 0) {
+        priceBreakdown.push({ name: `브래킷 타공 및 리벳 보강 (${bOpt?.label})`, amount: bDelta });
+      }
+
+      const totalTarget = baseCost + dDelta + bDelta;
+      minCost = Math.round(totalTarget * 0.85);
+      maxCost = Math.round(totalTarget * 1.25);
+
+      inclusions.push('기존 고장 도어클로저 본체 및 링크 암(Link Arm) 탈거');
+      inclusions.push('방화문 규격 KS 정품 도어클로저 본체 및 브래킷 고정 체결');
+      inclusions.push('1차 닫힘 속도(0~80도 구간) 및 2차 래칭 속도(마지막 10cm 구간) 유압 정밀 조절');
+      inclusions.push('방화문 도어록 래치볼트 부드러운 걸림 작동 테스트');
+      exclusions.push('현관문 철제 도어 찌그러짐 판금 및 힌지 교체비');
+      exclusions.push('디지털 도어락 신규 설치 및 현관문 도색비');
+      extraFeeWarnings.push('오래된 방화문 철판 나사 구멍 마모로 관통 볼트 또는 블라인드 리벳 보강 시 1만원 추가');
+      contractorChecklist.push('도어클로저 본체에서 검은 기름(유압 오일)이 흘러나왔는지 확인하고 신품으로 교체하는가?');
+      contractorChecklist.push('문이 세게 쾅 닫히지 않고 마지막 10cm 구간에서 부드럽게 감속되어 딸깍 닫히도록 2차 밸브를 조절했는가?');
+      contractorChecklist.push('소방법 규정에 부합하도록 화재 시 연기 차단을 위한 완전 폐쇄력이 확보되었는가?');
+      cautions.push('소방법 및 안전 고지: 아파트 현관 방화문은 화재 시 유독가스 확산을 막는 생명선입니다. 유압 밸브 고장으로 문이 쾅 닫히거나 덜 닫히는 상태를 방치하면 소음 민원뿐 아니라 소방점검 과태료 대상이 될 수 있으므로 즉시 교체해야 합니다.');
+      break;
+    }
+
+    case 'dryer-installation-relocation': {
+      const iOpt = service.questions.find((q) => q.id === 'install_mode')?.options?.find((o) => o.value === inputs.install_mode);
+      const iDelta = iOpt?.priceDelta || 0;
+      const rOpt = service.questions.find((q) => q.id === 'relocation_needed')?.options?.find((o) => o.value === inputs.relocation_needed);
+      const rDelta = rOpt?.priceDelta || 0;
+      const dOpt = service.questions.find((q) => q.id === 'drain_vent_setup')?.options?.find((o) => o.value === inputs.drain_vent_setup);
+      const dDelta = dOpt?.priceDelta || 0;
+
+      baseCost = 60000 + iDelta;
+      priceBreakdown.push({ name: `건조기 설치 거치 기본 공임 (${iOpt?.label || '단독 바닥 설치'})`, amount: baseCost });
+      if (rDelta !== 0) {
+        priceBreakdown.push({ name: `운반 및 이전 범위 (${rOpt?.label})`, amount: rDelta });
+      }
+      if (dDelta !== 0) {
+        priceBreakdown.push({ name: `배수/호스 부가 작업 (${dOpt?.label})`, amount: dDelta });
+      }
+
+      const totalTarget = baseCost + rDelta + dDelta;
+      minCost = Math.round(totalTarget * 0.85);
+      maxCost = Math.round(totalTarget * 1.25);
+
+      inclusions.push('건조기 안착 및 4개 수평 조절 레그 정밀 세팅');
+      inclusions.push('진동 방지 고무 패드 부착 및 배수 호스 체결');
+      inclusions.push('시험 가동 및 드럼 회전 소음·누수 점검');
+      inclusions.push('직렬 거치 시 전도 방지 브래킷 안전 결속');
+      exclusions.push('사다리차 이용료 및 2인 이상 계단 양중비');
+      exclusions.push('가스 건조기 도시가스 배관 철거/연결 인허가비');
+      exclusions.push('건조기 전용 선반 앵글 제작 자재비');
+      extraFeeWarnings.push('엘리베이터 없는 3층 이상 계단 수작업 운반 시 2~3만원 인건비 가산');
+      contractorChecklist.push('수평계로 가로·세로 완전 수평을 맞추어 고속 회전 시 진동을 방지했는가?');
+      contractorChecklist.push('직렬 설치 시 상단 건조기 낙하 방지 안전 고정 볼트가 견고히 체결되었는가?');
+      cautions.push('건조기는 탈수·건조 시 고속 회전 진동이 심하므로 바닥 수평이 맞지 않으면 베어링 마모와 소음이 급격히 증가합니다. 직렬 설치 시 반드시 전용 키트나 안전 브래킷 결속 여부를 확인하세요.');
+      break;
+    }
+
+    case 'ac-outdoor-unit-cleaning': {
+      const oOpt = service.questions.find((q) => q.id === 'outdoor_type')?.options?.find((o) => o.value === inputs.outdoor_type);
+      const oDelta = oOpt?.priceDelta || 0;
+      const lOpt = service.questions.find((q) => q.id === 'location_access')?.options?.find((o) => o.value === inputs.location_access);
+      const lDelta = lOpt?.priceDelta || 0;
+      const cOpt = service.questions.find((q) => q.id === 'cleaning_depth')?.options?.find((o) => o.value === inputs.cleaning_depth);
+      const cDelta = cOpt?.priceDelta || 0;
+
+      baseCost = 50000 + oDelta;
+      priceBreakdown.push({ name: `실외기 세척 기본 공임 (${oOpt?.label || '가정용 스탠드/2in1'})`, amount: baseCost });
+      if (lDelta !== 0) {
+        priceBreakdown.push({ name: `설치 위치 및 작업 환경 가산 (${lOpt?.label})`, amount: lDelta });
+      }
+      if (cDelta !== 0) {
+        priceBreakdown.push({ name: `세척 공정 가산 (${cOpt?.label})`, amount: cDelta });
+      }
+
+      const totalTarget = baseCost + lDelta + cDelta;
+      minCost = Math.round(totalTarget * 0.85);
+      maxCost = Math.round(totalTarget * 1.25);
+
+      inclusions.push('실외기 열교환기(콘덴서 알루미늄 핀) 전용 약품 분무 세척');
+      inclusions.push('고압 세척기를 이용한 먼지·낙엽·비둘기 배설물 고압 세정');
+      inclusions.push('송풍 팬 블레이드 먼지 브러싱 및 드레인 배수 확인');
+      inclusions.push('세척 후 가동 전류 및 컴프레셔 발열 상태 점검');
+      exclusions.push('비둘기 차단망(버드스파이크) 신규 제작 설치비');
+      exclusions.push('에어컨 냉매 가스 보충 충전비');
+      exclusions.push('외벽 로프 하강 특수 작업비');
+      extraFeeWarnings.push('아파트 외벽 돌출 앵글 작업 시 추락 방지 안전 수당 2~3만원 가산');
+      contractorChecklist.push('실외기 알루미늄 방열핀이 고압 수압에 휘어지지 않도록 적정 압력과 각도로 분사했는가?');
+      contractorChecklist.push('기판(PCB) 및 전기 모터 부위에 방수 비닐 보양을 철저히 하고 작업했는가?');
+      cautions.push('실외기 방열핀에 먼지와 이물질이 끼면 열 방출이 막혀 냉방 효율이 30% 이상 떨어지고 전기세가 급증하며 심할 경우 과열 화재가 발생할 수 있습니다.');
+      break;
+    }
+
+    case 'bathroom-vent-fan-cleaning': {
+      const fOpt = service.questions.find((q) => q.id === 'fan_model_type')?.options?.find((o) => o.value === inputs.fan_model_type);
+      const fDelta = fOpt?.priceDelta || 0;
+      const uOpt = service.questions.find((q) => q.id === 'unit_count')?.options?.find((o) => o.value === inputs.unit_count);
+      const uDelta = uOpt?.priceDelta || 0;
+      const dOpt = service.questions.find((q) => q.id === 'disinfection_care')?.options?.find((o) => o.value === inputs.disinfection_care);
+      const dDelta = dOpt?.priceDelta || 0;
+
+      baseCost = 40000 + fDelta;
+      priceBreakdown.push({ name: `환풍기 분해 세척 기본 공임 (${fOpt?.label || '일반 표준형'})`, amount: baseCost });
+      if (uDelta !== 0) {
+        priceBreakdown.push({ name: `의뢰 수량 가산 (${uOpt?.label})`, amount: uDelta });
+      }
+      if (dDelta !== 0) {
+        priceBreakdown.push({ name: `살균 소독 및 덕트 케어 (${dOpt?.label})`, amount: dDelta });
+      }
+
+      const totalTarget = baseCost + uDelta + dDelta;
+      minCost = Math.round(totalTarget * 0.85);
+      maxCost = Math.round(totalTarget * 1.25);
+
+      inclusions.push('환풍기 전면 그릴 커버 및 시로코팬 임펠러 날개 완전 분해');
+      inclusions.push('환풍기 내부 누적된 습기 곰팡이 및 미세먼지 약품 고압 세척');
+      inclusions.push('모터 축 이물질 제거 및 소음 감소 윤활 구리스 주입');
+      inclusions.push('재조립 후 흡입 풍량 테스트 (휴지 밀착 흡입력 확인)');
+      exclusions.push('모터 코일 단선 또는 침수로 인한 신규 환풍기 기기 교체비');
+      exclusions.push('천장 배기 주름관(덕트) 전체 교체 공사');
+      exclusions.push('공동 배기구 역류 차단 전동댐퍼 신규 자재비');
+      extraFeeWarnings.push('프리미엄 복합 환풍기(휴젠뜨 등) 온풍 히터 모듈 정밀 분해 시 공임 추가');
+      contractorChecklist.push('모터부에 세척액이 침투하여 합선되지 않도록 전기 절연 조치를 취했는가?');
+      contractorChecklist.push('조립 후 배기력이 정상 작동하여 티슈 한 장이 환풍기에 안정적으로 달라붙는가?');
+      cautions.push('욕실 환풍기에 곰팡이와 먼지가 쌓이면 흡입력이 약해져 샤워 후 욕실 습기가 빠지지 않고 타일 곰팡이가 급속도로 번지게 됩니다. 1년에 한 번 정기 세척이 필수입니다.');
+      break;
+    }
+
+    case 'curtain-blind-cleaning': {
+      const iOpt = service.questions.find((q) => q.id === 'item_type')?.options?.find((o) => o.value === inputs.item_type);
+      const iDelta = iOpt?.priceDelta || 0;
+      const sOpt = service.questions.find((q) => q.id === 'service_method')?.options?.find((o) => o.value === inputs.service_method);
+      const sDelta = sOpt?.priceDelta || 0;
+      const wOpt = service.questions.find((q) => q.id === 'windows_count')?.options?.find((o) => o.value === inputs.windows_count);
+      const wDelta = wOpt?.priceDelta || 0;
+
+      baseCost = 60000 + iDelta;
+      priceBreakdown.push({ name: `커튼/블라인드 클리닝 기본 공임 (${iOpt?.label || '일반 패브릭 커튼'})`, amount: baseCost });
+      if (sDelta !== 0) {
+        priceBreakdown.push({ name: `클리닝 진행 방식 가산 (${sOpt?.label})`, amount: sDelta });
+      }
+      if (wDelta !== 0) {
+        priceBreakdown.push({ name: `창문 수 가산 (${wOpt?.label})`, amount: wDelta });
+      }
+
+      const totalTarget = baseCost + sDelta + wDelta;
+      minCost = Math.round(totalTarget * 0.85);
+      maxCost = Math.round(totalTarget * 1.25);
+
+      inclusions.push('커튼 레일/봉에서 커튼 핀 손상 없는 안전 탈거');
+      inclusions.push('미세먼지·진드기 강력 헤파필터 건식 집진 흡입');
+      inclusions.push('원단 수축 방지 울코스 전용 세탁 및 살균 건조');
+      inclusions.push('스팀 주름 펴기 다림질 및 원위치 재설치');
+      exclusions.push('커튼 봉/레일 파손 부속 교체비');
+      exclusions.push('오래된 원단 햇빛 삭음으로 인한 찢김 수선비');
+      exclusions.push('화재 방염 코팅 가공비');
+      extraFeeWarnings.push('특수 암막 원단 세탁 후 코팅 박리 위험 원단 특수 세탁 시 추가비');
+      contractorChecklist.push('원단 소재(린넨, 실크, 폴리 암막)에 맞는 수축 방지 세탁 공정을 적용하는가?');
+      contractorChecklist.push('재설치 후 주름 라인(나비주름)이 흐트러지지 않도록 스팀 가공을 마쳤는가?');
+      cautions.push('커튼은 가정용 세탁기에 무작정 돌리면 암막 코팅이 벗겨지거나 원단 길이가 5~10cm 수축되는 대형 사고가 자주 발생합니다. 대형 커튼은 전문 수거 클리닝을 권장합니다.');
+      break;
+    }
+
+    case 'home-organization-consulting': {
+      const sOpt = service.questions.find((q) => q.id === 'space_scope')?.options?.find((o) => o.value === inputs.space_scope);
+      const sDelta = sOpt?.priceDelta || 0;
+      const pOpt = service.questions.find((q) => q.id === 'pro_count_hours')?.options?.find((o) => o.value === inputs.pro_count_hours);
+      const pDelta = pOpt?.priceDelta || 0;
+      const bOpt = service.questions.find((q) => q.id === 'storage_baskets')?.options?.find((o) => o.value === inputs.storage_baskets);
+      const bDelta = bOpt?.priceDelta || 0;
+
+      baseCost = 150000 + sDelta;
+      priceBreakdown.push({ name: `정리수납 컨설팅 기본 공임 (${sOpt?.label || '원포인트 1개 구역'})`, amount: baseCost });
+      if (pDelta !== 0) {
+        priceBreakdown.push({ name: `투입 인원 및 시간 가산 (${pOpt?.label})`, amount: pDelta });
+      }
+      if (bDelta !== 0) {
+        priceBreakdown.push({ name: `수납용품 및 바구니 준비 (${bOpt?.label})`, amount: bDelta });
+      }
+
+      const totalTarget = baseCost + pDelta + bDelta;
+      minCost = Math.round(totalTarget * 0.85);
+      maxCost = Math.round(totalTarget * 1.25);
+
+      inclusions.push('물품 전량 꺼내기(전출) 및 사용 빈도·용도별 카테고리 분류');
+      inclusions.push('비움(버리기/기부/당근) 선별 가이드 컨설팅');
+      inclusions.push('공간별 동선 최적화 수납 배치 및 구역 지정');
+      inclusions.push('물품 식별을 위한 카테고리 라벨링 및 유지관리 코칭');
+      exclusions.push('대형 폐기물 스티커 구매 및 외부 배출 대행료');
+      exclusions.push('가구 해체·재조립 및 목공 수납장 신규 시공비');
+      exclusions.push('수납 바구니 수십 개 대량 구매 시 자재 실비');
+      extraFeeWarnings.push('저장강박 수준의 극심한 누적 짐으로 작업 시간 연장 시 시간당 인건비 가산');
+      contractorChecklist.push('고객 동의 없이 임의로 물품을 버리지 않고 철저히 고객 승인을 거쳤는가?');
+      contractorChecklist.push('정리 후 고객이 스스로 쉽게 꺼내고 제자리에 넣을 수 있는 직관적 수납 구조를 만들었는가?');
+      cautions.push('정리수납은 단순 청소가 아니라 생활 습관과 동선을 재설계하는 컨설팅입니다. 버릴 물건을 결단할 수 있도록 의뢰인 본인이 선별 과정에 반드시 동참해야 최고의 유지 효과를 얻을 수 있습니다.');
+      break;
+    }
+
+    case 'gas-stove-installation': {
+      const wOpt = service.questions.find((q) => q.id === 'work_scope')?.options?.find((o) => o.value === inputs.work_scope);
+      const wDelta = wOpt?.priceDelta || 0;
+      const sOpt = service.questions.find((q) => q.id === 'stove_type')?.options?.find((o) => o.value === inputs.stove_type);
+      const sDelta = sOpt?.priceDelta || 0;
+      const hOpt = service.questions.find((q) => q.id === 'hose_length')?.options?.find((o) => o.value === inputs.hose_length);
+      const hDelta = hOpt?.priceDelta || 0;
+
+      baseCost = 30000 + wDelta;
+      priceBreakdown.push({ name: `가스레인지 연결/철거 기본 공임 (${wOpt?.label || '신규 연결'})`, amount: baseCost });
+      if (sDelta !== 0) {
+        priceBreakdown.push({ name: `가스레인지 기종 가산 (${sOpt?.label})`, amount: sDelta });
+      }
+      if (hDelta !== 0) {
+        priceBreakdown.push({ name: `가스 배관/호스 사양 (${hOpt?.label})`, amount: hDelta });
+      }
+
+      const totalTarget = baseCost + sDelta + hDelta;
+      minCost = Math.round(totalTarget * 0.85);
+      maxCost = Math.round(totalTarget * 1.25);
+
+      inclusions.push('공인 가스시설시공 자격 기사 방문 출장');
+      inclusions.push('도시가스 배관 및 가스레인지 안전 호스·휴즈콕 밸브 연결/철거');
+      inclusions.push('작업 후 디지털 가스 검지기 및 비눗물 거품 누출 정밀 테스트');
+      inclusions.push('철거 시 배관 끝단 전용 플러그 마감 봉인 시공');
+      exclusions.push('LPG 노즐 ↔ LNG 노즐 변환 개조 공임(제조사 A/S 별도)');
+      exclusions.push('도시가스 계량기 신규 신설 및 메인 배관 연장 공사');
+      extraFeeWarnings.push('빌트인 쿡탑 하부 공간 협소로 인한 특수 공구 체결 시 1만원 가산');
+      contractorChecklist.push('작업자가 가스시설시공업 자격 또는 도시가스 공인 자격을 보유하고 있는가?');
+      contractorChecklist.push('연결 완료 후 가스 검지기를 통해 배관 접합부의 미세 가스 누출이 0ppm임을 확인했는가?');
+      contractorChecklist.push('가스 밸브(휴즈콕)가 과류 차단 안전 기능이 정상 작동하는 KS 인증품인가?');
+      cautions.push('법적 자가시공 금지 고지: 도시가스사업법에 따라 가스 배관 연결은 무자격자 자가 시공이 엄격히 금지됩니다. 가스 누출로 인한 폭발·질식 사고를 방지하기 위해 반드시 공인된 기사에게 시공받으셔야 합니다.');
+      break;
+    }
+
+    case 'water-meter-insulation': {
+      const hOpt = service.questions.find((q) => q.id === 'housing_type')?.options?.find((o) => o.value === inputs.housing_type);
+      const hDelta = hOpt?.priceDelta || 0;
+      const iOpt = service.questions.find((q) => q.id === 'insulation_spec')?.options?.find((o) => o.value === inputs.insulation_spec);
+      const iDelta = iOpt?.priceDelta || 0;
+      const mOpt = service.questions.find((q) => q.id === 'meter_count')?.options?.find((o) => o.value === inputs.meter_count);
+      const mDelta = mOpt?.priceDelta || 0;
+
+      baseCost = 50000 + hDelta;
+      priceBreakdown.push({ name: `수도계량기함 단열 보온 시공 기본 공임 (${hOpt?.label || '복도식 아파트'})`, amount: baseCost });
+      if (iDelta !== 0) {
+        priceBreakdown.push({ name: `보온재 사양 가산 (${iOpt?.label})`, amount: iDelta });
+      }
+      if (mDelta !== 0) {
+        priceBreakdown.push({ name: `시공 개소 가산 (${mOpt?.label})`, amount: mDelta });
+      }
+
+      const totalTarget = baseCost + iDelta + mDelta;
+      minCost = Math.round(totalTarget * 0.85);
+      maxCost = Math.round(totalTarget * 1.25);
+
+      inclusions.push('계량기함 내부 습기·오염물 제거 및 청소');
+      inclusions.push('맞춤형 성형 스티로폼 보온재 및 난연 고무발포 단열재 충진');
+      inclusions.push('외부 찬바람 차단을 위한 테두리 방풍 비닐 및 실리콘 기밀 테이핑');
+      inclusions.push('계량기 검침창 확인 가능한 투명 검침구 보온 마감');
+      exclusions.push('이미 얼어붙은 수도 배관 고온 스팀 해빙 작업비');
+      exclusions.push('동파로 깨진 수도계량기 교체 및 수도사업소 수수료');
+      exclusions.push('계량기함 내부 전기 열선(히팅케이블) 신설 작업(화재 위험 금지)');
+      extraFeeWarnings.push('영하 15도 이하 한파 발생 시 긴급 출장 할증 가능');
+      contractorChecklist.push('물기를 머금어 얼어붙을 수 있는 헌 옷 대신 규격 난연 단열재를 사용하는가?');
+      contractorChecklist.push('검침원이 수도 사용량을 확인할 수 있도록 검침 창구 부위를 개폐 가능하게 마감했는가?');
+      cautions.push('서울시 수도사업소 동파 주의 안내: 수도계량기함 내부 습기를 머금은 헌 옷은 영하의 날씨에 꽁꽁 얼어붙어 오히려 동파를 촉진합니다. 동파 예방을 위해 전문 난연 보온재로 틈새 찬바람을 완전히 차단하세요.');
+      break;
+    }
+
+    case 'water-purifier-relocation': {
+      const pOpt = service.questions.find((q) => q.id === 'product_brand_type')?.options?.find((o) => o.value === inputs.product_brand_type);
+      const pDelta = pOpt?.priceDelta || 0;
+      const hOpt = service.questions.find((q) => q.id === 'hole_punching_need')?.options?.find((o) => o.value === inputs.hole_punching_need);
+      const hDelta = hOpt?.priceDelta || 0;
+      const dOpt = service.questions.find((q) => q.id === 'distance_relocation')?.options?.find((o) => o.value === inputs.distance_relocation);
+      const dDelta = dOpt?.priceDelta || 0;
+
+      baseCost = 45000 + pDelta;
+      priceBreakdown.push({ name: `정수기 이전설치 기본 공임 (${pOpt?.label || '일반 직수형'})`, amount: baseCost });
+      if (hDelta !== 0) {
+        priceBreakdown.push({ name: `싱크대 타공 가산 (${hOpt?.label})`, amount: hDelta });
+      }
+      if (dDelta !== 0) {
+        priceBreakdown.push({ name: `운반 이동 가산 (${dOpt?.label})`, amount: dDelta });
+      }
+
+      const totalTarget = baseCost + hDelta + dDelta;
+      minCost = Math.round(totalTarget * 0.85);
+      maxCost = Math.round(totalTarget * 1.25);
+
+      inclusions.push('싱크대 하부 수도 밸브 분기용 정품 원수 어댑터(T형 밸브) 체결');
+      inclusions.push('식품위생용 튜빙선(급수선) 연결 및 라인 고정 클립 마감');
+      inclusions.push('정수기 급수 가압 및 튜빙선 체결 부위 미세 누수 점검');
+      inclusions.push('정수기 초기 통수 플러싱 및 정상 출수 확인');
+      exclusions.push('정수기 신규 정품 필터 구매 비용(실비 별도)');
+      exclusions.push('조리수 밸브 신규 수전 타공 및 별도 코브라 설치비');
+      extraFeeWarnings.push('천연 대리석 또는 세라믹 상판 특수 코어 타공 시 1만~2만원 추가 공임');
+      contractorChecklist.push('식품용 무독성 NSF 인증 정품 튜빙선과 피팅 부속을 사용하는가?');
+      contractorChecklist.push('수압이 높은 환경에서 급수 호스가 빠지지 않도록 안전 락킹 클립을 결속했는가?');
+      cautions.push('누수 방지 주의: 싱크대 하부 정수기 피팅 연결부가 헐거우면 장시간 미세 누수가 발생하여 하부장 목재가 썩거나 아랫집 천장 누수로 이어질 수 있습니다. 시공 후 24시간 동안 휴지를 감아 누수 여부를 꼭 점검하세요.');
+      break;
+    }
+
+    case 'balcony-laundry-rack-installation': {
+      const pOpt = service.questions.find((q) => q.id === 'product_supply')?.options?.find((o) => o.value === inputs.product_supply);
+      const pDelta = pOpt?.priceDelta || 0;
+      const cOpt = service.questions.find((q) => q.id === 'ceiling_structure')?.options?.find((o) => o.value === inputs.ceiling_structure);
+      const cDelta = cOpt?.priceDelta || 0;
+      const oOpt = service.questions.find((q) => q.id === 'old_rack_removal')?.options?.find((o) => o.value === inputs.old_rack_removal);
+      const oDelta = oOpt?.priceDelta || 0;
+
+      baseCost = 65000 + pDelta;
+      priceBreakdown.push({ name: `베란다 빨래건조대 설치 기본 공임 (${pOpt?.label || '올스텐 자재 포함'})`, amount: baseCost });
+      if (cDelta !== 0) {
+        priceBreakdown.push({ name: `천장 마감 구조 가산 (${cOpt?.label})`, amount: cDelta });
+      }
+      if (oDelta !== 0) {
+        priceBreakdown.push({ name: `기존 건조대 상태 (${oOpt?.label})`, amount: oDelta });
+      }
+
+      const totalTarget = baseCost + cDelta + oDelta;
+      minCost = Math.round(totalTarget * 0.85);
+      maxCost = Math.round(totalTarget * 1.25);
+
+      inclusions.push('베란다 콘크리트 천장 해머드릴 정밀 타공 (집진기 사용)');
+      inclusions.push('고강도 앙카 볼트 고정 및 수평계 정밀 세팅');
+      inclusions.push('녹슬지 않는 올스테인리스(SUS304) 4봉 조립 및 승강 와이어 결속');
+      inclusions.push('승강 도르래 줄 부드러운 작동 및 무게 하중 테스트');
+      exclusions.push('전동 모터 리모컨 승강식 건조기 전기 배선 및 모터 설치비');
+      exclusions.push('베란다 천장 페인트 도색 및 곰팡이 방수 코팅비');
+      extraFeeWarnings.push('석고보드 천장 속 15cm 이상 깊은 콘크리트 슬래브 관통 특수 연장 앙카 시공 시 추가비');
+      contractorChecklist.push('녹이 슬어 빨래를 오염시키는 일반 도금봉 대신 100% 스테인리스 정품 봉을 장착했는가?');
+      contractorChecklist.push('젖은 빨래 30kg 이상 하중을 견딜 수 있도록 앙카가 콘크리트에 견고히 고정되었는가?');
+      cautions.push('안전 시공 안내: 빨래건조대는 젖은 이불이나 외투를 널었을 때 수십 킬로그램의 하중을 받습니다. 천장 타공 시 콘크리트 내부 철근을 피해 깊숙이 앙카를 체결해야 추락 사고를 예방할 수 있습니다.');
+      break;
+    }
+
+    case 'septic-tank-cleaning': {
+      const zone = inputs.district_zone || 'seongbuk';
+      const capacity = Math.max(0.75, Number(inputs.tank_capacity_cbm) || 2);
+      const isBasementOrNight = inputs.work_environment === 'long_hose_basement';
+
+      if (zone === 'other_region') {
+        type = 'quote_preparation';
+        baseCost = 40000;
+        minCost = 35000;
+        maxCost = 80000;
+        prepTitle = '정화조 청소 관할 지자체 조례 요율 안내';
+        prepExplanation = '성북구·광진구 외 지역은 각 지자체별 분뇨수집운반 조례 고시 수수료가 상이하므로, 관할 시·군·구청 청소행정과 또는 지정 정화조 청소 대행업체를 통해 공식 요율 확인 후 접수하셔야 합니다.';
+        priceBreakdown.push({ name: '타 지자체 조례 고시 요율 기준 상담', amount: baseCost });
+      } else if (zone === 'gwangjin') {
+        // 서울시 광진구 공식 조례 고시 기준
+        // 기본요금(0.75㎥ 이하): 24,500원
+        // 초과요금: 0.1㎥당 2,350원 (비례 계산)
+        // 야간/지하/장거리 할증: 7%
+        // 최종 요금 10원 미만 절사 (Math.floor(x / 10) * 10)
+        const baseFee = 24500;
+        const excessCbm = Math.max(0, capacity - 0.75);
+        const excessFee = (excessCbm / 0.1) * 2350;
+        let subtotal = baseFee + excessFee;
+
+        let surchargeAmount = 0;
+        if (isBasementOrNight) {
+          surchargeAmount = subtotal * 0.07;
+          subtotal += surchargeAmount;
+        }
+
+        // 10원 미만 절사
+        const totalFee = Math.floor(subtotal / 10) * 10;
+        baseCost = totalFee;
+        minCost = totalFee;
+        maxCost = totalFee;
+
+        priceBreakdown.push({ name: '서울시 광진구 정화조 기본 수수료 (0.75㎥ 이하)', amount: baseFee });
+        if (excessFee > 0) {
+          priceBreakdown.push({ name: `초과 수거량 수수료 (${excessCbm.toFixed(2)}㎥ / 0.1㎥당 2,350원)`, amount: Math.round(excessFee) });
+        }
+        if (isBasementOrNight) {
+          priceBreakdown.push({ name: '야간·지하 작업 조례 할증 (7%)', amount: Math.round(surchargeAmount) });
+        }
+      } else {
+        // 서울시 성북구 공식 고시 기준
+        // 기본 0.75㎥ 이하 24,000원 + 0.1㎥당 2,500원
+        const baseFee = 24000;
+        const excessPerPointOne = 2500;
+        const excessCbm = Math.max(0, capacity - 0.75);
+        const excessUnits = Math.ceil(excessCbm * 10);
+        const excessFee = excessUnits * excessPerPointOne;
+        const envDelta = isBasementOrNight ? 15000 : 0;
+        const totalOfficialFee = baseFee + excessFee + envDelta;
+
+        baseCost = totalOfficialFee;
+        minCost = Math.round(totalOfficialFee);
+        maxCost = Math.round(totalOfficialFee * 1.15);
+
+        priceBreakdown.push({ name: '서울시 성북구 정화조 기본 수수료 (0.75㎥ 이하)', amount: baseFee });
+        if (excessFee > 0) {
+          priceBreakdown.push({ name: `초과 수거량 수수료 (${excessCbm.toFixed(2)}㎥ / 0.1㎥당 ${excessPerPointOne}원)`, amount: excessFee });
+        }
+        if (envDelta > 0) {
+          priceBreakdown.push({ name: '작업 환경 가산 (지하/장거리 호스 연장)', amount: envDelta });
+        }
+      }
+
+      inclusions.push('지자체 허가 분뇨수집운반 특장 탱크로리 차량 현장 배차');
+      inclusions.push('정화조 맨홀 개방 및 내부 침전 오니·슬러지 고압 진공 흡입');
+      inclusions.push('정화조 벽면 잔여물 세척 및 맨홀 뚜껑 안전 체결 마감');
+      inclusions.push('청소 완료 후 지자체 전산망(세움터) 청소 실적 자동 등록');
+      exclusions.push('정화조 내부 브로워(공기공급장치) 고장 수리 및 모터 교체');
+      exclusions.push('정화조 균열 누수 보수 및 배관 뚫음 작업');
+      extraFeeWarnings.push('정화조 상부 장애물(데크, 무거운 화단) 적치 시 사전 철거 필요');
+      contractorChecklist.push('지자체 정식 허가를 받은 분뇨수집운반 대행업체 차량인가?');
+      contractorChecklist.push('작업자가 황화수소 등 유독가스 질식 예방 환기 안전 수칙을 준수하는가?');
+      contractorChecklist.push('청소 완료 영수증에 실측 수거량(㎥)과 조례 금액이 일치하게 기재되었는가?');
+      cautions.push('하수도법 제39조 법적 의무 고지: 모든 건축물의 정화조는 연 1회 이상 의무적으로 내부 청소를 실시해야 합니다. 정당한 사유 없이 청소를 이행하지 않을 경우 최고 100만원 이하의 과태료가 부과되므로 안내문 수령 후 기한 내에 청소해야 합니다.');
+      break;
+    }
+
+    case 'furniture-refinishing-paint': {
+      const qFurn = service.questions.find((q) => q.id === 'furniture_type');
+      const qMat = service.questions.find((q) => q.id === 'furniture_material');
+      const qFinish = service.questions.find((q) => q.id === 'paint_finish');
+
+      const furnOpt = qFurn?.options?.find((o) => o.value === inputs.furniture_type);
+      const matOpt = qMat?.options?.find((o) => o.value === inputs.furniture_material);
+      const finishOpt = qFinish?.options?.find((o) => o.value === inputs.paint_finish);
+
+      const fDelta = furnOpt?.priceDelta || 180000;
+      const mDelta = matOpt?.priceDelta || 0;
+      const finDelta = finishOpt?.priceDelta || 0;
+
+      baseCost = fDelta;
+      priceBreakdown.push({ name: `가구 도장 리폼 기본 공임 (${furnOpt?.label || '원목 테이블'})`, amount: baseCost });
+      if (mDelta !== 0) {
+        priceBreakdown.push({ name: `하도 젯소/프라이머 전처리 (${matOpt?.label})`, amount: mDelta });
+      }
+      if (finDelta !== 0) {
+        priceBreakdown.push({ name: `특수 마감 도장 기법 (${finishOpt?.label})`, amount: finDelta });
+      }
+
+      const totalTarget = baseCost + mDelta + finDelta;
+      minCost = Math.round(totalTarget * 0.9);
+      maxCost = Math.round(totalTarget * 1.15);
+
+      inclusions.push('기존 노후 바니시/페인트 코팅층 표면 정밀 샌딩 박리');
+      inclusions.push('가구 전용 친환경 수성 페인트 2~3회 정밀 도장');
+      inclusions.push('스크래치 및 황변 방지 우레탄 바니시 상도 코팅 마감');
+      exclusions.push('가구 뒤틀림·파손 목재 수리 및 구조 보강 목공비');
+      exclusions.push('신규 가구 손잡이·경첩 철물 자재 구입비');
+      extraFeeWarnings.push('대형 가구 공방 입고 작업 시 전문 용달 운송비 별도 발생');
+      extraFeeWarnings.push('시트지/필름 불량 부착 가구의 열풍기 강제 박리 밑작업 가산');
+      contractorChecklist.push('포름알데히드 방출 없는 친환경 인증 가구 도료를 사용하는가?');
+      contractorChecklist.push('도장 전 표면 먼지 집진 및 샌딩 공정을 충실히 이행하는가?');
+      contractorChecklist.push('작업 후 최소 48시간 이상 상온 완전 경화 안내를 제공하는가?');
+      cautions.push('도장 리폼 직후 겉면이 말라도 도막 내부가 단단해지는 완전 경화까지 약 7~10일 소요되므로 초기에는 뜨거운 냄비나 물기 접촉을 주의해야 합니다.');
+      break;
+    }
+
+    case 'outdoor-wood-deck-installation': {
+      const qMat = service.questions.find((q) => q.id === 'deck_material');
+      const qFound = service.questions.find((q) => q.id === 'ground_foundation');
+
+      const matOpt = qMat?.options?.find((o) => o.value === inputs.deck_material);
+      const foundOpt = qFound?.options?.find((o) => o.value === inputs.ground_foundation);
+      const isRailingWanted = inputs.railing_installation === 'custom_onsite';
+
+      const pyeong = Math.max(1, Math.min(50, Number(inputs.deck_area_pyeong) || 5));
+      const matPerPyeong = matOpt?.priceDelta || 650000;
+      const foundPerPyeong = foundOpt?.priceDelta || 0;
+
+      baseCost = pyeong * matPerPyeong;
+      priceBreakdown.push({ name: `야외 데크 상판 자재 및 아연각관 하지 시공 (${pyeong}평, ${matOpt?.label || '합성목재'})`, amount: baseCost });
+      if (foundPerPyeong > 0) {
+        const totalFound = pyeong * foundPerPyeong;
+        priceBreakdown.push({ name: `비포장 지반 기초 주춧돌 매립 공사 (${pyeong}평)`, amount: totalFound });
+      }
+      if (isRailingWanted) {
+        priceBreakdown.push({ name: '안전 난간 (핸드레일) 설치 (현장 실측 맞춤 견적 분기)', amount: 0, description: '구간 길이(m) 및 디자인(평철·단조·합성목재) 현장 확인 후 별도 산정' });
+      }
+
+      const totalTarget = baseCost + (pyeong * foundPerPyeong);
+      minCost = Math.round(totalTarget * 0.92);
+      maxCost = Math.round(totalTarget * 1.12);
+
+      inclusions.push('녹 방지 아연도금 각관(50x50 2T) 용접 및 수평 하지 프레임 제작');
+      inclusions.push('데크 상판(합성목재/방부목) 전용 클립 또는 스크루 고정');
+      inclusions.push('지면 구배에 맞춘 수평 레벨링 및 모서리 마감 몰딩');
+      exclusions.push('기존 노후 데크/콘크리트 구조물 철거 및 폐기물 반출비');
+      exclusions.push('급경사면 옹벽 축조 및 대규모 토목 평탄화 작업');
+      if (isRailingWanted) {
+        exclusions.push('안전 난간(핸드레일) 시공비 (현장 실측 후 길이·자재별 맞춤 견적으로 산출)');
+      }
+      extraFeeWarnings.push('암반 지형 또는 중장비 진입 불가 산간 지형 기초비 가산');
+      extraFeeWarnings.push('아파트/빌라 테라스 사다리차 자재 양중비 현장 실비 청구');
+      contractorChecklist.push('부식에 취약한 일반 칼라각관 대신 정품 아연도금 각관을 사용하는가?');
+      contractorChecklist.push('합성목재의 열팽창을 고려하여 상판 간 이격 거리(5mm)를 준수하는가?');
+      contractorChecklist.push('데크 하부 우수 배수가 원활하도록 통풍 및 배수로를 확보했는가?');
+      if (isRailingWanted) {
+        contractorChecklist.push('안전 난간 시공 시 바닥 각관 베이스에 용접 직결하여 흔들림 없이 견고하게 고정하는가?');
+      }
+      cautions.push('합성목재 데크는 수축과 팽창이 크므로 밀착 시공 시 여름철 솟아오름 하자가 발생합니다. 반드시 규정 클립 간격을 지켜 시공해야 합니다.');
+      if (isRailingWanted) {
+        cautions.push('안전 난간(핸드레일)은 설치 구간 길이(m)와 재질에 따라 금액 편차가 크므로 현장 방문 시 정확한 구간을 실측하여 별도 견적을 확인하세요.');
+      }
+      break;
+    }
+
+    case 'lawn-garden-maintenance': {
+      const qCond = service.questions.find((q) => q.id === 'weed_condition');
+      const qWaste = service.questions.find((q) => q.id === 'waste_disposal');
+
+      const condOpt = qCond?.options?.find((o) => o.value === inputs.weed_condition);
+      const wasteOpt = qWaste?.options?.find((o) => o.value === inputs.waste_disposal);
+
+      const pyeong = Math.max(10, Math.min(500, Number(inputs.lawn_area_pyeong) || 50));
+      const baseAreaRate = pyeong <= 50 ? 180000 : 180000 + (pyeong - 50) * 3500;
+      const condPerPyeong = condOpt?.priceDelta || 0;
+      const totalCond = pyeong * condPerPyeong;
+      const wasteCost = wasteOpt?.priceDelta || 0;
+
+      baseCost = baseAreaRate;
+      priceBreakdown.push({ name: `잔디 깎기 및 정원 예초 기본 공임 (${pyeong}평)`, amount: baseCost });
+      if (totalCond > 0) {
+        priceBreakdown.push({ name: `잡목·억새 무성 제초 난공사 할증 (${pyeong}평)`, amount: totalCond });
+      }
+      if (wasteCost > 0) {
+        priceBreakdown.push({ name: `풀 잔재물 마대 수거 및 1톤 트럭 폐기물 반출`, amount: wasteCost });
+      }
+
+      const totalTarget = baseCost + totalCond + wasteCost;
+      minCost = Math.round(totalTarget * 0.9);
+      maxCost = Math.round(totalTarget * 1.15);
+
+      inclusions.push('전문 엔진 예초기 및 잔디깎기 롤러 모어 기계 제초 작업');
+      inclusions.push('정원석·디딤돌 주변 나일론줄 정밀 에징 마감');
+      inclusions.push('작업 후 엔진 블로워를 이용한 통로·바닥 비산물 집진 청소');
+      exclusions.push('정원수/소나무 전정(가지치기) 및 병충해 농약 살포');
+      exclusions.push('고사된 잔디 제거 및 신규 뗏장 잔디 보식 공사');
+      extraFeeWarnings.push('돌·파쇄석이 많은 지형의 비산 방지망 추가 설치비');
+      extraFeeWarnings.push('경사 30도 이상 급비탈 마당의 안전 장구 할증');
+      contractorChecklist.push('예초기 날 안전 커버 장착 및 안면 보호구를 철저히 착용하는가?');
+      contractorChecklist.push('정원 내 옥외 조명선, 수도 호스, 어린 묘목 손상 방지 조치를 취하는가?');
+      contractorChecklist.push('작업 후 잔재물을 지정 장소에 정돈하거나 깔끔히 반출하는가?');
+      cautions.push('예초기 고속 회전 칼날에 자갈이 튀어 건물 유리창이나 차량이 파손될 수 있으므로 작업 반경 15m 내 출입을 금지해야 합니다.');
+      break;
+    }
+
+    case 'toilet-internal-parts-replacement': {
+      const qType = service.questions.find((q) => q.id === 'toilet_type');
+      const qScope = service.questions.find((q) => q.id === 'parts_replacement_scope');
+
+      const typeOpt = qType?.options?.find((o) => o.value === inputs.toilet_type);
+      const scopeOpt = qScope?.options?.find((o) => o.value === inputs.parts_replacement_scope);
+
+      const tDelta = typeOpt?.priceDelta || 65000;
+      const sDelta = scopeOpt?.priceDelta || 0;
+
+      baseCost = tDelta;
+      priceBreakdown.push({ name: `양변기 물탱크 분리 및 부속 교체 공임/자재 (${typeOpt?.label || '투피스 변기'})`, amount: baseCost });
+      if (sDelta !== 0) {
+        priceBreakdown.push({ name: `스테인리스 고압 급수 호스 교체 (${scopeOpt?.label})`, amount: sDelta });
+      }
+
+      const totalTarget = baseCost + sDelta;
+      minCost = Math.round(totalTarget * 0.92);
+      maxCost = Math.round(totalTarget * 1.15);
+
+      inclusions.push('기존 물탱크 탈거 및 노후 부속 일체 완전 해체');
+      inclusions.push('국산 KS 인증 정품 필밸브, 사이펀 볼탑, 플래퍼마개, 물내림핸들 설치');
+      inclusions.push('탱크 재결합, 누수 차단 고무패킹 체결 및 적정 수위 조절');
+      inclusions.push('급수 개방 후 연결부 미세 누수 및 물내림 담수 테스트');
+      exclusions.push('양변기 도기 본체 균열·파손에 따른 변기 전면 교체');
+      exclusions.push('벽면/바닥 매립 배관 앵글밸브 교체 및 배관 뚫음');
+      extraFeeWarnings.push('물탱크 체결 볼트 심한 부식으로 그라인더 절단 철거 필요 시');
+      extraFeeWarnings.push('수입 외산 명품 도기(콜러, 토토 등) 전용 특수 부속 필요 시');
+      contractorChecklist.push('내구성이 검증된 국산 KS 와토스코리아 정품 부속 세트를 사용하는가?');
+      contractorChecklist.push('물탱크 체결 볼트 조임 시 과토크로 인한 도기 파손 주의를 기울이는가?');
+      contractorChecklist.push('필밸브 멈춤 수위가 오버플로우 관 아래로 안전하게 맞춰졌는가?');
+      cautions.push('변기 물탱크 내부 플래퍼 고무마개가 노후되면 귀에 잘 들리지 않는 미세 누수가 지속되어 상하수도 요금이 수십만 원 청구될 수 있으므로 물샘 즉시 교체해야 합니다.');
+      break;
+    }
+
+    case 'bathroom-accessories-installation': {
+      const qPkg = service.questions.find((q) => q.id === 'installation_package');
+      const qTile = service.questions.find((q) => q.id === 'tile_material');
+      const qHw = service.questions.find((q) => q.id === 'hardware_provision');
+
+      const pkgOpt = qPkg?.options?.find((o) => o.value === inputs.installation_package);
+      const tileOpt = qTile?.options?.find((o) => o.value === inputs.tile_material);
+      const hwOpt = qHw?.options?.find((o) => o.value === inputs.hardware_provision);
+
+      const pkgDelta = pkgOpt?.priceDelta || 65000;
+      const tileDelta = tileOpt?.priceDelta || 0;
+      const hwDelta = hwOpt?.priceDelta || 0;
+
+      baseCost = pkgDelta;
+      priceBreakdown.push({ name: `욕실 악세사리 타공 및 설치 기본 공임 (${pkgOpt?.label || '3종 기본 세트'})`, amount: baseCost });
+      if (tileDelta !== 0) {
+        priceBreakdown.push({ name: `고강도 타일 다이아몬드 타공 깨짐방지 시공 (${tileOpt?.label})`, amount: tileDelta });
+      }
+      if (hwDelta !== 0) {
+        priceBreakdown.push({ name: `SUS304 국산 올스테인리스 정품 자재비 (${hwOpt?.label})`, amount: hwDelta });
+      }
+
+      const totalTarget = baseCost + tileDelta + hwDelta;
+      minCost = Math.round(totalTarget * 0.92);
+      maxCost = Math.round(totalTarget * 1.15);
+
+      inclusions.push('타일 파손 없는 습식 다이아몬드 코어비트 정밀 타공');
+      inclusions.push('벽면 앙카 칼블럭 삽입 및 수평계 정밀 피스 고정');
+      inclusions.push('타공 부위 수분 침투 방지 바이오 실리콘 방수 마감');
+      exclusions.push('벽면 매립 급수관/전선 탐지 및 배관 수리 공사');
+      exclusions.push('욕실 거울장/대형 슬라이딩장 철거 및 신규 시공');
+      extraFeeWarnings.push('수도 배관 근접 위험 구역의 위치 이동 및 재타공 필요 시');
+      extraFeeWarnings.push('타일 뒤 합판/석고 가벽 보강 특수 토글앙카 시공 시');
+      contractorChecklist.push('수전 주변 매립 수도 배관 경로를 피해 안전하게 타공 위치를 선정했는가?');
+      contractorChecklist.push('타일 표면 크랙이나 깨짐 없이 깔끔하게 천공되었는가?');
+      contractorChecklist.push('수건걸이 및 선반이 흔들림 없이 수평으로 견고하게 고정되었는가?');
+      cautions.push('샤워기 및 세면기 수전 주변 상하좌우로는 수도 배관이 벽면 내부에 지나가므로, 자가 타공 시 배관 관통 누수 위험이 큽니다. 전문가 시공을 강력 권장합니다.');
+      break;
+    }
+
     default: {
       type = 'quote_preparation';
       baseCost = 100000;
@@ -2129,8 +2932,14 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
     minCost = maxCost;
     maxCost = temp;
   }
-  minCost = Math.max(10000, Math.round(minCost / 1000) * 1000);
-  maxCost = Math.max(minCost, Math.round(maxCost / 1000) * 1000);
+  if (service.slug === 'septic-tank-cleaning') {
+    // 지자체 조례 고시 10원 단위 절사 규정 반영
+    minCost = Math.max(10000, Math.floor(minCost / 10) * 10);
+    maxCost = Math.max(minCost, Math.floor(maxCost / 10) * 10);
+  } else {
+    minCost = Math.max(10000, Math.round(minCost / 1000) * 1000);
+    maxCost = Math.max(minCost, Math.round(maxCost / 1000) * 1000);
+  }
 
   const formattedRange = minCost === maxCost
     ? formatKoreanWon(minCost)

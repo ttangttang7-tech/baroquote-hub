@@ -194,5 +194,92 @@ describe('Estimation Engine — 30 Services Comprehensive Unit Test Suite (150+ 
       const uniqueRatios = new Set(spreads.map((r) => r.toFixed(2)));
       expect(uniqueRatios.size).toBeGreaterThan(1);
     });
+
+    it('septic-tank-cleaning: verifies Gwangjin-gu exact statutory tariff (5㎥ standard = 124,370원, 5㎥ surcharge = 133,080원)', () => {
+      // 1. 광진구 5㎥ 일반 작업 (표준 작업, 10원 미만 절사 검증)
+      const resStandard = calculateEstimate('septic-tank-cleaning', {
+        district_zone: 'gwangjin',
+        tank_capacity_cbm: 5,
+        work_environment: 'standard_ground',
+      });
+      expect(resStandard.type).toBe('range_estimate');
+      expect(resStandard.minAmount).toBe(124370);
+      expect(resStandard.maxAmount).toBe(124370);
+      expect(resStandard.formattedRange).toBe('12만 4,370원');
+
+      // 2. 광진구 5㎥ 할증 작업 (지하/장거리 7% 할증, 10원 미만 절사 검증)
+      const resSurcharge = calculateEstimate('septic-tank-cleaning', {
+        district_zone: 'gwangjin',
+        tank_capacity_cbm: 5,
+        work_environment: 'long_hose_basement',
+      });
+      expect(resSurcharge.type).toBe('range_estimate');
+      expect(resSurcharge.minAmount).toBe(133080);
+      expect(resSurcharge.maxAmount).toBe(133080);
+      expect(resSurcharge.formattedRange).toBe('13만 3,080원');
+
+      // 3. 타 지역 선택 시 견적준비형(quote_preparation) 전환 확인
+      const resOther = calculateEstimate('septic-tank-cleaning', {
+        district_zone: 'other_region',
+        tank_capacity_cbm: 5,
+      });
+      expect(resOther.type).toBe('quote_preparation');
+      expect(resOther.prepTitle).toContain('조례 요율 안내');
+    });
+
+    it('outdoor-wood-deck-installation branches railing to custom on-site quote without numeric price addition', () => {
+      // 1. 난간 없음 (5평 합성목재 65만원/평 = 3,250,000원)
+      const resNoRailing = calculateEstimate('outdoor-wood-deck-installation', {
+        deck_material: 'wpc_composite',
+        ground_foundation: 'concrete_flat',
+        deck_area_pyeong: 5,
+        railing_installation: 'none',
+      });
+      expect(resNoRailing.type).toBe('range_estimate');
+      expect(resNoRailing.minAmount).toBe(Math.round(3250000 * 0.92));
+      expect(resNoRailing.maxAmount).toBe(Math.round(3250000 * 1.12));
+
+      // 2. 안전 난간 선택 시 금액 추가 없이(0원) 현장 실측 맞춤 분기 처리
+      const resWithRailing = calculateEstimate('outdoor-wood-deck-installation', {
+        deck_material: 'wpc_composite',
+        ground_foundation: 'concrete_flat',
+        deck_area_pyeong: 5,
+        railing_installation: 'custom_onsite',
+      });
+      expect(resWithRailing.type).toBe('range_estimate');
+      // 금액은 난간 없을 때와 동일하게 상판+기초만 계산 (난간 가격 직접 가산 배제)
+      expect(resWithRailing.minAmount).toBe(resNoRailing.minAmount);
+      expect(resWithRailing.maxAmount).toBe(resNoRailing.maxAmount);
+
+      // 난간 현장 실측 가이드 항목 확인
+      const railingBreakdown = resWithRailing.priceBreakdown.find((b) => b.name.includes('안전 난간'));
+      expect(railingBreakdown).toBeDefined();
+      expect(railingBreakdown?.amount).toBe(0);
+      expect(resWithRailing.exclusions.some((e) => e.includes('안전 난간'))).toBe(true);
+      expect(resWithRailing.cautions.some((c) => c.includes('안전 난간'))).toBe(true);
+    });
+
+    it('preparation trio (drain-unclogging, office-cleaning-service, office-moving) strictly emits 0 numeric amounts and provides checklists', () => {
+      const prepSlugs = ['drain-unclogging', 'office-cleaning-service', 'office-moving'];
+
+      for (const slug of prepSlugs) {
+        const res = calculateEstimate(slug, {});
+        expect(res.type).toBe('quote_preparation');
+        expect(res.minAmount).toBeUndefined();
+        expect(res.maxAmount).toBeUndefined();
+        expect(res.minPrice).toBeUndefined();
+        expect(res.maxPrice).toBeUndefined();
+        expect(res.formattedRange).toContain('현장 실측 맞춤 견적');
+
+        // All breakdown amounts must be strictly 0 (no leaked prices)
+        for (const item of res.priceBreakdown) {
+          expect(item.amount).toBe(0);
+        }
+
+        // Must provide contractor questions and caution/photo lists
+        expect(res.contractorChecklist.length).toBeGreaterThanOrEqual(2);
+        expect(res.cautions.length).toBeGreaterThanOrEqual(1);
+      }
+    });
   });
 });
