@@ -2592,7 +2592,7 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
     case 'septic-tank-cleaning': {
       const zone = inputs.district_zone || 'seongbuk';
       const capacity = Math.max(0.75, Number(inputs.tank_capacity_cbm) || 2);
-      const isBasementOrNight = inputs.work_environment === 'long_hose_basement';
+      const isBasementOrNight = inputs.work_environment === 'basement_or_night' || inputs.work_environment === 'long_hose_basement';
 
       if (zone === 'other_region') {
         type = 'quote_preparation';

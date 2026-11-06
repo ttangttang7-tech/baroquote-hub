@@ -45,7 +45,8 @@ export type SourceType =
   | 'official_standard'
   | 'platform_average'
   | 'market_survey'
-  | 'regulatory_guideline';
+  | 'regulatory_guideline'
+  | 'official_tariff';
 
 export interface PriceEvidence {
   provider: string;

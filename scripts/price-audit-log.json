@@ -1,11 +1,11 @@
 {
-  "auditDate": "2026-10-26T08:24:27.201Z",
-  "todayBoundary": "2026-10-26",
-  "totalServices": 60,
-  "http200Count": 60,
+  "auditDate": "2026-11-06T10:34:27.211Z",
+  "todayBoundary": "2026-11-06",
+  "totalServices": 80,
+  "http200Count": 80,
   "fullVerifiedCount": 58,
   "roundedVerifiedCount": 1,
-  "partialVerifiedCount": 1,
+  "partialVerifiedCount": 21,
   "unverifiedCount": 0,
   "results": [
     {
@@ -35,9 +35,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -66,9 +66,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -97,9 +97,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -128,9 +128,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -159,9 +159,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -190,9 +190,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -221,9 +221,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -252,9 +252,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -283,9 +283,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -314,9 +314,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -345,9 +345,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -376,9 +376,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -407,9 +407,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -438,9 +438,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -469,9 +469,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -500,9 +500,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -531,9 +531,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -562,9 +562,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -593,9 +593,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -624,9 +624,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -655,9 +655,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "partially_verified",
@@ -692,9 +692,9 @@
         "anomalyReason": "숨고 원문 최저가 70,000원이 평균가 50,000원보다 높은 플랫폼 데이터 이상치(모순) 확인. 레지스트리는 현장 기초 통수 50,000원으로 합리적 산정하였으나, 원문 최저가 불일치로 partially_verified 엄격 분류"
       },
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -723,9 +723,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -754,9 +754,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -790,9 +790,9 @@
         "roundingDelta": 4433,
         "rationale": "숨고 원문 평균 3,504,433원, 소비자 인지성 및 견적 편의를 위한 만원 단위 반올림(3,500,000원) 표기 확인"
       },
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -821,9 +821,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -852,9 +852,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -883,9 +883,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -914,9 +914,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -945,9 +945,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 17,
+      "ageInDays": 28,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -976,9 +976,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1007,9 +1007,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1038,9 +1038,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1069,9 +1069,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1100,9 +1100,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1131,9 +1131,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1162,9 +1162,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1193,9 +1193,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1224,9 +1224,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1255,9 +1255,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1286,9 +1286,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1317,9 +1317,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1348,9 +1348,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1379,9 +1379,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1410,9 +1410,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1441,9 +1441,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1472,9 +1472,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1503,9 +1503,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1534,9 +1534,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1565,9 +1565,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1596,9 +1596,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1627,9 +1627,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1658,9 +1658,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1689,9 +1689,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1720,9 +1720,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1751,9 +1751,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1782,9 +1782,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1813,9 +1813,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1844,9 +1844,9 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     },
     {
       "status": "ok",
@@ -1875,9 +1875,629 @@
       },
       "discrepancyDetails": null,
       "roundingDetails": null,
-      "ageInDays": 2,
+      "ageInDays": 13,
       "isStale": false,
-      "verifiedAt": "2026-10-26T08:24:27.201Z"
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "dishwasher-installation",
+      "url": "https://soomgo.com/prices/dishwasher-installation",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 90000,
+        "minPrice": 50000,
+        "maxPrice": 200000,
+        "priceUnit": "건당 (평균 9만 / 단순설치 5만 ~ 장리폼 포함 20만)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "bidet-installation-replacement",
+      "url": "https://soomgo.com/prices/bidet-installation",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 45000,
+        "minPrice": 30000,
+        "maxPrice": 80000,
+        "priceUnit": "건당 (평균 4.5만 / 단순설치 3만 ~ 배선/수거 포함 8만)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "ac-refrigerant-recharge",
+      "url": "https://soomgo.com/prices/air-conditioner-gas-refill",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 70000,
+        "minPrice": 50000,
+        "maxPrice": 120000,
+        "priceUnit": "건당 (평균 7만원 / 벽걸이 5만 ~ 2in1 진공포함 12만)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "bathroom-silicone-resealing",
+      "url": "https://soomgo.com/prices/silicone-caulking",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 90000,
+        "minPrice": 60000,
+        "maxPrice": 150000,
+        "priceUnit": "실당 (평균 9만원 / 부분시공 6만 ~ 욕실전체 15만)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "door-closer-replacement",
+      "url": "https://soomgo.com/prices/door-closer-replacement",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 65000,
+        "minPrice": 45000,
+        "maxPrice": 95000,
+        "priceUnit": "문 1짝당 (평균 6.5만원 / 단순공임 4.5만 ~ 자재포함 9.5만)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "dryer-installation-relocation",
+      "url": "https://soomgo.com/prices/dryer-installation",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 60000,
+        "minPrice": 40000,
+        "maxPrice": 150000,
+        "priceUnit": "건당 (평균 6만원 / 단독 4만 ~ 직렬 이전 15만)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "ac-outdoor-unit-cleaning",
+      "url": "https://soomgo.com/prices/air-conditioner-outdoor-unit-cleaning",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 50000,
+        "minPrice": 35000,
+        "maxPrice": 95000,
+        "priceUnit": "대당 (평균 5만원 / 실내 실외기실 3.5만 ~ 외벽난간 분해 9.5만)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "bathroom-vent-fan-cleaning",
+      "url": "https://soomgo.com/prices/bathroom-vent-cleaning",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 40000,
+        "minPrice": 30000,
+        "maxPrice": 90000,
+        "priceUnit": "대당 (평균 4만원 / 표준형 3만 ~ 복합 환풍기 9만)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "curtain-blind-cleaning",
+      "url": "https://soomgo.com/prices/curtain-cleaning",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 60000,
+        "minPrice": 40000,
+        "maxPrice": 160000,
+        "priceUnit": "창당 (평균 6만원 / 단창 스팀 4만 ~ 전세대 수거세탁 16만)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "home-organization-consulting",
+      "url": "https://soomgo.com/prices/home-organizing",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 150000,
+        "minPrice": 100000,
+        "maxPrice": 750000,
+        "priceUnit": "건당 (원포인트 15만원 / 1영역 10만 ~ 30평형 전체 75만)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "gas-stove-installation",
+      "url": "https://www.skens.com/busan/content/view.do?cate=service&m1=gassafety&m2=movecheck",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 30000,
+        "minPrice": 20000,
+        "maxPrice": 55000,
+        "priceUnit": "건당 (평균 3만원 / 단순철거 2만 ~ 빌트인연장 5.5만)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "water-meter-insulation",
+      "url": "https://mediahub.seoul.go.kr/archives/2013156",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 50000,
+        "minPrice": 35000,
+        "maxPrice": 85000,
+        "priceUnit": "개소당 (평균 5만원 / 표준 3.5만 ~ 이중완전밀폐 8.5만)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "water-purifier-relocation",
+      "url": "https://www.skintellixservice.com/web/visit/charge/visitCharge.do",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 45000,
+        "minPrice": 30000,
+        "maxPrice": 80000,
+        "priceUnit": "건당 (평균 4.5만원 / 단순설치 3만 ~ 천연석타공 8만)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "balcony-laundry-rack-installation",
+      "url": "https://store.ohou.se/goods/1300984",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 65000,
+        "minPrice": 45000,
+        "maxPrice": 105000,
+        "priceUnit": "세트당 (평균 6.5만원 / 단순설치 4.5만 ~ 올스텐자재포함 8.5만)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "septic-tank-cleaning",
+      "url": "https://www.sb.go.kr/www/selectBbsNttView.do?bbsNo=91&integrDeptCode=&key=5927&nttNo=9577605&pageIndex=1&searchCnd=all",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 35000,
+        "minPrice": 24000,
+        "maxPrice": 150000,
+        "priceUnit": "건당 (0.75㎥ 기본 2.4만 ~ 5㎥ 13만)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "furniture-refinishing-paint",
+      "url": "https://soomgo.com",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 180000,
+        "minPrice": 45000,
+        "maxPrice": 750000,
+        "priceUnit": "건당 (가구 1점당 의자 4.5만 ~ 대형장롱 65만원)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "outdoor-wood-deck-installation",
+      "url": "https://soomgo.com",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 2000000,
+        "minPrice": 1200000,
+        "maxPrice": 6500000,
+        "priceUnit": "평당 (방부목 35~45만 / 합성목재 60~75만)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "lawn-garden-maintenance",
+      "url": "https://soomgo.com",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 200000,
+        "minPrice": 150000,
+        "maxPrice": 600000,
+        "priceUnit": "건당 (50평 18만 ~ 150평 45만)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "toilet-internal-parts-replacement",
+      "url": "https://soomgo.com",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 70000,
+        "minPrice": 65000,
+        "maxPrice": 140000,
+        "priceUnit": "건당 (투피스 6.5만~8만 / 원피스 10만~13만)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
+    },
+    {
+      "status": "partially_verified",
+      "slug": "bathroom-accessories-installation",
+      "url": "https://soomgo.com/prices/%EC%84%A0%EB%B0%98-%EC%84%A4%EC%B9%98-%EB%B0%8F-%EC%88%98%EB%A6%AC",
+      "httpStatus": 200,
+      "httpOk": true,
+      "liveExtractionSuccess": false,
+      "liveVerificationLevel": "partially_verified",
+      "fieldStatus": {
+        "avg": "unextracted",
+        "min": "unextracted",
+        "max": "unextracted"
+      },
+      "extracted": {
+        "avg": null,
+        "min": null,
+        "max": null
+      },
+      "registryPrices": {
+        "basePrice": 65000,
+        "minPrice": 40000,
+        "maxPrice": 150000,
+        "priceUnit": "건당 (기본 3종 공임 6.5만원 / 포세린 타공 및 자재 포함 시 최대 15만원)",
+        "lastVerifiedAt": "2026-11-06"
+      },
+      "discrepancyDetails": null,
+      "roundingDetails": null,
+      "ageInDays": 0,
+      "isStale": false,
+      "verifiedAt": "2026-11-06T10:34:27.211Z"
     }
   ]
 }

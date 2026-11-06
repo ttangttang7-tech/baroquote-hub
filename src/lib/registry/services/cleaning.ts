@@ -1396,7 +1396,7 @@ export const CLEANING_SERVICES: ServiceDefinition[] = [
     categoryId: 'cleaning',
     categoryName: '청소·가사',
     ruleId: 'rule-septic-tank-cleaning',
-    shortDesc: '지자체 조례 기준 정화조 용량(㎥)별 법정 청소 수수료 계산, 지하 장거리 호스 연장 및 수거 안내',
+    shortDesc: '지자체 조례 기준 정화조 용량(㎥)별 법정 청소 수수료 계산, 지하 층·야간 작업 할증 및 법정 수거 안내',
     icon: '🚛',
     questions: [
       {
@@ -1425,12 +1425,13 @@ export const CLEANING_SERVICES: ServiceDefinition[] = [
       },
       {
         id: 'work_environment',
-        label: '작업 현장 환경 및 호스 연결 거리',
+        label: '작업 현장 환경 (지하 층 또는 야간 작업 여부)',
         type: 'select',
         defaultValue: 'standard_ground',
         options: [
-          { label: '표준 작업 (분뇨차량 정화조 바로 앞 주차 가능, 호스 10m 이내)', value: 'standard_ground', priceDelta: 0 },
-          { label: '지하 깊은 층 / 야간 / 장거리 호스 작업 (조례 7% 할증 규정)', value: 'long_hose_basement', priceDelta: 0, hint: '조례상 7% 할증 부과' },
+          { label: '표준 작업 (지상 주간 작업)', value: 'standard_ground', priceDelta: 0 },
+          { label: '지하 층 또는 야간 작업 (조례 7% 할증 부과)', value: 'basement_or_night', priceDelta: 0, hint: '조례상 7% 할증 부과' },
+          { label: '지하 층 또는 야간 작업 (조례 7% 할증 부과)', value: 'long_hose_basement', priceDelta: 0, hint: '조례상 7% 할증 부과' },
         ],
         required: true,
       },

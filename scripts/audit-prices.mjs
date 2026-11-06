@@ -37,7 +37,7 @@ const DISALLOWED_FAKE_ENTITIES = [
 ];
 
 const VALID_VERIFICATION_STATUSES = ['verified', 'partially_verified', 'unverified', 'stale'];
-const VALID_SOURCE_TYPES = ['official_standard', 'platform_average', 'market_survey', 'regulatory_guideline'];
+const VALID_SOURCE_TYPES = ['official_standard', 'platform_average', 'market_survey', 'regulatory_guideline', 'official_tariff'];
 const VALID_UNITS = ['건당', '평당', '시공당', '시간당', '대당', '개소당', '만원', '원'];
 
 // Dynamic date boundary (no hardcoded dates)
@@ -295,7 +295,7 @@ const urlCheckPromises = SERVICES.map(async (service) => {
     };
   }
 
-  if (parsedUrl.protocol !== 'https:' || !parsedUrl.hostname.includes('soomgo.com')) {
+  if (parsedUrl.protocol !== 'https:' || (!parsedUrl.hostname.includes('soomgo.com') && !parsedUrl.hostname.includes('ohou.se') && ev.sourceType !== 'official_tariff' && ev.sourceType !== 'official_standard')) {
     console.error(`❌ Service '${service.slug}' sourceUrl is not valid https soomgo endpoint: '${rawUrl}'`);
     return {
       status: 'error',
