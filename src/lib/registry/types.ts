@@ -42,6 +42,7 @@ export interface QuestionDefinition {
 export type VerificationStatus = 'verified' | 'partially_verified' | 'unverified' | 'stale';
 
 export type SourceType =
+  | 'none'
   | 'official_standard'
   | 'platform_average'
   | 'market_survey'

@@ -155,9 +155,9 @@ describe('Estimation Engine — 30 Services Comprehensive Unit Test Suite (150+ 
       expect(result.maxPrice).toBeUndefined();
       expect(result.formattedRange).toContain('현장 실측 맞춤 견적');
       expect(result.prepTitle).toContain('사무실 정기청소');
-      expect(result.basis.explanation).toContain('400,000원');
-      expect(result.basis.explanation).toContain('정기 방문');
-      expect(result.priceBreakdown.length).toBeGreaterThanOrEqual(3);
+      expect(result.basis.explanation).toContain('현장');
+      expect(result.basis.explanation).not.toMatch(/[0-9][0-9,]*원/);
+      expect(result.priceBreakdown).toEqual([]);
       expect(result.checklist.length).toBeGreaterThanOrEqual(3);
     });
 

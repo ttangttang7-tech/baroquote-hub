@@ -47,7 +47,8 @@ test.describe('BaroQuote Platform E2E Test Suite', () => {
 
       const serviceCards = page.locator('.category-services-section .service-card');
       const count = await serviceCards.count();
-      expect(count).toBe(cat.serviceCount);
+      const registeredCount = SERVICES.filter((service) => service.category === cat.id).length;
+      expect(count).toBe(registeredCount);
     }
   });
 

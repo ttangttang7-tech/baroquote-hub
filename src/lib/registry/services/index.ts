@@ -5,6 +5,7 @@ import { HEATING_COOLING_SERVICES } from './heatingCooling';
 import { PLUMBING_SERVICES } from './plumbing';
 import { INTERIOR_SERVICES } from './interior';
 import { INSTALLATION_SERVICES } from './installation';
+import { ADDITIONAL_SERVICES } from './additional';
 
 export const ALL_SERVICES: ServiceDefinition[] = [
   ...CLEANING_SERVICES,
@@ -13,6 +14,7 @@ export const ALL_SERVICES: ServiceDefinition[] = [
   ...PLUMBING_SERVICES,
   ...INTERIOR_SERVICES,
   ...INSTALLATION_SERVICES,
+  ...ADDITIONAL_SERVICES,
 ];
 
 export const SERVICES: ServiceDefinition[] = [...ALL_SERVICES]

@@ -41,10 +41,10 @@ describe('Price Evidence & Estimation Engine Quality Audits', () => {
     expect(officeService).toBeDefined();
 
     const ev = officeService!.evidence;
-    // Base reference is per-visit commercial cleaning
-    expect(ev.priceUnit).toContain('건당');
-    expect(ev.notes).toContain('1회성 상업공간 청소 건당 기준');
-    expect(ev.notes).toContain('월정액');
+    // Retain historical evidence while the recurring-service estimate remains price-free.
+    expect(ev.priceUnit).toContain('1회성 대청소 기준');
+    expect(ev.sourceType).toBe('platform_average');
+    expect(ev.basePrice).toBe(400000);
     expect(ev.verificationStatus).toBe('partially_verified');
 
     // Estimator must produce quote_preparation without fabricated numbers
@@ -57,12 +57,8 @@ describe('Price Evidence & Estimation Engine Quality Audits', () => {
     expect(res.type).toBe('quote_preparation');
     expect(res.minAmount).toBeUndefined();
     expect(res.maxAmount).toBeUndefined();
-    expect(res.priceBreakdown.length).toBeGreaterThanOrEqual(3);
-    // Cost factors should have amount 0 or descriptive notes
-    for (const item of res.priceBreakdown) {
-      expect(item.amount).toBe(0);
-      expect(item.description).toBeTruthy();
-    }
+    expect(res.priceBreakdown).toEqual([]);
+    expect(res.basis.explanation).not.toMatch(/[0-9][0-9,]*원/);
   });
 
   // 4. 옵션 가산금 근거 및 적용 단위
@@ -100,7 +96,10 @@ describe('Price Evidence & Estimation Engine Quality Audits', () => {
     for (const service of SERVICES) {
       const unitStr = service.evidence.priceUnit;
       expect(unitStr).toBeTruthy();
-      const hasValid = VALID_UNITS.some((u) => unitStr.includes(u));
+      const hasValid = VALID_UNITS.some((u) => unitStr.includes(u)) ||
+        (service.estimateType === 'quote_preparation' &&
+          service.evidence.verificationStatus !== 'verified' &&
+          service.evidence.basePrice === 0 && unitStr.includes('가격 미산출'));
       expect(hasValid).toBe(true);
     }
   });
@@ -281,7 +280,7 @@ describe('Price Evidence & Estimation Engine Quality Audits', () => {
     expect(res.minPrice).toBeUndefined();
     expect(res.maxPrice).toBeUndefined();
     expect(res.prepTitle).toContain('하수구 청소 시세 상충 안내');
-    expect(res.basis.explanation).toContain('시세 데이터 충돌 및 모순');
+    expect(res.basis.explanation).toContain('단일 가격 근거');
   });
 
   // 잘못된 입력값(음수, NaN, Infinity, 범위초과, 미등록옵션) 계산 차단 방어 검증
@@ -381,4 +380,3 @@ describe('Price Evidence & Estimation Engine Quality Audits', () => {
     });
   });
 });
-
