@@ -37,7 +37,7 @@ const DISALLOWED_FAKE_ENTITIES = [
 ];
 
 const VALID_VERIFICATION_STATUSES = ['verified', 'partially_verified', 'unverified', 'stale'];
-const VALID_SOURCE_TYPES = ['official_standard', 'platform_average', 'market_survey', 'regulatory_guideline', 'official_tariff'];
+const VALID_SOURCE_TYPES = ['none', 'official_standard', 'platform_average', 'market_survey', 'regulatory_guideline', 'official_tariff'];
 const VALID_UNITS = ['건당', '평당', '시공당', '시간당', '대당', '개소당', '만원', '원'];
 
 // Dynamic date boundary (no hardcoded dates)
@@ -51,6 +51,27 @@ for (const service of SERVICES) {
   if (!ev) {
     console.error(`❌ Service '${service.id}' (${service.slug}) missing price evidence object!`);
     errorCount++;
+    continue;
+  }
+
+  // Preparation-only entries intentionally contain no price evidence. Validate
+  // that they remain price-free and never probe a non-price source as a quote.
+  if (service.estimateType === 'quote_preparation') {
+    if (ev.priceUnit !== '가격 미산출') {
+      console.error(`❌ Preparation-only service '${service.slug}' must use the explicit price-free unit label.`);
+      errorCount++;
+    }
+    try {
+      const answers = Object.fromEntries(service.questions.map((q) => [q.id, q.defaultValue]));
+      const result = calculateEstimate(service.id, answers);
+      if (!result || result.type !== 'quote_preparation' || result.minAmount !== undefined || result.maxAmount !== undefined || !result.basis?.explanation || !result.checklist?.length) {
+        console.error(`❌ Preparation-only service '${service.slug}' returned an invalid price-free preparation result.`);
+        errorCount++;
+      }
+    } catch (err) {
+      console.error(`❌ Preparation-only service '${service.slug}' threw during preparation audit:`, err);
+      errorCount++;
+    }
     continue;
   }
 
@@ -273,7 +294,8 @@ function extractLivePrices(html) {
   return { avg, min, max };
 }
 
-const urlCheckPromises = SERVICES.map(async (service) => {
+const priceServices = SERVICES.filter((service) => service.estimateType !== 'quote_preparation');
+const urlCheckPromises = priceServices.map(async (service) => {
   const ev = service.priceEvidence || service.evidence;
   const rawUrl = ev.sourceUrl;
 
@@ -532,16 +554,16 @@ const partialVerifiedCount = urlResults.filter((r) => r.liveVerificationLevel ==
 const unverifiedCount = urlResults.filter((r) => r.liveVerificationLevel === 'unverified').length;
 
 console.log(`\n📊 Source URL & Live Price Extraction Summary:`);
-console.log(`   - HTTP 200 OK Connections: ${http200Count} / ${SERVICES.length}`);
-console.log(`   - Full 3-Point Verified (Exact Match): ${fullVerifiedCount} / ${SERVICES.length}`);
-console.log(`   - Verified with Rounding (Rooftop Avg Rounded): ${roundedVerifiedCount} / ${SERVICES.length}`);
-console.log(`   - Partial Verified (Anomaly / Preparation Mode): ${partialVerifiedCount} / ${SERVICES.length}`);
-console.log(`   - Unverified / Errors: ${unverifiedCount} / ${SERVICES.length}`);
+console.log(`   - HTTP 200 OK Connections: ${http200Count} / ${priceServices.length} price-source entries (${SERVICES.length - priceServices.length} preparation-only entries skipped)`);
+console.log(`   - Full 3-Point Verified (Exact Match): ${fullVerifiedCount} / ${priceServices.length}`);
+console.log(`   - Verified with Rounding (Rooftop Avg Rounded): ${roundedVerifiedCount} / ${priceServices.length}`);
+console.log(`   - Partial Verified: ${partialVerifiedCount} / ${priceServices.length}`);
+console.log(`   - Unverified / Errors: ${unverifiedCount} / ${priceServices.length}`);
 console.log(`   - Network Notices / Latency: ${networkWarningCount}`);
 console.log(`   - Dead / Mismatched Source URLs: ${urlResults.filter((r) => r.status === 'error').length}`);
 
-if (fullVerifiedCount + roundedVerifiedCount === 0) {
-  console.error(`\n❌ FATAL: 0 out of ${SERVICES.length} live source URLs had verified price extraction. Cannot report price audit success!`);
+if (priceServices.length > 0 && fullVerifiedCount + roundedVerifiedCount === 0) {
+  console.error(`\n❌ FATAL: 0 out of ${priceServices.length} live price-source URLs had verified price extraction. Cannot report price audit success!`);
   errorCount++;
 }
 

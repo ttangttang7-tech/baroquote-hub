@@ -151,7 +151,7 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
     prepExplanation = `본 서비스의 기존 시장 가격 자료는 유효기간(${service.evidence?.verificationCycleDays || DEFAULT_STALE_THRESHOLD_DAYS}일)을 경과하여 최신 실거래 시세 재검증을 진행하고 있습니다. 왜곡된 금액 제공을 방지하기 위해 숫자 견적 대신 아래 현장 실측 가이드와 업체 견적 비교 체크리스트를 우선 안내해 드립니다.`;
   } else if (isDrainUnclogging) {
     prepTitle = '하수구 청소 시세 상충 안내 (현장 맞춤 견적 권장)';
-    prepExplanation = '숨고 원문 플랫폼의 상단 요약(평균 7만/최저 5만/최고 30만)과 본문 상세(평균 5만/최저 7만/최고 30만) 간 시세 데이터 충돌 및 모순이 확인되어 왜곡된 숫자 견적 출력을 전면 차단하고 현장 실측 맞춤 견적 준비형으로 안내합니다.';
+    prepExplanation = '공개 시세 원문 내 상단 요약과 본문 상세의 기준이 서로 일치하지 않아 신뢰할 수 있는 단일 가격 근거를 확정할 수 없습니다. 왜곡된 숫자 견적 출력을 차단하고 현장 실측 맞춤 견적 준비형으로 안내합니다.';
   } else if (effectiveStatus === 'partially_verified' && !isOfficeCleaning) {
     prepTitle = '부분 검증 서비스 (현장 실측 맞춤 견적 권장)';
     prepExplanation = `본 서비스는 기본 출장비 및 기초 작업비만 일부 확인된 상태이며, 현장 조건에 따른 편차가 커 정확한 사전 정액 추정이 어렵습니다. 확정 견적 전 아래 체크리스트로 2~3개 업체의 견적을 비교하세요.`;
@@ -392,7 +392,7 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       }
 
       prepExplanation =
-        '숨고에 공개된 상업공간 청소 시세는 1회성 준공/이사 대청소 건당 평균 400,000원(최저 15만~최고 100만) 기준입니다. 정기 방문 클리닝은 주간 방문 횟수, 실평수, 쓰레기 배출 환경, 야간/주간 출입 보안 조건에 따라 월간 계약금이 결정되므로, 단일 정액가 대신 복수 업체의 방문 실측 소견 비교를 권장합니다.';
+        '1회성 준공·이사 대청소의 공개 시세는 정기 방문 클리닝과 서비스 범위 및 과금 단위가 달라 월간 계약가 산출 근거로 사용할 수 없습니다. 방문 횟수, 실평수, 쓰레기 배출 환경, 출입 시간과 보안 조건에 따라 계약 범위가 달라지므로, 숫자 견적 대신 복수 업체의 현장 실측 소견 비교를 권장합니다.';
 
       inclusions.push('업무공간 바닥 쓸기 및 전용 약품 물걸레 청소');
       inclusions.push('개인/공용 쓰레기통 비우기 및 분리수거장 배출');
@@ -742,7 +742,7 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       type = 'quote_preparation';
       prepTitle = '하수구 청소 시세 상충 안내 (현장 맞춤 견적 권장)';
       prepExplanation =
-        '숨고 원문 플랫폼의 상단 요약(평균 7만/최저 5만/최고 30만)과 본문 상세(평균 5만/최저 7만/최고 30만) 간 시세 데이터 충돌 및 모순이 확인되어 왜곡된 숫자 견적 출력을 전면 차단하고 현장 실측 맞춤 견적 준비형으로 안내합니다.';
+        '공개 시세 원문 내 상단 요약과 본문 상세의 기준이 서로 일치하지 않아 신뢰할 수 있는 단일 가격 근거를 확정할 수 없습니다. 왜곡된 숫자 견적 출력을 차단하고 현장 실측 맞춤 견적 준비형으로 안내합니다.';
 
       const bOpt = service.questions.find((q) => q.id === 'blockage_location')?.options?.find((o) => o.value === inputs.blockage_location);
       const eqOpt = service.questions.find((q) => q.id === 'equipment_level')?.options?.find((o) => o.value === inputs.equipment_level);
@@ -2876,15 +2876,11 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
 
     default: {
       type = 'quote_preparation';
-      baseCost = 100000;
-      minCost = 100000;
-      maxCost = 150000;
-      priceBreakdown.push({ name: '현장 실측 및 맞춤 견적 준비 항목', amount: baseCost });
-      inclusions.push('서비스 현장 기본 실측 및 상태 정밀 점검');
-      exclusions.push('자재비 및 추가 특수 공정');
-      extraFeeWarnings.push('현장 작업 난이도 및 자재 선택에 따른 견적 변동 가능');
-      contractorChecklist.push('서면 견적서와 작업 내역서를 사전에 전달받았는가?');
-      cautions.push('정확한 비용은 현장 상태 실측 후 최종 확정됩니다.');
+      // 가격 근거가 없는 서비스에는 추정 금액을 생성하지 않는다.
+      inclusions.push('현장 상태와 작업 범위를 업체와 함께 확인');
+      exclusions.push('현장 확인 전 확정 가능한 금액 산출');
+      contractorChecklist.push('작업 범위·자재·폐기물 처리·출장비가 구분된 서면 견적을 받았는가?');
+      cautions.push('공개 검증 시세가 없어 임의 금액은 표시하지 않습니다. 현장 확인 후 복수 업체의 서면 견적을 비교하세요.');
       break;
     }
   }
@@ -2905,7 +2901,7 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       formattedRange: '현장 실측 맞춤 견적 (단일 정액가 산출 불가)',
       prepTitle: finalPrepTitle,
       inputSummary,
-      priceBreakdown,
+      priceBreakdown: [],
       inclusions,
       exclusions,
       extraFeeWarnings,
@@ -2916,7 +2912,7 @@ export function calculateEstimate(serviceSlugOrId: string, userInputs: Record<st
       minAmount: undefined,
       maxAmount: undefined,
       basis: {
-        breakdown: priceBreakdown.map((p) => ({ label: p.name, amount: p.amount })),
+        breakdown: [{ label: '금액 산출 기준', amount: '현장 진단 및 작업 범위 확인 후 안내' }],
         explanation: finalExplanation,
       },
       includedItems: inclusions,
