@@ -2,18 +2,25 @@ import type { EstimateResult, InputSummaryItem, PriceBreakdownItem } from '../re
 import { getServiceBySlug, getServiceById } from '../registry/services';
 
 export function formatKoreanWon(amount: number): string {
-  if (isNaN(amount) || !isFinite(amount) || amount < 0) {
+  // PILOT-002: NaN, 음수, Infinity, 소수점, 극단값(1조원) 완전 방어
+  let safeAmount = Number(amount);
+  if (isNaN(safeAmount) || safeAmount < 0) {
     return '0원';
   }
-  const manWon = Math.floor(amount / 10000);
-  const remainder = amount % 10000;
+  if (!isFinite(safeAmount) || safeAmount > 1_000_000_000_000) {
+    safeAmount = 1_000_000_000_000; // 최대 1조원 상한 보정
+  }
+  safeAmount = Math.round(safeAmount);
+
+  const manWon = Math.floor(safeAmount / 10000);
+  const remainder = safeAmount % 10000;
   if (manWon > 0 && remainder === 0) {
     return `${manWon.toLocaleString()}만원`;
   }
   if (manWon > 0 && remainder > 0) {
     return `${manWon.toLocaleString()}만 ${remainder.toLocaleString()}원`;
   }
-  return `${amount.toLocaleString()}원`;
+  return `${safeAmount.toLocaleString()}원`;
 }
 
 export const DEFAULT_STALE_THRESHOLD_DAYS = 90; // 분기별(90일) 주기
