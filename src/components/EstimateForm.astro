@@ -3,18 +3,19 @@ import type { QuestionDefinition } from '../lib/registry/types';
 
 interface Props {
   serviceId: string;
+  preparationOnly?: boolean;
   questions: QuestionDefinition[];
   initialAnswers: Record<string, any>;
 }
 
-const { serviceId, questions, initialAnswers } = Astro.props;
+const { serviceId, questions, initialAnswers, preparationOnly = false } = Astro.props;
 ---
 
 <form class="estimate-form" id="estimateForm" data-service-id={serviceId}>
   <div class="form-header">
     <h2 class="form-title">조건 선택</h2>
     <p class="form-desc">
-      조건을 선택하면 실시간 시장 예상 견적과 체크리스트가 즉시 계산됩니다.
+      {preparationOnly ? '조건을 선택하면 업체에 전달할 정보와 견적 요청 전 확인할 항목을 볼 수 있습니다.' : '조건을 선택하면 실시간 시장 예상 견적과 체크리스트가 즉시 계산됩니다.'}
     </p>
   </div>
 
@@ -124,7 +125,7 @@ const { serviceId, questions, initialAnswers } = Astro.props;
 
   <div class="form-actions">
     <button type="submit" class="btn btn-primary btn-submit" id="calculateBtn">
-      예상 견적 확인하기
+      {preparationOnly ? '견적 준비 항목 확인하기' : '예상 견적 확인하기'}
     </button>
     <button type="button" class="btn btn-secondary btn-reset" id="resetBtn">
       초기화
