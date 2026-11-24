@@ -116,7 +116,8 @@ const jsonLd = [
           <EstimateForm 
             serviceId={service.id} 
             questions={service.questions} 
-            initialAnswers={initialAnswers} 
+            initialAnswers={initialAnswers}
+            preparationOnly={service.estimateType === 'quote_preparation'}
           />
         </div>
 
