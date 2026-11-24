@@ -7,6 +7,8 @@ import { INTERIOR_SERVICES } from './interior';
 import { INSTALLATION_SERVICES } from './installation';
 import { ADDITIONAL_SERVICES } from './additional';
 
+import { QUOTE_PREPARATION_SERVICES } from './quotePreparation';
+
 export const ALL_SERVICES: ServiceDefinition[] = [
   ...CLEANING_SERVICES,
   ...MOVING_SERVICES,
@@ -15,6 +17,7 @@ export const ALL_SERVICES: ServiceDefinition[] = [
   ...INTERIOR_SERVICES,
   ...INSTALLATION_SERVICES,
   ...ADDITIONAL_SERVICES,
+  ...QUOTE_PREPARATION_SERVICES,
 ];
 
 export const SERVICES: ServiceDefinition[] = [...ALL_SERVICES]
