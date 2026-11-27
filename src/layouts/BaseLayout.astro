@@ -30,6 +30,13 @@ const formattedTitle = title.includes('바로견적') ? title : `${title} | 바�
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-SMNBE43YMJ"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-SMNBE43YMJ');
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>{formattedTitle}</title>
     <meta name="description" content={description} />
